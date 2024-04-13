@@ -105,6 +105,38 @@
 <p>&#x2F;&#x2F;.htaccess  修改文件<br><code>SetHandler application/x-httpd-php</code></p>
 <p>再上传一个图片格式的木马即可，自动解析为php</p>
 <p>ps：phpstudy的apache有问题，复现不了</p>
+<p>另一种方法是后缀名冗余(未知拓展名绕过)绕过，例如修改成<strong>one.php.aaa、one.php.xxxx</strong>等。然后直接使用中国菜刀连接。5,6也是这种方法绕过</p>
+<h2 id="7"><a href="#7" class="headerlink" title="7"></a>7</h2><p>加.(空格)<code>a.php. </code></p>
+<h2 id="8"><a href="#8" class="headerlink" title="8"></a>8</h2><p>加.<code>a.php.</code></p>
+<h2 id="9"><a href="#9" class="headerlink" title="9"></a>9</h2><p>增加后缀::$DATA</p>
+<h2 id="10"><a href="#10" class="headerlink" title="10"></a>10</h2><p>冗余后缀名</p>
+<h2 id="11"><a href="#11" class="headerlink" title="11"></a>11</h2><p><code>$file_name = str_ireplace($deny_ext,&quot;&quot;, $file_name);</code>替换了后缀名</p>
+<p>pphphp(php) phphpp(hpp)复写尝试</p>
+<h2 id="12"><a href="#12" class="headerlink" title="12"></a>12</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$msg</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$ext_arr</span> = <span class="keyword">array</span>(<span class="string">&#x27;jpg&#x27;</span>,<span class="string">&#x27;png&#x27;</span>,<span class="string">&#x27;gif&#x27;</span>);<span class="comment">//白名单</span></span><br><span class="line">    <span class="variable">$file_ext</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="title function_ invoke__">strrpos</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="string">&quot;.&quot;</span>)+<span class="number">1</span>);<span class="comment">//后缀</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">in_array</span>(<span class="variable">$file_ext</span>,<span class="variable">$ext_arr</span>))&#123;<span class="comment">//后缀存在</span></span><br><span class="line">        <span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">        <span class="variable">$img_path</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;save_path&#x27;</span>].<span class="string">&quot;/&quot;</span>.<span class="title function_ invoke__">rand</span>(<span class="number">10</span>, <span class="number">99</span>).<span class="title function_ invoke__">date</span>(<span class="string">&quot;YmdHis&quot;</span>).<span class="string">&quot;.&quot;</span>.<span class="variable">$file_ext</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>,<span class="variable">$img_path</span>))&#123;</span><br><span class="line">        <span class="variable">$is_upload</span> = <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$msg</span> = <span class="string">&#x27;上传出错！&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="variable">$msg</span> = <span class="string">&quot;只允许上传.jpg|.png|.gif类型文件！&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$is_upload</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过截断上传（0x00，%00，&#x2F;00 ）实现。<code>a.php%00</code>，filename要改成jpg</p>
+<p>（1）php版本要小于5.3.4。</p>
+<p>（2）文件路径可控。</p>
+<p>（3）magic_quotes_gpc需要为OFF状态。（在php.ini中）</p>
+<h2 id="13"><a href="#13" class="headerlink" title="13"></a>13</h2><p>save_path变成了POST提交,区别在于不对%00自动编码，需手动解码</p>
+<h2 id="14-16"><a href="#14-16" class="headerlink" title="14-16"></a>14-16</h2><p>图片马cmd执行<code>copy a.jpg/b+ b.php c.jpg</code></p>
+<p>可以绕过getimagesize()函数来实现对文件类型的识别判断,exif_imagetype()函数获得图片文件的类型，从而实现文件白名单的过滤操作。</p>
+<p>利用文件包含来使用木马</p>
+<h2 id="17"><a href="#17" class="headerlink" title="17"></a>17</h2><p>二次渲染绕过</p>
+<p>绕过二次渲染的核心思想便是先上传一张图片，再将上传完成后的图片下载下来，对比渲染前后图片的编码变化，将我们的代码写在未被渲染的区域便可绕过二次渲染。<br>由于不同格式文件的特性，在进行绕过二次渲染时，选用gif的图像最容易成功，对于jpg和png这两种图片需要用脚本进行改写，也不在进行尝试。</p>
+<p>用winhex工具,在最后加上php代码</p>
+<p><img src="/../images/0413-1.png"></p>
+<p>将渲染后的gif文件下载到本地，通过对比软件对比渲染前后的十六进制数据。下图左为渲染前，右为选然后的文件。未标红的即为前后未发生变化的区域。</p>
+<p><img src="/../images/0413-2.png"></p>
+<p>将木马写到该区域再次进行尝试上传并利用文件包含访问。</p>
+<h2 id="17-1"><a href="#17-1" class="headerlink" title="17"></a>17</h2><p>条件竞争</p>
+<p>分析源码，对于上传的文件处理是先保存到服务器，再对比拓展名，如果拓展名不属于白名单中的三种后缀，便由18行的操作执行unlink操作将保存的文件删除</p>
+<p><code>&lt;?php fputs(fopen(&#39;info.php&#39;,&#39;w&#39;),&#39;&lt;?php phpinfo();?&gt;&#39;);?&gt;</code>通过写入这行代码，一旦竞争成功，文件会留在服务器，可访问此文件调用phpinfo()</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/../images/0413-3.png"></h2><p>bp的intruder模块发包，自己去浏览器刷新或者用python脚本</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://192.168.159.128/upload-labs-master/upload/eval.php&quot;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    html = requests.get(url)</span><br><span class="line">    <span class="keyword">if</span> html.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;OK&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="19"><a href="#19" class="headerlink" title="19"></a>19</h2><p>同样是条件竞争,只不过需要图片马,把上面的代码写进图片即可</p>
+<p>Pass19 — %00截断，参考Pass11<br>Pass20 — 0X00截断，参考Pass12</p>
 
                 
                 <p class="end">__END__</p>
