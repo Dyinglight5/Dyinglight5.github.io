@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Live For Code
+            4.14文件上传刷题日记
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,187 +32,127 @@
 <meta name="generator" content="Hexo 7.1.1"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">Dyinglight</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">4.14文件上传刷题日记</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-14
+                        </span>
+                        
+                            
+                                <span id="/article/3439035480/" class="leancloud_visitors" data-flag-title="4.14文件上传刷题日记">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/3439035480/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                    
+                        
+                            <span class="tag-color">刷题日记</span>
+                        
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h2 id="buuctf-是兄弟就来传马"><a href="#buuctf-是兄弟就来传马" class="headerlink" title="buuctf[是兄弟就来传马"></a>buuctf[是兄弟就来传马</h2><p>先传一个php木马</p>
+<p><img src="/../images/0414-1.png"></p>
+<p>页面报错，随便改一个后缀，看看是黑名单还是白名单过滤，这里php代码前加GIF89a绕过图片大小检查</p>
+<p> <img src="/../images/0414-2.png"></p>
+<p>报错，接着试一下是不是MIME过滤</p>
+<p><code>Content-Type: image/png</code></p>
+<p>上传成功 <code>/var/www/html/upload/743be915f2c6ab5de3600d87068cafd2/hack.jpg succesfully uploaded!</code></p>
+<p>接下来修改.htaccess解析文件,记得改Content-type</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch <span class="string">&quot;hack&quot;</span> &gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;var&#x2F;www&#x2F;html&#x2F;upload&#x2F;743be915f2c6ab5de3600d87068cafd2&#x2F;.htaccess succesfully uploaded!</p>
+<p>接着上传hack.jpg图片<code>/var/www/html/upload/743be915f2c6ab5de3600d87068cafd2/hack.jpg succesfully uploaded!</code></p>
+<p>拼接后的url蚁剑链接即可</p>
+<h2 id="ACTF2020-Upload"><a href="#ACTF2020-Upload" class="headerlink" title="ACTF2020 Upload"></a>ACTF2020 Upload</h2><p>尝试上传php，发现前端拦截，上传png,用bp抓包改php，上传失败</p>
+<p>尝试phtml，上传成功</p>
+<p>Upload Success! Look here~ .&#x2F;uplo4d&#x2F;87d8f9288427fb50ed6e8dd6be21e62b.phtml</p>
+<p><a target="_blank" rel="noopener" href="http://b2a5f0cf-75b2-4af3-9386-e4d027a70dc1.node5.buuoj.cn:81/uplo4d/87d8f9288427fb50ed6e8dd6be21e62b.phtml%E8%9A%81%E5%89%91%E9%93%BE%E6%8E%A5%E5%8D%B3%E5%8F%AF">http://b2a5f0cf-75b2-4af3-9386-e4d027a70dc1.node5.buuoj.cn:81/uplo4d/87d8f9288427fb50ed6e8dd6be21e62b.phtml蚁剑链接即可</a></p>
+<p>ps:buu上面的文件上传题都有bug，经常导致重定向</p>
+<h2 id="SWPUCTF-2021-新生赛-easyupload1-0"><a href="#SWPUCTF-2021-新生赛-easyupload1-0" class="headerlink" title="[SWPUCTF 2021 新生赛]easyupload1.0"></a>[SWPUCTF 2021 新生赛]easyupload1.0</h2><p>同样是png文件改phtml，用蚁剑链接只能找到fakeflag，看了wp才知道在phpinfo()中，长知识了</p>
+<h2 id="SWPUCTF-2021-新生赛-easyupload3-0"><a href="#SWPUCTF-2021-新生赛-easyupload3-0" class="headerlink" title="[SWPUCTF 2021 新生赛]easyupload3.0"></a>[SWPUCTF 2021 新生赛]easyupload3.0</h2><p>提示用文件组合，.htaccess秒了(nss平台没bug)</p>
+<h2 id="NISACTF-2022-babyupload复现"><a href="#NISACTF-2022-babyupload复现" class="headerlink" title="[NISACTF 2022]babyupload复现"></a>[NISACTF 2022]babyupload复现</h2><p>上传各种文件，发现一直返回badname，查看源代码，发现source目录，访问后给了Python源码</p>
+<p>代码粘到gpt，发现文件不能带点，根据文件名给一个id，再通过<code>/file/uuid</code>访问文件，通过查询数据库得到对应文件名，在文件名前拼接<code>uploads/</code>后读取该路径下上传的文件。</p>
+<p><code> with open(os.path.join(&quot;uploads/&quot;, res[0]), &quot;r&quot;) as f:        return f.read()</code></p>
+<p>绝对路径拼接漏洞</p>
+<blockquote>
+<p>os.path.join(path,*paths)函数用于将多个文件路径连接成一个组合的路径。第一个函数通常包含了基础路径，而之后的每个参数被当作组件拼接到基础路径之后。然而，这个函数有一个少有人知的特性，如果拼接的某个路径以 &#x2F; 开头，那么包括基础路径在内的所有前缀路径都将被删除，该路径将视为绝对路径</p>
+</blockquote>
+<p>直接把文件名字改成&#x2F;flag，访问得到flag</p>
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/3439035480/">4.14文件上传刷题日记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-14
-                            </span>
-                            
-                                
-                                    <span id="/article/3439035480/" class="leancloud_visitors" data-flag-title="4.14文件上传刷题日记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/3439035480/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/RL02.jpg" alt="Dyinglight">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>Dyinglight
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/article/3439035480/" target="_blank">4.14文件上传刷题日记</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>原神,启动！
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/">刷题日记</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/1906377861/">[XYCTF]刷题笔记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-12
-                            </span>
-                            
-                                
-                                    <span id="/article/1906377861/" class="leancloud_visitors" data-flag-title="[XYCTF]刷题笔记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/1906377861/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/1664270079/">upload-labs刷题笔记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-04
-                            </span>
-                            
-                                
-                                    <span id="/article/1664270079/" class="leancloud_visitors" data-flag-title="upload-labs刷题笔记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/1664270079/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/3998144523/">文件上传漏洞学习笔记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-03
-                            </span>
-                            
-                                
-                                    <span id="/article/3998144523/" class="leancloud_visitors" data-flag-title="文件上传漏洞学习笔记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/3998144523/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/2093147683/">20240331刷题日记-sql</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-31
-                            </span>
-                            
-                                
-                                    <span id="/article/2093147683/" class="leancloud_visitors" data-flag-title="20240331刷题日记-sql">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2093147683/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/article/1906377861/" class="next-prefix">» </a> 下一篇：    <a href="/article/1906377861/" title="发布于 2024-04-12 08:36">[XYCTF]刷题笔记</a>
+                    
+                </div>
             </div>
             
-            
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a href="/page/2/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -244,7 +184,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
