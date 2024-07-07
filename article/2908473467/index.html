@@ -70,7 +70,7 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h1 id="ciscn-writeup"><a href="#ciscn-writeup" class="headerlink" title="ciscn writeup"></a>ciscn writeup</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="simple-php（复现）"><a href="#simple-php（复现）" class="headerlink" title="simple_php（复现）"></a>simple_php（复现）</h3><p>比赛的时候一直在尝试其他命令，看了wp才发现能用php -r ‘代码’来执行php语句或者系统命令</p>
+                <h1 id="ciscn-writeup"><a href="#ciscn-writeup" class="headerlink" title="ciscn writeup"></a>ciscn writeup</h1><h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="simple-php（复现）"><a href="#simple-php（复现）" class="headerlink" title="simple_php（复现）"></a>simple_php（复现）</h3><h4 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h4><p>比赛的时候一直在尝试其他命令，看了wp才发现能用php -r ‘代码’来执行php语句或者系统命令</p>
 <p>与此相似的还有<code>php -i</code>可以查看phpinfo等等</p>
 <p>但是由于题目过滤了许多关键字，我们可以利用hex2bin转码绕过过滤</p>
 <p>hex2bin(‘语句’);	但是由于过滤了引号，使用substr截取一个字符(这里是下划线)，剩下的就会被识别为字符串</p>
@@ -92,6 +92,19 @@
 
 <p><img src="/../images/ciscn/4.png"></p>
 <p>拿到flag!</p>
+<h4 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h4><p>没有ban掉diff和dd，可以使用diff读目录，dd读文件:</p>
+<p>读根目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diff --recursive / /home</span><br></pre></td></tr></table></figure>
+
+<p>发现根目录没有flag。</p>
+<p>读特定文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/5.png"></p>
+<p>没有flag,但是发现了mysql，猜测账号密码root</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -proot --all-databases</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/ciscn/6.png"></p>
 
                 
                 <p class="end">__END__</p>
