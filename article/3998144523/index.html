@@ -111,7 +111,7 @@
 <li><p>指定特定文件名的处理方式(纯文本)<code>   AddType text/plain .pl .py .php</code></p>
 </li>
 <li><p>完全禁止特定扩展名的文件被访问(黑名单)</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   Options -ExecCGI</span><br><span class="line">   AddHandler cgi-script <span class="string">.php</span> <span class="string">.pl</span> <span class="string">.py</span> <span class="string">.jsp</span> <span class="string">.asp</span> <span class="string">.htm</span> <span class="string">.shtml</span> <span class="string">.sh</span> <span class="string">.cgi</span>识别</span><br><span class="line"></span><br><span class="line">3. 强制web服务器对于特定文件类型的处理，**与第一条不同的是， 下面的方法直接强行让apache将文件识别为你指定的类型，而第一种是让浏览器符合上面正则的全部被认为是纯文本，也可以继续往里面加入其他类型。**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   Options -ExecCGI</span><br><span class="line">   AddHandler cgi-script .php .pl .py .jsp .asp .htm .shtml .sh .cgi识别</span><br><span class="line"></span><br><span class="line">3. 强制web服务器对于特定文件类型的处理，**与第一条不同的是， 下面的方法直接强行让apache将文件识别为你指定的类型，而第一种是让浏览器符合上面正则的全部被认为是纯文本，也可以继续往里面加入其他类型。**</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>&lt;FilesMatch “.(php|pl|py|jsp|asp|htm|shtml|sh|cgi)$”&gt;<br>ForceType text&#x2F;plain</p>
 </FilesMatch>
 ```
